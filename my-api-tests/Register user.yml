@@ -1,0 +1,26 @@
+info:
+  name: "Register user "
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/auth/register"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Aisha",
+        "email": "aisha@test.com",
+        "password": "123456",
+        "university": "Griffith",
+        "year": "3",
+        "course": "Computing"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
