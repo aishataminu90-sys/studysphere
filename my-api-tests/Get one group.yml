@@ -1,0 +1,18 @@
+info:
+  name: "Get one group"
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{baseUrl}}/groups/PASTE_GROUP_ID_HERE"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

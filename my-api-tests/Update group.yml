@@ -1,0 +1,24 @@
+info:
+  name: "Update group"
+  type: http
+  seq: 8
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/groups/PASTE_GROUP_ID_HERE"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Web Dev Study Group Updated",
+        "module": "CS204",
+        "description": "Updated description",
+        "nextSession": "2026-04-25T18:00:00.000Z"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

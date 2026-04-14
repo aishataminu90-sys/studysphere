@@ -1,0 +1,24 @@
+info:
+  name: "Create group"
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{baseUrl}}/groups"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Web Dev Study Group",
+        "module": "CS204",
+        "description": "Weekly web dev study sessions",
+        "nextSession": "2026-04-20T19:00:00.000Z"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

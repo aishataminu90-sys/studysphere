@@ -1,0 +1,24 @@
+info:
+  name: "get resources "
+  type: http
+  seq: 6
+
+http:
+  method: GET
+  url: "{{baseUrl}}/resources/69de2b67ecfd0355a6bd4883"
+  body:
+    type: json
+    data: |-
+      [
+        {
+          "_id": "69de2b67ecfd0355a6bd4883",
+          "title": "Node.js Notes"
+        }
+      ]
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

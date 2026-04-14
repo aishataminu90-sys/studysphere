@@ -17,10 +17,20 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 const authMiddleware = require('./middleware/authMiddleware');
+var resourceRouter = require('./routes/resources');
 var groupsRouter = require('./routes/groups');
 var remindersRouter = require('./routes/reminders');
 
-//Connecting to  MongoDB
+// 🔍 DEBUG (VERY IMPORTANT — DO NOT REMOVE YET)
+console.log('indexRouter:', typeof indexRouter);
+console.log('usersRouter:', typeof usersRouter);
+console.log('authRouter:', typeof authRouter);
+console.log('authMiddleware:', typeof authMiddleware);
+console.log('resourceRouter:', typeof resourceRouter);
+console.log('groupsRouter:', typeof groupsRouter);
+console.log('remindersRouter:', typeof remindersRouter);
+
+// Connecting to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
@@ -52,10 +62,9 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/users', authMiddleware, usersRouter);
 app.use('/auth', authRouter);
-app.use('/resources', require('./routes/resources'));
-app.use('/groups', require('./routes/groups'));
-app.use('/reminders', require('./routes/reminders'));
-
+app.use('/resources', resourceRouter);
+app.use('/groups', groupsRouter);
+app.use('/reminders', remindersRouter);
 
 // catch 404
 app.use(function(req, res, next) {
@@ -66,7 +75,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  res.render('error');
+
   res.status(err.status || 500).json({
     error: err.message
   });

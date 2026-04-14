@@ -1,0 +1,18 @@
+info:
+  name: "Join group"
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: "{{baseUrl}}/groups/PASTE_GROUP_ID_HERE/join"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

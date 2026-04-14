@@ -1,0 +1,24 @@
+info:
+  name: "Update reminder"
+  type: http
+  seq: 13
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/reminders/PASTE_REMINDER_ID_HERE"
+  body:
+    type: json
+    data: |-
+      {
+        "title": "Study Chapter 4 and 5",
+        "description": "Updated - also cover chapter 5",
+        "dueDate": "2026-04-19T10:00:00.000Z",
+        "completed": false
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

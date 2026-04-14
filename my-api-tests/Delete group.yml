@@ -1,0 +1,18 @@
+info:
+  name: "Delete group"
+  type: http
+  seq: 10
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/groups/PASTE_GROUP_ID_HERE"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

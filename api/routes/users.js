@@ -1,3 +1,7 @@
+var express = require('express');
+var router = express.Router();
+const User = require('../models/User');
+
 // This route gets the currently logged-in user's details
 router.get('/', async (req, res) => {
   try {
@@ -27,3 +31,5 @@ router.get('/', async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 });
+
+module.exports = router;

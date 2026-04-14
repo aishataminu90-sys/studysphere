@@ -1,0 +1,15 @@
+info:
+  name: update resource
+  type: http
+  seq: 7
+
+http:
+  method: PUT
+  url: "{{base Url}}/resources"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

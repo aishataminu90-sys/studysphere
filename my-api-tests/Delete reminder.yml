@@ -1,0 +1,18 @@
+info:
+  name: "Delete reminder"
+  type: http
+  seq: 15
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/reminders/PASTE_REMINDER_ID_HERE"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
