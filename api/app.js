@@ -50,6 +50,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/users', authMiddleware, usersRouter);
 app.use('/auth', authRouter);
+app.use('/resources', require('./routes/resources'));
 
 
 // catch 404
