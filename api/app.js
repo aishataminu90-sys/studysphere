@@ -17,6 +17,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 const authMiddleware = require('./middleware/authMiddleware');
+var groupsRouter = require('./routes/groups');
+var remindersRouter = require('./routes/reminders');
 
 //Connecting to  MongoDB
 mongoose.connect(process.env.MONGO_URI)
@@ -25,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // Middleware
 app.use(cors());
@@ -51,6 +53,8 @@ app.use('/', indexRouter);
 app.use('/users', authMiddleware, usersRouter);
 app.use('/auth', authRouter);
 app.use('/resources', require('./routes/resources'));
+app.use('/groups', require('./routes/groups'));
+app.use('/reminders', require('./routes/reminders'));
 
 
 // catch 404
@@ -62,10 +66,10 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  //res.render('error');
-  // res.status(err.status || 500).json({
-  //   error: err.message
-  // });
+  res.render('error');
+  res.status(err.status || 500).json({
+    error: err.message
+  });
 });
 
 module.exports = app;
