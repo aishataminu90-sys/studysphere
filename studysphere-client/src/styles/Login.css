@@ -1,0 +1,203 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Base */
+.login-page {
+  min-height: 100vh;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+/* Layout */
+.login-wrapper {
+  max-width: 1180px;
+  margin: 55px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Left side */
+.login-tagline {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.login-info h1 {
+  font-size: clamp(2.7rem, 6vw, 5.3rem);
+  line-height: 1;
+  margin: 14px 0 22px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: inherit;
+}
+
+.login-info p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+/* Card */
+.login-card {
+  padding: 44px;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 460px;
+  backdrop-filter: blur(18px);
+  text-align: center;
+}
+
+.login-card h2 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+}
+
+.subtitle {
+  margin-bottom: 24px;
+}
+
+/* Inputs */
+.login-card input {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 10px 0;
+  border-radius: 14px;
+  outline: none;
+}
+
+.login-card button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  margin-top: 14px;
+  cursor: pointer;
+  font-weight: 900;
+  border: none;
+}
+
+.forgot-link,
+.link {
+  margin-top: 16px;
+}
+
+/* DARK MODE (glass) */
+.login-page.glass {
+  color: #f9fafb;
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+}
+
+.login-page.glass .login-tagline {
+  color: #2dd4bf;
+}
+
+.login-page.glass .login-info p,
+.login-page.glass .subtitle,
+.login-page.glass .link {
+  color: #d1d5db;
+}
+
+.login-page.glass .login-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.login-page.glass .login-card input {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f9fafb;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.login-page.glass .login-card input::placeholder {
+  color: #cbd5e1;
+}
+
+.login-page.glass .login-card button {
+  background: #14b8a6;
+  color: #031316;
+}
+
+.login-page.glass .login-card button:hover {
+  background: #2dd4bf;
+}
+
+.login-page.glass .forgot-link a,
+.login-page.glass .link a {
+  color: #5eead4;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* LIGHT MODE (campus) */
+
+.login-page.campus {
+  color: #111827;
+  background: #f8faf5;
+}
+
+.login-page.campus .login-tagline {
+  color: #2f855a;
+}
+
+.login-page.campus .login-info p,
+.login-page.campus .subtitle,
+.login-page.campus .link {
+  color: #374151;
+}
+
+.login-page.campus .login-card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.login-page.campus .login-card input {
+  background: #f8faf5;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.login-page.campus .login-card input::placeholder {
+  color: #6b7280;
+}
+
+.login-page.campus .login-card button {
+  background: #2f855a;
+  color: white;
+}
+
+.login-page.campus .login-card button:hover {
+  background: #276749;
+}
+
+.login-page.campus .forgot-link a,
+.login-page.campus .link a {
+  color: #2f855a;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Responsive */
+
+@media (max-width: 850px) {
+  .login-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .login-info {
+    text-align: center;
+  }
+
+  .login-info p {
+    margin: 0 auto;
+  }
+
+  .login-card {
+    margin: 0 auto;
+  }
+}

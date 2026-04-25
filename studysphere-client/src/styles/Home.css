@@ -1,0 +1,399 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+.home {
+  min-height: 100vh;
+  padding: 28px 7%;
+  
+}
+
+.feature-icon {
+  font-size: 2.4rem !important;
+  color: #5eead4;
+  margin-bottom: 12px;
+}
+
+.campus .feature-icon {
+  color: #2f855a;
+}
+
+
+/* Shared layout */
+
+.theme-switcher {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+  justify-content: center;
+  z-index: 10;
+  position: relative;
+}
+
+.theme-switcher button {
+  padding: 10px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  border: none;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.tagline {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #5eead4; /* ADD THIS */
+}
+/* .hero h1 {
+  font-weight: 800;
+  letter-spacing: -1px;
+} 
+*/
+  .hero h1 {
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-size: clamp(2.7rem, 6vw, 5.7rem);
+  line-height: 1;
+  margin: 14px 0 22px;
+  color: inherit;
+}
+
+
+ /* .hero h1 {
+  font-size: clamp(2.7rem, 6vw, 5.7rem);
+  line-height: 1;
+  margin: 14px 0 22px;
+  color: #f9fafb; /* ADD THIS LINE 
+}  
+*/
+
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 620px;
+  color: #d1d5db; /* ADD THIS */
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 30px;
+}
+
+.primary-btn,
+.secondary-btn {
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.hero-card {
+  padding: 26px;
+  border-radius: 30px;
+  backdrop-filter: blur(18px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.task-card {
+  padding: 18px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.task-card h3 {
+  margin: 0 0 6px;
+}
+
+.task-card p {
+  margin: 0;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 70px;
+}
+
+.feature-card {
+  padding: 24px;
+  border-radius: 24px;
+}
+
+.feature-card span {
+  font-size: 2rem;
+}
+
+.feature-card h3 {
+  margin-bottom: 8px;
+}
+
+/*  dark mode */
+
+.glass {
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+  color: #f8fafc;
+}
+
+.glass .logo,
+.glass .tagline {
+  color: #2dd4bf;
+}
+
+.glass .nav-links a {
+  color: #e5e7eb;
+}
+
+.glass .nav-btn,
+.glass .primary-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+
+.glass .secondary-btn {
+  border: 1px solid #2dd4bf;
+  color: #ccfbf1;
+}
+
+.glass .hero-card,
+.glass .feature-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.glass .task-card {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.glass .status {
+  background: rgba(45, 212, 191, 0.2);
+  color: #5eead4;
+}
+
+.glass .theme-switcher button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+}
+
+.glass .theme-switcher .active {
+  background: #14b8a6;
+  color: #031316;
+}
+
+/*  light mode  */
+
+.campus {
+  background: #f8faf5;
+  color: #111827; /* darker text */
+}
+
+.campus .hero h1 {
+  color: #111827; /* dark text for light background */
+}
+
+.campus .description {
+  color: #374151;
+}
+.campus .logo,
+.campus .tagline {
+  color: #2f855a;
+}
+
+.campus .nav-links a {
+  color: #18392b;
+}
+
+.campus .nav-btn,
+.campus .primary-btn {
+  background: #2f855a;
+  color: white;
+}
+
+.campus .secondary-btn {
+  background: #e8f5ee;
+  color: #2f855a;
+}
+
+.campus .hero-card,
+.campus .feature-card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.campus .task-card {
+  background: #f1f8f4;
+}
+
+.campus .status {
+  background: #d9fbe8;
+  color: #166534;
+}
+
+.campus .theme-switcher button {
+  background: #e7f2eb;
+  color: #2f855a;
+}
+
+.campus .theme-switcher .active {
+  background: #2f855a;
+  color: white;
+}
+/* animation*/
+.navbar,
+.theme-switcher,
+.hero-text,
+.hero-card,
+.feature-card,
+.login-card,
+.register-card {
+  animation: fadeUp 0.7s ease both;
+}
+
+.hero-card {
+  animation-delay: 0.15s;
+}
+
+.feature-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: #5eead4;
+}
+
+.campus .feature-card:hover {
+  border-color: #2f855a;
+}
+
+.primary-btn,
+.secondary-btn,
+.login-card button,
+.register-card button,
+.theme-switcher button {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.login-card button:hover,
+.register-card button:hover,
+.theme-switcher button:hover {
+  transform: translateY(-2px);
+}
+
+.hero-card,
+.login-card,
+.register-card {
+  transition: transform 0.25s ease;
+}
+
+.hero-card:hover,
+.login-card:hover,
+.register-card:hover {
+  transform: translateY(-6px);
+}
+
+.task-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task-icons {
+  display: flex;
+  gap: 6px;
+}
+
+.task-icons svg {
+  font-size: 1.1rem;
+  color: #5eead4;
+}
+
+.campus .task-icons svg {
+  color: #2f855a;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  margin: -4px 0 8px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.campus .error-message {
+  color: #dc2626;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .navbar {
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+}

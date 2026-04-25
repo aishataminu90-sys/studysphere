@@ -1,0 +1,219 @@
+* {
+  box-sizing: border-box;
+}
+
+.register-page {
+  min-height: 100vh;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+.register-wrapper {
+  max-width: 1180px;
+  margin: 55px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.register-tagline {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.register-info h1 {
+  font-size: clamp(2.7rem, 6vw, 5.3rem);
+  line-height: 1;
+  margin: 14px 0 22px;
+  font-weight: 800;
+  letter-spacing: -1px;
+   color: inherit;
+}
+
+.register-info p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 560px;
+}
+
+.register-card {
+  padding: 44px;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 460px;
+  backdrop-filter: blur(18px);
+  text-align: center;
+}
+
+.register-card h2 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+}
+
+.subtitle {
+  margin-bottom: 24px;
+}
+
+.register-card input {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 10px 0;
+  border-radius: 14px;
+  outline: none;
+}
+
+.register-card button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  margin-top: 14px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.link {
+  margin-top: 16px;
+}
+
+.link a {
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* DARK MODE */
+
+.register-page.glass {
+  color: #f9fafb;
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+}
+
+.register-page.glass .register-tagline {
+  color: #2dd4bf;
+}
+
+.register-page.glass .register-info p,
+.register-page.glass .subtitle,
+.register-page.glass .link {
+  color: #d1d5db;
+}
+
+.register-page.glass .register-card {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.register-page.glass .register-card input {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f9fafb;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.register-page.glass .register-card input::placeholder {
+  color: #cbd5e1;
+}
+
+.register-page.glass .register-card input:focus {
+  border-color: #2dd4bf;
+}
+
+.register-page.glass .register-card button {
+  background: #14b8a6;
+  color: #031316;
+}
+
+.register-page.glass .register-card button:hover {
+  background: #2dd4bf;
+}
+
+.register-page.glass .link a {
+  color: #5eead4;
+}
+
+/* LIGHT MODE */
+
+.register-page.campus {
+  color: #111827;
+  background: #f8faf5;
+}
+
+.register-page.campus .register-tagline {
+  color: #2f855a;
+}
+
+.register-page.campus .register-info p,
+.register-page.campus .subtitle,
+.register-page.campus .link {
+  color: #374151;
+}
+
+.register-page.campus .register-card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.register-page.campus .register-card input {
+  background: #f8faf5;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.register-page.campus .register-card input::placeholder {
+  color: #6b7280;
+}
+
+.register-page.campus .register-card input:focus {
+  border-color: #2f855a;
+}
+
+.register-page.campus .register-card button {
+  background: #2f855a;
+  color: white;
+}
+
+.register-page.campus .register-card button:hover {
+  background: #276749;
+}
+
+.register-page.campus .link a {
+  color: #2f855a;
+}
+
+.error-message {
+  margin: -4px 0 8px;
+  text-align: left;
+  font-size: 0.85rem;
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.campus .error-message {
+  color: #dc2626;
+}
+
+@media (max-width: 850px) {
+  .register-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .register-info {
+    text-align: center;
+  }
+
+  .register-info p {
+    margin: 0 auto;
+  }
+
+  .register-card {
+    margin: 0 auto;
+  }
+}
