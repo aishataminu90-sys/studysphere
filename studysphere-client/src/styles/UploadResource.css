@@ -1,0 +1,388 @@
+/* UploadResource.css - Upload form page matching StudySphere theme */
+
+#root:has(.upload-page) {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  text-align: left;
+}
+
+* { box-sizing: border-box; }
+
+.upload-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+.upload-wrapper {
+  margin-left: 220px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 220px);
+}
+
+/* Top bar */
+.upload-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.upload-topbar-left h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.upload-main {
+  padding: 28px 32px;
+  flex: 1;
+}
+
+/* Page header */
+.upload-tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0 0 6px;
+}
+
+.upload-header h1 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 6px 0 8px;
+}
+
+.upload-subtitle {
+  font-size: 0.92rem;
+  opacity: 0.7;
+  margin: 0 0 24px;
+}
+
+/* Success banner */
+.success-banner {
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: rgba(20, 184, 166, 0.2);
+  color: #2dd4bf;
+  border: 1px solid rgba(20,184,166,0.3);
+}
+
+/* Two column layout - form + tips */
+.upload-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Form card */
+.upload-form {
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each form field group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* File drop zone */
+.file-drop-zone {
+  border-radius: 12px;
+  border: 2px dashed;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.file-drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+}
+
+.file-hint {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.file-types {
+  margin: 0;
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+
+/* Error messages */
+.error-msg {
+  color: #f87171;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+/* Submit/cancel buttons */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.submit-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.submit-btn:hover { transform: translateY(-2px); }
+
+.cancel-btn {
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  background: transparent;
+}
+
+.cancel-btn:hover { transform: translateY(-2px); }
+
+/* Tips aside card */
+.upload-tips {
+  border-radius: 16px;
+  padding: 24px;
+  position: sticky;
+  top: 20px;
+}
+
+.upload-tips h3 {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.upload-tips ul {
+  padding-left: 18px;
+  margin: 0 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.upload-tips li {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.tips-note {
+  font-size: 0.82rem;
+  padding: 12px;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════
+   DARK MODE (glass)
+══════════════════════════════ */
+.upload-page.glass {
+  background:
+    radial-gradient(circle at top left, rgba(20,184,166,0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+  color: #f8fafc;
+}
+
+.upload-page.glass .upload-topbar {
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.upload-page.glass .upload-tagline { color: #2dd4bf; }
+.upload-page.glass .upload-subtitle { color: #d1d5db; }
+
+.upload-page.glass .upload-form {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.upload-page.glass .form-group label { color: #e5e7eb; }
+
+.upload-page.glass input,
+.upload-page.glass select,
+.upload-page.glass textarea {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #f8fafc;
+}
+
+.upload-page.glass input::placeholder,
+.upload-page.glass textarea::placeholder {
+  color: #94a3b8;
+}
+
+.upload-page.glass select option { background: #1e2a3a; }
+
+.upload-page.glass .file-drop-zone {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+
+.upload-page.glass .submit-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+
+.upload-page.glass .submit-btn:hover { background: #2dd4bf; }
+
+.upload-page.glass .cancel-btn {
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #e5e7eb;
+}
+
+.upload-page.glass .upload-tips {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.upload-page.glass .tips-note {
+  background: rgba(20,184,166,0.1);
+  color: #5eead4;
+}
+
+/* ══════════════════════════════
+   LIGHT MODE (campus)
+══════════════════════════════ */
+.upload-page.campus {
+  background: #f4f6f8;
+  color: #111827;
+}
+
+.upload-page.campus .upload-topbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.upload-page.campus .upload-tagline { color: #2f855a; }
+.upload-page.campus .upload-subtitle { color: #374151; }
+
+.upload-page.campus .upload-form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.upload-page.campus input,
+.upload-page.campus select,
+.upload-page.campus textarea {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.upload-page.campus .file-drop-zone {
+  border-color: #d1d5db;
+  background: #f9fafb;
+}
+
+.upload-page.campus .submit-btn {
+  background: #2f855a;
+  color: white;
+}
+
+.upload-page.campus .submit-btn:hover { background: #276749; }
+
+.upload-page.campus .cancel-btn {
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.upload-page.campus .upload-tips {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+}
+
+.upload-page.campus .tips-note {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.upload-page.campus .error-msg { color: #dc2626; }
+
+.upload-page.campus .success-banner {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .upload-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .upload-tips { position: static; }
+}
+
+@media (max-width: 768px) {
+  .upload-wrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .upload-main,
+  .upload-topbar {
+    padding: 16px;
+  }
+
+  .form-actions { flex-direction: column; }
+}

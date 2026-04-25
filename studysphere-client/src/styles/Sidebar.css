@@ -1,0 +1,134 @@
+/* Sidebar.css - Navigation sidebar shown after login */
+
+* { box-sizing: border-box; }
+
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background: rgba(10, 26, 43, 0.95);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+}
+
+.sidebar-logo {
+  padding: 10px 20px 28px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2dd4bf;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 16px 0;
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-links li { width: 100%; }
+
+.sidebar-link {
+  display: block;
+  padding: 12px 24px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+
+.sidebar-link.active {
+  background: rgba(20,184,166,0.2);
+  color: #2dd4bf;
+  font-weight: 700;
+  border-left: 3px solid #2dd4bf;
+}
+
+.sidebar-logout {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-link.logout { color: #fca5a5; }
+
+.sidebar-link.logout:hover {
+  background: rgba(239,68,68,0.15);
+  color: #f87171;
+}
+
+/* ── LIGHT MODE overrides ── */
+.dashboard-page.campus .sidebar,
+.resources-page.campus .sidebar,
+.upload-page.campus .sidebar {
+  background: #ffffff;
+  border-right: 1px solid #d1d5db;
+}
+
+.dashboard-page.campus .sidebar-logo h2,
+.resources-page.campus .sidebar-logo h2,
+.upload-page.campus .sidebar-logo h2 {
+  color: #2f855a;
+}
+
+.dashboard-page.campus .sidebar-link,
+.resources-page.campus .sidebar-link,
+.upload-page.campus .sidebar-link {
+  color: #374151;
+}
+
+.dashboard-page.campus .sidebar-link:hover,
+.resources-page.campus .sidebar-link:hover,
+.upload-page.campus .sidebar-link:hover {
+  background: #f1f8f4;
+  color: #111827;
+}
+
+.dashboard-page.campus .sidebar-link.active,
+.resources-page.campus .sidebar-link.active,
+.upload-page.campus .sidebar-link.active {
+  background: #e8f5ee;
+  color: #2f855a;
+  border-left: 3px solid #2f855a;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .sidebar-logo {
+    width: 100%;
+    padding: 10px;
+    border-bottom: none;
+  }
+
+  .sidebar-logout { border-top: none; }
+}
