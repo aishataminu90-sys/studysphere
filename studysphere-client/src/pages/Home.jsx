@@ -1,12 +1,6 @@
-// Imports React and useState so the page can store and update the selected theme
-import React, { useState } from "react";
-
+import React from "react";
 // Imports the CSS file for the Home page
 import "../styles/Home.css";
-
-// Shared components used across multiple pages
-import Navbar from "../components/Navbar";
-import ThemeToggle from "../components/ThemeToggle";
 
 // Material UI icons used for the feature cards and study plan card
 import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
@@ -22,17 +16,11 @@ const themes = {
   campus: "Light Mode",
 };
 
-function Home() {
-  // Stores the current theme. The default theme is "glass" which is the dark mode
-  const [theme, setTheme] = useState("glass");
+function Home({theme}) {
 
   return (
     // The selected theme is added as a class name so CSS can change the page style
     <main className={`home ${theme}`}>
-      <Navbar />
-
-      {/* Sends the current theme and the function to change it into ThemeToggle */}
-      <ThemeToggle theme={theme} setTheme={setTheme} />
 
       {/* Keeps the main page content aligned and centered */}
       <div className="page-content">

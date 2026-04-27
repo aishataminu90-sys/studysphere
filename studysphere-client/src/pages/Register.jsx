@@ -6,12 +6,11 @@ import { Link } from "react-router-dom";
 import "../styles/Register.css";
 
 // Shared components
-import Navbar from "../components/Navbar";
 import ThemeToggle from "../components/ThemeToggle";
 
-function Register() {
+function Register({theme}) {
   // Controls dark/light mode
-  const [theme, setTheme] = useState("glass");
+  //const [theme, setTheme] = useState("glass");
 
   // Stores all user input from the form
   const [form, setForm] = useState({
@@ -101,10 +100,10 @@ function Register() {
   return (
     // Applies the selected theme dark or light mode 
     <main className={`page register-page ${theme}`}>
-      <Navbar />
+     
 
       {/* Theme switcher component */}
-      <ThemeToggle theme={theme} setTheme={setTheme} />
+      {/* <ThemeToggle theme={theme} setTheme={setTheme} /> */}
 
       <section className="register-wrapper">
         {/* Left side informational content */}

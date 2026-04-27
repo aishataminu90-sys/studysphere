@@ -7,12 +7,9 @@ import { Link } from "react-router-dom";
 import "../styles/Login.css";
 
 // Shared components used across pages
-import Navbar from "../components/Navbar";
 import ThemeToggle from "../components/ThemeToggle";
 
-function Login() {
-  // Stores the current theme. "glass" is dark mode and "campus" is light mode.
-  const [theme, setTheme] = useState("glass");
+function Login({theme}) {
 
   // Stores the values typed into the login form
   const [form, setForm] = useState({
@@ -71,10 +68,6 @@ function Login() {
   return (
     // Adds the selected theme as a class so CSS can switch between dark and light mode
     <main className={`page login-page ${theme}`}>
-      <Navbar />
-
-      {/* Allows the user to switch between dark and light mode */}
-      <ThemeToggle theme={theme} setTheme={setTheme} />
 
       <section className="login-wrapper">
         {/* Left side text section */}

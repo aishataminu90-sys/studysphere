@@ -10,10 +10,12 @@
 
 /* Layout */
 .login-wrapper {
-  max-width: 1180px;
-  margin: 55px auto 0;
+  width: 100%;
+  max-width: 1500px;
+  min-height: calc(100vh - 150px);
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 0.95fr;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, 460px);
   gap: 80px;
   align-items: center;
 }
@@ -48,6 +50,7 @@
   max-width: 460px;
   backdrop-filter: blur(18px);
   text-align: center;
+  justify-self: end;
 }
 
 .login-card h2 {

@@ -11,7 +11,7 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 // Navbar styling
 import "../styles/Navbar.css";
 
-function Navbar() {
+function Navbar({ theme }) {
   // Controls whether the mobile dropdown menu is visible
   const [menuOpen, setMenuOpen] = useState(false);
 

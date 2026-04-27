@@ -8,11 +8,11 @@
 }
 
 .register-wrapper {
-  max-width: 1180px;
-  margin: 55px auto 0;
+  max-width: 1300px;
+  margin: 110px auto 0;
   display: grid;
-  grid-template-columns: 1fr 0.95fr;
-  gap: 80px;
+  grid-template-columns: 1fr 0.85fr;
+  gap: 90px;
   align-items: center;
 }
 
@@ -41,9 +41,10 @@
   padding: 44px;
   border-radius: 30px;
   width: 100%;
-  max-width: 460px;
+  max-width: 480px;
   backdrop-filter: blur(18px);
   text-align: center;
+  justify-self: end;
 }
 
 .register-card h2 {
@@ -57,8 +58,8 @@
 
 .register-card input {
   width: 100%;
-  padding: 14px 16px;
-  margin: 10px 0;
+  padding: 12px 16px;
+  margin: 7px 0;
   border-radius: 14px;
   outline: none;
 }
