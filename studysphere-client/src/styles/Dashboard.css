@@ -1,5 +1,4 @@
-/* Dashboard.css - Moodle-inspired layout with StudySphere theme */
-
+/* Fix Aishat's root centering so dashboard takes full width */
 #root:has(.dashboard-page) {
   width: 100%;
   max-width: 100%;
@@ -8,39 +7,61 @@
   text-align: left;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
+/* Outer page wrapper - stacks navbar on top, then sidebar+content below */
 .dashboard-page {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   font-family: "Inter", "Roboto", sans-serif;
 }
 
-/* Wrapper for everything to the right of the sidebar */
+/* Row below the DashboardNavbar: sidebar + main content side by side */
+.dashboard-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Everything to the right of the sidebar */
 .dashboard-wrapper {
-  margin-left: 220px;
+  margin-left: 230px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 220px);
+  width: calc(100% - 230px);
+  transition: margin-left 0.25s ease, width 0.25s ease;
 }
 
-/* ── TOP BAR ── */
+/* When sidebar is collapsed (60px wide) */
+.dashboard-page:has(.sidebar-collapsed) .dashboard-wrapper {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+/* Top bar with page title and theme toggle */
 .dash-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 14px 32px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dash-topbar-left {
+  display: flex;
+  align-items: center;
 }
 
 .dash-topbar-left h2 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
 }
 
-/* ── WELCOME BANNER ── */
+/* Welcome banner below the topbar */
 .dash-welcome-banner {
   display: flex;
   justify-content: space-between;
@@ -48,7 +69,7 @@
   flex-wrap: wrap;
   gap: 20px;
   padding: 28px 32px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .dash-tagline {
@@ -59,37 +80,19 @@
 }
 
 .dash-welcome-banner h1 {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-weight: 800;
   letter-spacing: -0.5px;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
 }
 
 .dash-subtitle {
-  font-size: 0.92rem;
+  font-size: 1rem;
   margin: 0;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-.dash-quick-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.action-btn {
-  padding: 10px 18px;
-  border-radius: 12px;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.action-btn:hover { transform: translateY(-2px); }
-
-/* ── MAIN CONTENT AREA ── */
+/* Main two-column layout */
 .dash-content {
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -110,42 +113,39 @@
   gap: 24px;
 }
 
-/* ── SECTION BLOCKS ── */
+/* Section cards */
 .dash-section {
   border-radius: 16px;
-  padding: 20px 24px;
+  padding: 22px 24px;
 }
 
 .dash-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
-.dash-section-header h3 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
+/* "View all" button link style */
 .dash-link-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   padding: 0;
   transition: opacity 0.2s;
 }
 
-.dash-link-btn:hover { opacity: 0.7; }
+.dash-link-btn:hover {
+  opacity: 0.7;
+}
 
-/* ── MOODLE-STYLE COURSE CARDS ── */
+/* Course cards grid - like Moodle */
 .dash-course-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 16px;
 }
 
 .course-card {
@@ -154,164 +154,165 @@
   transition: transform 0.2s ease;
 }
 
-.course-card:hover { transform: translateY(-4px); }
+.course-card:hover {
+  transform: translateY(-4px);
+}
 
-/* Coloured top strip like Moodle */
+/* Coloured top strip on each card */
 .course-card-bar {
-  height: 6px;
+  height: 7px;
   background: linear-gradient(90deg, #14b8a6, #2dd4bf);
 }
 
+/* Green bar for study group cards */
 .course-card-bar.group-bar {
   background: linear-gradient(90deg, #2f855a, #48bb78);
 }
 
 .course-card-body {
-  padding: 14px;
+  padding: 16px;
 }
 
 .course-card-tag {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   padding: 3px 10px;
   border-radius: 999px;
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .course-card-body h4 {
-  margin: 0 0 4px;
-  font-size: 0.92rem;
+  margin: 0 0 6px;
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
 .course-card-body p {
-  margin: 0 0 12px;
-  font-size: 0.8rem;
-  opacity: 0.6;
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  opacity: 0.65;
 }
 
 .course-card-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 700;
   padding: 0;
   transition: opacity 0.2s;
 }
 
-.course-card-btn:hover { opacity: 0.7; }
+.course-card-btn:hover {
+  opacity: 0.7;
+}
 
-/* ── TIMELINE (right column) ── */
+/* Reminders timeline */
 .dash-timeline {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .timeline-item {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   align-items: flex-start;
 }
 
 .timeline-dot {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background: #14b8a6;
-  margin-top: 5px;
+  margin-top: 4px;
   flex-shrink: 0;
 }
 
 .timeline-title {
   margin: 0 0 4px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
 }
 
 .timeline-date {
   margin: 0;
-  font-size: 0.8rem;
-  opacity: 0.6;
+  font-size: 0.82rem;
+  opacity: 0.65;
 }
 
-/* ── STATS BLOCK ── */
+/* Quick stats grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
-  margin-top: 12px;
+  margin-top: 4px;
 }
 
 .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 14px;
+  padding: 16px;
   border-radius: 12px;
   text-align: center;
 }
 
 .stat-number {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 800;
   line-height: 1;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .stat-label {
-  font-size: 0.78rem;
-  opacity: 0.7;
+  font-size: 0.82rem;
+  opacity: 0.75;
 }
 
-/* ══════════════════════════════
-   DARK MODE (glass)
-══════════════════════════════ */
+/* Dark mode */
 .dashboard-page.glass {
   background:
-    radial-gradient(circle at top left, rgba(20,184,166,0.35), transparent 40%),
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
     linear-gradient(135deg, #0a1a2b, #111827);
   color: #f8fafc;
 }
 
-.dashboard-page.glass .dash-topbar { background: rgba(255,255,255,0.04); }
+.dashboard-page.glass .dash-topbar {
+  background: rgba(255, 255, 255, 0.04);
+}
+
 .dashboard-page.glass .dash-tagline { color: #2dd4bf; }
+.dashboard-page.glass .dash-subtitle { color: #e2e8f0; }
 .dashboard-page.glass .dash-link-btn { color: #2dd4bf; }
 
-.dashboard-page.glass .action-btn {
-  background: #14b8a6;
-  color: #031316;
-}
-.dashboard-page.glass .action-btn:hover { background: #2dd4bf; }
-
 .dashboard-page.glass .dash-section {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dashboard-page.glass .course-card {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dashboard-page.glass .course-card-tag {
-  background: rgba(45,212,191,0.2);
+  background: rgba(45, 212, 191, 0.2);
   color: #5eead4;
 }
 
 .dashboard-page.glass .course-card-btn { color: #2dd4bf; }
 
 .dashboard-page.glass .stat-item {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .dashboard-page.glass .stat-number { color: #2dd4bf; }
+.dashboard-page.glass .section-icon { color: #5eead4; }
+.dashboard-page.glass .topbar-icon { color: #5eead4; }
 
-/* ══════════════════════════════
-   LIGHT MODE (campus)
-══════════════════════════════ */
+/* Light mode */
 .dashboard-page.campus {
   background: #f4f6f8;
   color: #111827;
@@ -328,18 +329,13 @@
 }
 
 .dashboard-page.campus .dash-tagline { color: #2f855a; }
+.dashboard-page.campus .dash-subtitle { color: #374151; }
 .dashboard-page.campus .dash-link-btn { color: #2f855a; }
-
-.dashboard-page.campus .action-btn {
-  background: #2f855a;
-  color: white;
-}
-.dashboard-page.campus .action-btn:hover { background: #276749; }
 
 .dashboard-page.campus .dash-section {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .dashboard-page.campus .course-card {
@@ -359,24 +355,28 @@
 }
 
 .dashboard-page.campus .stat-number { color: #2f855a; }
-
 .dashboard-page.campus .timeline-dot { background: #2f855a; }
+.dashboard-page.campus .section-icon { color: #2f855a; }
+.dashboard-page.campus .topbar-icon { color: #2f855a; }
 
-/* ── ANIMATION ── */
+/* Fade in animation */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.dash-section { animation: fadeUp 0.6s ease both; }
+.dash-section {
+  animation: fadeUp 0.6s ease both;
+}
 
-/* ── RESPONSIVE ── */
+/* Tablet - stack to one column */
 @media (max-width: 1024px) {
   .dash-content {
     grid-template-columns: 1fr;
   }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
   .dashboard-wrapper {
     margin-left: 0;
@@ -393,6 +393,4 @@
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .dash-quick-actions { flex-direction: column; }
 }

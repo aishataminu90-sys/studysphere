@@ -1,0 +1,155 @@
+/* DashboardNavbar.css - Top bar for logged-in pages only */
+
+/* ─── Container ─────────────────────────────────────────── */
+.dash-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:28px;
+  padding-left: 80px;
+  height: 60px;
+  background: rgba(10, 26, 43, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  flex-shrink: 0;
+}
+
+/* ─── Logo ───────────────────────────────────────────────── */
+.dash-navbar-logo-text {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #2dd4bf;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+/* ─── Right-side controls ────────────────────────────────── */
+.dash-navbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Shared button styles ───────────────────────────────── */
+.dash-navbar-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.dash-navbar-btn:active {
+  transform: scale(0.96);
+}
+
+.dash-navbar-icon {
+  font-size: 1.1rem !important;
+  flex-shrink: 0;
+}
+
+/* ─── Theme toggle button ────────────────────────────────── */
+.dash-navbar-theme-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.dash-navbar-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f9fafb;
+}
+
+/* ─── Home button ────────────────────────────────────────── */
+.dash-navbar-home-btn {
+  background: rgba(45, 212, 191, 0.12);
+  color: #2dd4bf;
+}
+
+.dash-navbar-home-btn:hover {
+  background: rgba(45, 212, 191, 0.22);
+  color: #5eead4;
+}
+
+/* ─── Logout button ──────────────────────────────────────── */
+.dash-navbar-logout-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+}
+
+.dash-navbar-logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* ─── Light mode (campus) overrides ─────────────────────── */
+.campus .dash-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.campus .dash-navbar-logo-text {
+  color: #2f855a;
+}
+
+.campus .dash-navbar-theme-btn {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.campus .dash-navbar-theme-btn:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.campus .dash-navbar-home-btn {
+  background: #e8f5ee;
+  color: #2f855a;
+}
+
+.campus .dash-navbar-home-btn:hover {
+  background: #d1ead9;
+  color: #276749;
+}
+
+.campus .dash-navbar-logout-btn {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.campus .dash-navbar-logout-btn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ─── Responsive: hide text labels on small screens ─────── */
+@media (max-width: 540px) {
+  .dash-navbar-btn-label {
+    display: none;
+  }
+
+  .dash-navbar-btn {
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .dash-navbar {
+    padding: 0 16px;
+  }
+}
+
+.dashboard-navbar {
+  margin-left: 240px; /* same width as sidebar */
+  width: calc(100% - 240px);
+}
+

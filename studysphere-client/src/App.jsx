@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -8,29 +8,34 @@ import Dashboard from "./pages/Dashboard";
 import Resources from "./pages/Resources";
 import UploadResource from "./pages/UploadResource";
 
-import Navbar from "./components/Navbar";
-import ThemeToggle from "./components/ThemeToggle";
-import "./styles/Layout.css";
+const LOGGED_IN_PATHS = ["/dashboard", "/resources", "/upload"];
 
-// App.jsx - sets up all routes for the application
-// Theme is managed here and passed down to Aishat's pages
-function App() {
-  // Shared theme state - glass is dark mode, campus is light mode
+function AppContent() {
   const [theme, setTheme] = useState("glass");
+  const location = useLocation();
+  const isLoggedIn = LOGGED_IN_PATHS.includes(location.pathname);
 
   return (
-    <Router>
+    <main className={`app ${isLoggedIn ? "" : theme}`}>
       <Routes>
-        {/* Aishat's pages - receive theme as a prop */}
-        <Route path="/" element={<Home theme={theme} />} />
-        <Route path="/login" element={<Login theme={theme} />} />
-        <Route path="/register" element={<Register theme={theme} />} />
+        {/* PUBLIC */}
+        <Route path="/" element={<Home theme={theme} setTheme={setTheme} />} />
+        <Route path="/login" element={<Login theme={theme} setTheme={setTheme} />} />
+        <Route path="/register" element={<Register theme={theme} setTheme={setTheme} />} />
 
-        {/* Aisha's pages - manage their own theme internally */}
+        {/* DASHBOARD */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/upload" element={<UploadResource />} />
       </Routes>
+    </main>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

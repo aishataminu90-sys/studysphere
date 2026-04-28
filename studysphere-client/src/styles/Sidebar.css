@@ -1,134 +1,204 @@
-/* Sidebar.css - Navigation sidebar shown after login */
+* {
+  box-sizing: border-box;
+}
 
-* { box-sizing: border-box; }
-
+/* ─── Main sidebar container ─────────────────────────────── */
 .sidebar {
-  width: 220px;
-  min-height: 100vh;
+  position: fixed;
+  width: 240px;
+
+  top: 60px; /* sits below DashboardNavbar which is 60px tall */
+  left: 0;
+  height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 100;
-  background: rgba(10, 26, 43, 0.95);
-  border-right: 1px solid rgba(255,255,255,0.1);
+  background: rgba(10, 26, 43, 0.97);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
+  transition: width 0.25s ease;
+  /* NO overflow:hidden - that was clipping the toggle button */
 }
 
-.sidebar-logo {
-  padding: 10px 20px 28px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+/* Open state */
+.sidebar-open {
+  width: 230px;
 }
 
-.sidebar-logo h2 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #2dd4bf;
+/* Collapsed state - icons only */
+.sidebar-collapsed {
+  width: 60px;
 }
 
+/* ─── Nav links list ─────────────────────────────────────── */
 .sidebar-links {
   list-style: none;
-  padding: 16px 0;
+  padding: 12px 0;
   margin: 0;
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.sidebar-links li { width: 100%; }
+.sidebar-links li {
+  width: 100%;
+}
 
+/* ─── Individual link ────────────────────────────────────── */
 .sidebar-link {
-  display: block;
-  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
   color: #cbd5e1;
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .sidebar-link:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
 
+/* Active page highlight */
 .sidebar-link.active {
-  background: rgba(20,184,166,0.2);
+  background: rgba(20, 184, 166, 0.2);
   color: #2dd4bf;
   font-weight: 700;
   border-left: 3px solid #2dd4bf;
 }
 
-.sidebar-logout {
-  padding: 10px 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
+/* MUI icon */
+.sidebar-icon {
+  font-size: 1.2rem !important;
+  flex-shrink: 0;
 }
 
-.sidebar-link.logout { color: #fca5a5; }
-
-.sidebar-link.logout:hover {
-  background: rgba(239,68,68,0.15);
-  color: #f87171;
+/* Text label */
+.sidebar-label {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-/* ── LIGHT MODE overrides ── */
-.dashboard-page.campus .sidebar,
-.resources-page.campus .sidebar,
-.upload-page.campus .sidebar {
+/* Collapsed: centre icons */
+.sidebar-collapsed .sidebar-link {
+  justify-content: center;
+  padding: 13px 0;
+}
+
+/* Active border still shows when collapsed */
+.sidebar-collapsed .sidebar-link.active {
+  border-left: 3px solid #2dd4bf;
+}
+
+/* ─── Toggle button at the bottom ────────────────────────── */
+.sidebar-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background: rgba(45, 212, 191, 0.1);
+  color: #2dd4bf;
+}
+
+.sidebar-toggle-icon {
+  font-size: 1.1rem !important;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-label {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Hide text label in toggle when collapsed */
+.sidebar-collapsed .sidebar-toggle-label {
+  display: none;
+}
+
+/* ─── Icons used by page topbars (compatibility) ─────────── */
+.topbar-icon {
+  font-size: 1.3rem !important;
+  margin-right: 8px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title h3 {
+  margin: 0;
+}
+
+.section-icon {
+  font-size: 1.2rem !important;
+}
+
+/* ─── Light mode (campus) ────────────────────────────────── */
+.campus .sidebar {
   background: #ffffff;
   border-right: 1px solid #d1d5db;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
 }
 
-.dashboard-page.campus .sidebar-logo h2,
-.resources-page.campus .sidebar-logo h2,
-.upload-page.campus .sidebar-logo h2 {
+.campus .sidebar-toggle-btn {
+  border-top-color: #e5e7eb;
+  color: #9ca3af;
+}
+
+.campus .sidebar-toggle-btn:hover {
+  background: #f0faf4;
   color: #2f855a;
 }
 
-.dashboard-page.campus .sidebar-link,
-.resources-page.campus .sidebar-link,
-.upload-page.campus .sidebar-link {
+.campus .sidebar-link {
   color: #374151;
 }
 
-.dashboard-page.campus .sidebar-link:hover,
-.resources-page.campus .sidebar-link:hover,
-.upload-page.campus .sidebar-link:hover {
+.campus .sidebar-link:hover {
   background: #f1f8f4;
   color: #111827;
 }
 
-.dashboard-page.campus .sidebar-link.active,
-.resources-page.campus .sidebar-link.active,
-.upload-page.campus .sidebar-link.active {
+.campus .sidebar-link.active {
   background: #e8f5ee;
   color: #2f855a;
-  border-left: 3px solid #2f855a;
+  border-left-color: #2f855a;
 }
 
-/* ── RESPONSIVE ── */
+/* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar {
-    width: 100%;
-    min-height: auto;
-    position: relative;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 10px;
+    width: 60px !important;
   }
 
-  .sidebar-links {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
+  .sidebar-label,
+  .sidebar-toggle-label {
+    display: none;
   }
 
-  .sidebar-logo {
-    width: 100%;
-    padding: 10px;
-    border-bottom: none;
+  .sidebar-link {
+    justify-content: center;
+    padding: 13px 0;
   }
-
-  .sidebar-logout { border-top: none; }
 }

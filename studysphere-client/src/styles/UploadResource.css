@@ -1,5 +1,4 @@
-/* UploadResource.css - Upload form page matching StudySphere theme */
-
+/* Fix root centering for full width layout */
 #root:has(.upload-page) {
   width: 100%;
   max-width: 100%;
@@ -12,16 +11,38 @@
 
 .upload-page {
   display: flex;
+  flex-direction: column;
   min-height: 100vh;
   font-family: "Inter", "Roboto", sans-serif;
 }
 
+/* Row below DashboardNavbar */
+.upload-form-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Everything to the right of the sidebar */
 .upload-wrapper {
-  margin-left: 220px;
+  margin-left: 230px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: calc(100% - 220px);
+  width: calc(100% - 230px);
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+/* Collapsed sidebar */
+.upload-page:has(.sidebar-collapsed) .upload-wrapper {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+/* Renamed from upload-layout to upload-form-layout to avoid conflict */
+.upload-form-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
 }
 
 /* Top bar */
@@ -30,12 +51,18 @@
   justify-content: space-between;
   align-items: center;
   padding: 14px 32px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.upload-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .upload-topbar-left h2 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
 }
 
@@ -44,7 +71,7 @@
   flex: 1;
 }
 
-/* Page header */
+/* Page heading */
 .upload-tagline {
   font-size: 0.78rem;
   font-weight: 700;
@@ -60,24 +87,29 @@
 }
 
 .upload-subtitle {
-  font-size: 0.92rem;
-  opacity: 0.7;
+  font-size: 1rem;
+  opacity: 0.8;
   margin: 0 0 24px;
 }
 
-/* Success banner */
+/* Success banner shown after valid submission */
 .success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 16px 20px;
   border-radius: 14px;
   font-weight: 700;
   margin-bottom: 20px;
-  background: rgba(20, 184, 166, 0.2);
-  color: #2dd4bf;
-  border: 1px solid rgba(20,184,166,0.3);
+  font-size: 0.95rem;
 }
 
-/* Two column layout - form + tips */
-.upload-layout {
+.success-icon {
+  font-size: 1.3rem !important;
+}
+
+/* Two column layout */
+.upload-form-layout {
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 24px;
@@ -93,22 +125,22 @@
   gap: 20px;
 }
 
-/* Each form field group */
+/* Individual form field group */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
 }
 
 .form-group label {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 700;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 12px 16px;
+  padding: 13px 16px;
   border-radius: 12px;
   font-size: 0.95rem;
   font-family: inherit;
@@ -121,16 +153,18 @@
   resize: vertical;
 }
 
-/* File drop zone */
+/* File upload drop zone */
 .file-drop-zone {
   border-radius: 12px;
   border: 2px dashed;
-  padding: 24px;
+  padding: 30px 20px;
   text-align: center;
   cursor: pointer;
   position: relative;
+  transition: border-color 0.2s;
 }
 
+/* Hidden file input covers the whole drop zone area */
 .file-drop-zone input[type="file"] {
   position: absolute;
   inset: 0;
@@ -141,31 +175,38 @@
   padding: 0;
 }
 
+.file-upload-icon {
+  font-size: 2rem !important;
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+
 .file-hint {
   margin: 0 0 6px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
 }
 
 .file-types {
   margin: 0;
-  font-size: 0.78rem;
-  opacity: 0.6;
+  font-size: 0.8rem;
+  opacity: 0.55;
 }
 
-/* Error messages */
+/* Error messages shown under invalid fields */
 .error-msg {
-  color: #f87171;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 700;
   margin: 0;
+  color: #f87171;
 }
 
+/* Red border on fields with errors */
 .input-error {
   border-color: #ef4444 !important;
 }
 
-/* Submit/cancel buttons */
+/* Submit and cancel buttons */
 .form-actions {
   display: flex;
   gap: 12px;
@@ -174,6 +215,10 @@
 
 .submit-btn {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 14px;
   border-radius: 14px;
   border: none;
@@ -197,7 +242,7 @@
 
 .cancel-btn:hover { transform: translateY(-2px); }
 
-/* Tips aside card */
+/* Tips card - same height feel as the form */
 .upload-tips {
   border-radius: 16px;
   padding: 24px;
@@ -205,10 +250,21 @@
   top: 20px;
 }
 
-.upload-tips h3 {
-  margin: 0 0 14px;
+.tips-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tips-header h3 {
+  margin: 0;
   font-size: 1rem;
   font-weight: 700;
+}
+
+.tips-icon {
+  font-size: 1.2rem !important;
 }
 
 .upload-tips ul {
@@ -220,48 +276,50 @@
 }
 
 .upload-tips li {
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.6;
   opacity: 0.85;
 }
 
 .tips-note {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   padding: 12px;
   border-radius: 10px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-/* ══════════════════════════════
-   DARK MODE (glass)
-══════════════════════════════ */
+.btn-icon {
+  font-size: 1rem !important;
+}
+
+/* Dark mode */
 .upload-page.glass {
   background:
-    radial-gradient(circle at top left, rgba(20,184,166,0.35), transparent 40%),
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
     linear-gradient(135deg, #0a1a2b, #111827);
   color: #f8fafc;
 }
 
 .upload-page.glass .upload-topbar {
-  background: rgba(255,255,255,0.04);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .upload-page.glass .upload-tagline { color: #2dd4bf; }
-.upload-page.glass .upload-subtitle { color: #d1d5db; }
+.upload-page.glass .upload-subtitle { color: #e2e8f0; }
+.upload-page.glass .topbar-icon { color: #5eead4; }
 
 .upload-page.glass .upload-form {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.upload-page.glass .form-group label { color: #e5e7eb; }
+.upload-page.glass .form-group label { color: #e2e8f0; }
 
 .upload-page.glass input,
 .upload-page.glass select,
 .upload-page.glass textarea {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #f8fafc;
 }
 
@@ -270,11 +328,13 @@
   color: #94a3b8;
 }
 
-.upload-page.glass select option { background: #1e2a3a; }
+.upload-page.glass select option {
+  background: #1e2a3a;
+}
 
 .upload-page.glass .file-drop-zone {
-  border-color: rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .upload-page.glass .submit-btn {
@@ -285,23 +345,29 @@
 .upload-page.glass .submit-btn:hover { background: #2dd4bf; }
 
 .upload-page.glass .cancel-btn {
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
 }
 
 .upload-page.glass .upload-tips {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.upload-page.glass .tips-icon { color: #5eead4; }
+
 .upload-page.glass .tips-note {
-  background: rgba(20,184,166,0.1);
+  background: rgba(20, 184, 166, 0.1);
   color: #5eead4;
 }
 
-/* ══════════════════════════════
-   LIGHT MODE (campus)
-══════════════════════════════ */
+.upload-page.glass .success-banner {
+  background: rgba(20, 184, 166, 0.15);
+  color: #2dd4bf;
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+/* Light mode */
 .upload-page.campus {
   background: #f4f6f8;
   color: #111827;
@@ -314,11 +380,12 @@
 
 .upload-page.campus .upload-tagline { color: #2f855a; }
 .upload-page.campus .upload-subtitle { color: #374151; }
+.upload-page.campus .topbar-icon { color: #2f855a; }
 
 .upload-page.campus .upload-form {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .upload-page.campus input,
@@ -349,7 +416,10 @@
 .upload-page.campus .upload-tips {
   background: #ffffff;
   border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
+
+.upload-page.campus .tips-icon { color: #2f855a; }
 
 .upload-page.campus .tips-note {
   background: #f0fdf4;
@@ -361,18 +431,20 @@
 .upload-page.campus .success-banner {
   background: #f0fdf4;
   color: #166534;
-  border-color: #bbf7d0;
+  border: 1px solid #bbf7d0;
 }
 
-/* ── RESPONSIVE ── */
+/* Stack to one column on smaller screens */
 @media (max-width: 900px) {
-  .upload-layout {
+  .upload-form-layout {
     grid-template-columns: 1fr;
   }
-
-  .upload-tips { position: static; }
+  .upload-tips {
+    position: static;
+  }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
   .upload-wrapper {
     margin-left: 0;
@@ -384,5 +456,7 @@
     padding: 16px;
   }
 
-  .form-actions { flex-direction: column; }
+  .form-actions {
+    flex-direction: column;
+  }
 }

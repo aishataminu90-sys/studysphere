@@ -1,8 +1,6 @@
 import React from "react";
-// Imports the CSS file for the Home page
 import "../styles/Home.css";
 
-// Material UI icons used for the feature cards and study plan card
 import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
@@ -10,21 +8,23 @@ import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import TaskAltRoundedIcon from "@mui/icons-material/TaskAltRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 
-// Theme names used by the ThemeToggle component
+import Navbar from "../components/Navbar";
+import ThemeToggle from "../components/ThemeToggle";
+
 const themes = {
   glass: "Dark Mode",
   campus: "Light Mode",
 };
 
-function Home({theme}) {
+// Added setTheme to props so ThemeToggle works
+function Home({ theme, setTheme }) {
 
   return (
-    // The selected theme is added as a class name so CSS can change the page style
     <main className={`home ${theme}`}>
+       <Navbar theme={theme} />
+       <ThemeToggle theme={theme} setTheme={setTheme} />
 
-      {/* Keeps the main page content aligned and centered */}
       <div className="page-content">
-        {/* Main hero section */}
         <section className="hero">
           <div className="hero-text">
             <p className="tagline">Your academic life, organised</p>
@@ -36,7 +36,6 @@ function Home({theme}) {
               materials, and manage reminders all in one place.
             </p>
 
-            {/* Main call-to-action buttons */}
             <div className="hero-buttons">
               <a href="/register" className="primary-btn">
                 Get Started
@@ -47,7 +46,6 @@ function Home({theme}) {
             </div>
           </div>
 
-          {/* Preview card showing what the user see after logging in */}
           <div className="hero-card">
             <div className="card-header">
               <span>Today&apos;s Study Plan</span>
@@ -66,8 +64,6 @@ function Home({theme}) {
 
             <div className="task-card">
               <h3>Assignment Reminder</h3>
-
-        
               <p className="task-text">
                 Due tomorrow - stay on track
                 <span className="task-icons">
@@ -79,7 +75,6 @@ function Home({theme}) {
           </div>
         </section>
 
-        {/* Feature cards showing the main StudySphere functionality */}
         <section className="features">
           <div className="feature-card">
             <FolderRoundedIcon className="feature-icon" />

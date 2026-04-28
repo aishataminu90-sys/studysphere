@@ -18,7 +18,8 @@ body {
 .app {
   min-height: 100vh;
   width: 100%;
-  padding-top: 22px;
+  /* Removed padding-top: 22px — it was creating a gap above the DashboardNavbar
+     on logged-in pages. Public pages (Home/Login/Register) add their own spacing. */
 }
 
 .app.glass {
