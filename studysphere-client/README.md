@@ -19,6 +19,29 @@
 - Ensured responsive design across different screen sizes
 - Prepared frontend for API integration using environment variables
 
+### Frontend (Aisha - 3127257):
+
+- Built Dashboard page with Moodle-inspired layout including:
+  - Course-style cards for recent resources and study groups
+  - Upcoming reminders timeline
+  - Quick stats block
+- Built Resources page with:
+  - Live search bar filtering by title
+  - Module and tag dropdown filters
+  - Save/unsave toggle functionality
+  - Empty state handling when no results found
+- Built Upload Resource page with:
+  - Multi-field form (title, module, type, description, file upload)
+  - Full client-side validation with error messages
+  - Success banner and redirect on valid submission
+  - Upload Tips sidebar card
+- Built Sidebar component with:
+  - Active page highlighting using NavLink
+  - Links to all pages (Dashboard, Resources, Upload, Study Groups, Reminders)
+  - Responsive mobile layout
+- Integrated dark/light theme system across all pages matching Aishat's glass/campus design
+- Ensured responsive design across different screen sizes
+
 
 ##  Frontend Setup Instructions
 
