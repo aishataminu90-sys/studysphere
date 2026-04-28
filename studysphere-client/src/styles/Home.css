@@ -9,8 +9,14 @@ body {
 
 .home {
   min-height: 100vh;
-  padding: 28px 7%;
-  
+  width: 100%;
+  padding: 22px 6%;
+  overflow-x: hidden;
+}
+
+.page-content {
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .feature-icon {
@@ -45,9 +51,10 @@ body {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 50px;
+  grid-template-columns: 1fr 0.95fr;
+  gap: 70px;
   align-items: center;
+  min-height: 54vh;
 }
 
 .tagline {
@@ -64,11 +71,12 @@ body {
   .hero h1 {
   font-weight: 800;
   letter-spacing: -1px;
-  font-size: clamp(2.7rem, 6vw, 5.7rem);
-  line-height: 1;
+  font-size: clamp(3.2rem, 5.8vw, 6.7rem);
+  line-height: 0.95;
   margin: 14px 0 22px;
   color: inherit;
 }
+
 
 
  /* .hero h1 {
@@ -81,9 +89,9 @@ body {
 
 
 .description {
-  font-size: 1.1rem;
-  line-height: 1.7;
   max-width: 620px;
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  line-height: 1.6;
   color: #d1d5db; /* ADD THIS */
 }
 
@@ -105,6 +113,9 @@ body {
   padding: 26px;
   border-radius: 30px;
   backdrop-filter: blur(18px);
+  width: 100%;
+  max-width: 620px;
+  justify-self: end;
 }
 
 .card-header {
@@ -137,13 +148,20 @@ body {
 .features {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-top: 70px;
+  gap: 24px;
+  margin-top: 42px;
 }
 
 .feature-card {
+  min-height: 135px;
   padding: 24px;
   border-radius: 24px;
+
+}
+
+.feature-card p {
+  font-size: 1rem;
+  line-height: 1.45;
 }
 
 .feature-card span {
@@ -156,7 +174,7 @@ body {
 
 /*  dark mode */
 
-.glass {
+.glass.home {
   background:
     radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
     linear-gradient(135deg, #0a1a2b, #111827);
@@ -209,10 +227,9 @@ body {
 }
 
 /*  light mode  */
-
-.campus {
+.campus.home {
   background: #f8faf5;
-  color: #111827; /* darker text */
+  color: #111827;
 }
 
 .campus .hero h1 {
@@ -280,6 +297,10 @@ body {
 
 .hero-card {
   animation-delay: 0.15s;
+}
+
+.hero-text {
+  max-width: 760px;
 }
 
 .feature-card {
@@ -396,4 +417,14 @@ body {
   .hero-buttons {
     flex-direction: column;
   }
+}
+
+main.campus.home {
+  background: #f8faf5 !important;
+}
+
+main.glass.home {
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827) !important;
 }
