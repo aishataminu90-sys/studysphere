@@ -11,6 +11,13 @@
   box-sizing: border-box;
 }
 
+.feature{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+
 /* Outer page wrapper - stacks navbar on top, then sidebar+content below */
 .dashboard-page {
   display: flex;

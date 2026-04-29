@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import DashboardNavbar from "../components/DashboardNavbar";
+import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
+import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
+import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
+import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
@@ -50,7 +54,10 @@ function Dashboard() {
           {/* Page title bar */}
           <header className="dash-topbar">
             <div className="dash-topbar-left">
-              <h2>📘 My Dashboard</h2>
+             <div className="feature">
+              <FolderRoundedIcon className="feature-icons"/>
+              <h2> My Dashboard</h2>
+              </div> 
             </div>
           </header>
 
@@ -60,12 +67,6 @@ function Dashboard() {
               <p className="dash-tagline">YOUR STUDY HUB</p>
               <h1>Welcome back, {username}! 👋</h1>
               <p className="dash-subtitle">You have {reminders.length} upcoming reminders and {studyGroups.length} active study groups.</p>
-            </div>
-            <div className="dash-quick-actions">
-              <button className="action-btn" onClick={() => navigate("/upload")}>⬆️ Upload</button>
-              <button className="action-btn" onClick={() => navigate("/resources")}>📚 Resources</button>
-              <button className="action-btn" onClick={() => navigate("/studygroups")}>👥 Groups</button>
-              <button className="action-btn" onClick={() => navigate("/reminders")}>🔔 Reminders</button>
             </div>
           </div>
 
@@ -78,7 +79,10 @@ function Dashboard() {
               {/* Recent Resources - styled like Moodle course cards */}
               <section className="dash-section">
                 <div className="dash-section-header">
-                  <h3>📚 Recent Resources</h3>
+                  <div className="feature">
+                  <FolderRoundedIcon className="feature-icons"/>
+                  <h3> Recent Resources</h3>
+                  </div>
                   <button className="dash-link-btn" onClick={() => navigate("/resources")}>View all</button>
                 </div>
                 <div className="dash-course-grid">
@@ -102,7 +106,10 @@ function Dashboard() {
               {/* Study Groups */}
               <section className="dash-section">
                 <div className="dash-section-header">
-                  <h3>👥 My Study Groups</h3>
+                  <div className="feature">
+                  <GroupsRoundedIcon className="feature-icons"/>
+                  <h3>My Study Groups</h3>
+                  </div>
                   <button className="dash-link-btn" onClick={() => navigate("/studygroups")}>View all</button>
                 </div>
                 <div className="dash-course-grid">
@@ -128,7 +135,10 @@ function Dashboard() {
             <div className="dash-right-col">
               <section className="dash-section">
                 <div className="dash-section-header">
-                  <h3>🔔 Upcoming</h3>
+                  <div className="feature">
+                    <AccessAlarmRoundedIcon className="feature-icons"/>
+                    <h3>Upcoming</h3>
+                  </div>
                   <button className="dash-link-btn" onClick={() => navigate("/reminders")}>View all</button>
                 </div>
 
@@ -148,7 +158,10 @@ function Dashboard() {
 
               {/* Quick stats block like Moodle */}
               <section className="dash-section dash-stats">
-                <h3>📊 Quick Stats</h3>
+                <div className="feature">
+                  <BarChartRoundedIcon className="feature-icons"/>
+                  <h3>Quick Stats</h3>
+                </div>
                 <div className="stats-grid">
                   <div className="stat-item">
                     <span className="stat-number">3</span>
