@@ -1,5 +1,4 @@
-// Sidebar.jsx - Collapsible left navigation for logged-in pages
-// Arrow button at the bottom toggles open/closed
+
 
 import { useState } from "react";
 import { NavLink } from "react-router-dom";

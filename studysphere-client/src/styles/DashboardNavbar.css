@@ -1,5 +1,3 @@
-/* DashboardNavbar.css - Top bar for logged-in pages only */
-
 /* ─── Container ─────────────────────────────────────────── */
 .dash-navbar {
   position: sticky;
@@ -152,4 +150,3 @@
   margin-left: 240px; /* same width as sidebar */
   width: calc(100% - 240px);
 }
-
