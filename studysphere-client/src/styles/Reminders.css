@@ -1,0 +1,504 @@
+/* Reminders.css - Styles for the Reminders / Tasks page
+   Follows the exact layout pattern of Resources.css and StudyGroups.css */
+
+/* Fix root centering for full-width layout */
+#root:has(.reminders-page) {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  text-align: left;
+}
+
+* { box-sizing: border-box; }
+
+/* Outer wrapper */
+.reminders-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+/* Row below DashboardNavbar */
+.reminders-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Main content to the right of sidebar - mirrors resources-main exactly */
+.reminders-main {
+  margin-left: 230px;
+  padding: 30px 40px;
+  flex: 1;
+  width: calc(100% - 230px);
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+/* Shift when sidebar collapses */
+.reminders-page:has(.sidebar-collapsed) .reminders-main {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+/* ── Page heading ─────────────────────────────────────────── */
+
+.reminders-tagline {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+}
+
+.reminders-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 6px 0 8px;
+}
+
+.reminders-subtitle {
+  font-size: 1rem;
+  margin-bottom: 28px;
+  opacity: 0.8;
+}
+
+/* ── Controls row ─────────────────────────────────────────── */
+
+.reminders-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.reminders-count {
+  font-size: 0.9rem;
+  opacity: 0.65;
+  margin: 0;
+}
+
+/* Add Reminder button */
+.add-reminder-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.add-reminder-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Motivational message banner ──────────────────────────── */
+
+.motiv-banner {
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  animation: fadeUp 0.4s ease both;
+  text-align: center;
+}
+
+/* All done banner */
+.all-done-banner {
+  padding: 20px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 24px;
+  animation: fadeUp 0.4s ease both;
+}
+
+/* ── Add reminder form ────────────────────────────────────── */
+
+.add-form {
+  padding: 30px 32px;
+  border-radius: 20px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.add-form h2 {
+  margin: 0 0 22px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+/* Label + input stacked */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.form-field input {
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+/* Submit button */
+.submit-form-btn {
+  padding: 12px 26px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  margin-top: 8px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.submit-form-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Section headings ─────────────────────────────────────── */
+
+.reminders-section {
+  margin-bottom: 36px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.section-heading-icon {
+  font-size: 1.4rem !important;
+}
+
+/* ── Reminder cards ───────────────────────────────────────── */
+
+.reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual reminder card - horizontal layout like resource-card */
+.reminder-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  border-radius: 18px;
+  animation: fadeUp 0.5s ease both;
+  transition: transform 0.2s ease;
+}
+
+.reminder-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Left side: circle button + text */
+.reminder-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+}
+
+/* Circle/check button to toggle complete */
+.complete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.complete-btn:hover {
+  transform: scale(1.15);
+}
+
+.complete-icon {
+  font-size: 1.5rem !important;
+}
+
+/* Text block: title + date */
+.reminder-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.reminder-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Strikethrough on completed task titles */
+.strikethrough {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* Due date row with icon */
+.reminder-date {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.65;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.date-icon {
+  font-size: 0.85rem !important;
+}
+
+/* Delete button on the right side */
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
+
+.delete-icon {
+  font-size: 1.2rem !important;
+}
+
+/* Empty state */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  opacity: 0.6;
+  font-size: 1rem;
+}
+
+/* Validation error */
+.error-message {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+/* ── Dark mode (glass) ────────────────────────────────────── */
+
+.reminders-page.glass {
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+  color: #f8fafc;
+}
+
+.reminders-page.glass .reminders-tagline { color: #2dd4bf; }
+.reminders-page.glass .reminders-subtitle { color: #e2e8f0; }
+.reminders-page.glass .section-heading-icon { color: #5eead4; }
+.reminders-page.glass .done-icon { color: #4ade80; }
+
+.reminders-page.glass .add-reminder-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+.reminders-page.glass .add-reminder-btn:hover { background: #2dd4bf; }
+
+.reminders-page.glass .motiv-banner {
+  background: rgba(45, 212, 191, 0.15);
+  color: #5eead4;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+}
+
+.reminders-page.glass .all-done-banner {
+  background: rgba(74, 222, 128, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+
+.reminders-page.glass .add-form {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reminders-page.glass .form-field label { color: #d1d5db; }
+
+.reminders-page.glass .form-field input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f8fafc;
+}
+
+.reminders-page.glass .form-field input::placeholder { color: #94a3b8; }
+
+.reminders-page.glass .submit-form-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+.reminders-page.glass .submit-form-btn:hover { background: #2dd4bf; }
+
+.reminders-page.glass .reminder-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reminders-page.glass .reminder-card:hover { border-color: #5eead4; }
+
+.reminders-page.glass .reminder-card.completed {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.reminders-page.glass .complete-btn { color: #5eead4; }
+.reminders-page.glass .complete-btn.done { color: #4ade80; }
+
+.reminders-page.glass .delete-btn { color: #6b7280; }
+.reminders-page.glass .delete-btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+}
+
+.reminders-page.glass .error-message { color: #fca5a5; }
+
+/* ── Light mode (campus) ──────────────────────────────────── */
+
+.reminders-page.campus {
+  background: #f4f6f8;
+  color: #111827;
+}
+
+.reminders-page.campus .reminders-tagline { color: #2f855a; }
+.reminders-page.campus .reminders-subtitle { color: #374151; }
+.reminders-page.campus .section-heading-icon { color: #2f855a; }
+.reminders-page.campus .done-icon { color: #16a34a; }
+
+.reminders-page.campus .add-reminder-btn {
+  background: #2f855a;
+  color: white;
+}
+.reminders-page.campus .add-reminder-btn:hover { background: #276749; }
+
+.reminders-page.campus .motiv-banner {
+  background: #d9fbe8;
+  color: #166534;
+  border: 1px solid #a7f3c0;
+}
+
+.reminders-page.campus .all-done-banner {
+  background: #d9fbe8;
+  color: #166534;
+  border: 1px solid #a7f3c0;
+}
+
+.reminders-page.campus .add-form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.reminders-page.campus .form-field label { color: #374151; }
+
+.reminders-page.campus .form-field input {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.reminders-page.campus .form-field input::placeholder { color: #9ca3af; }
+
+.reminders-page.campus .submit-form-btn {
+  background: #2f855a;
+  color: white;
+}
+.reminders-page.campus .submit-form-btn:hover { background: #276749; }
+
+.reminders-page.campus .reminder-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.reminders-page.campus .reminder-card:hover { border-color: #2f855a; }
+
+.reminders-page.campus .reminder-card.completed {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  opacity: 0.8;
+}
+
+.reminders-page.campus .complete-btn { color: #9ca3af; }
+.reminders-page.campus .complete-btn.done { color: #16a34a; }
+
+.reminders-page.campus .delete-btn { color: #9ca3af; }
+.reminders-page.campus .delete-btn:hover {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+.reminders-page.campus .error-message { color: #dc2626; }
+
+/* ── Animations ───────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .reminders-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 16px;
+  }
+
+  .reminders-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reminder-card {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+}

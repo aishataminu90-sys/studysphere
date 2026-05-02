@@ -1,0 +1,518 @@
+/* StudyGroups.css - Styles for the Study Groups page
+   Follows the exact same layout pattern as Resources.css:
+   full-width page, DashboardNavbar + Sidebar + main content */
+
+/* Fix root centering for full-width layout - same fix as Resources.css */
+#root:has(.groups-page) {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  text-align: left;
+}
+
+* { box-sizing: border-box; }
+
+/* Outer wrapper - stacks navbar on top, sidebar+content below */
+.groups-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+/* Row below DashboardNavbar: sidebar + main content side by side */
+.groups-layout {
+  display: flex;
+  flex: 1;
+}
+
+/* Main content sits to the right of the sidebar - mirrors resources-main */
+.groups-main {
+  margin-left: 230px;
+  padding: 30px 40px;
+  flex: 1;
+  width: calc(100% - 230px);
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+/* Shift content when sidebar collapses to 60px */
+.groups-page:has(.sidebar-collapsed) .groups-main {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+/* ── Page heading - matches Resources page style ───────────── */
+
+.groups-tagline {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+}
+
+.groups-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 6px 0 8px;
+}
+
+.groups-subtitle {
+  font-size: 1rem;
+  margin-bottom: 28px;
+  opacity: 0.8;
+}
+
+/* ── Controls row: count text + create button ─────────────── */
+
+.groups-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.groups-count {
+  font-size: 0.9rem;
+  opacity: 0.65;
+  margin: 0;
+}
+
+/* Create Group button - teal filled pill */
+.create-group-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.create-group-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Success banner ────────────────────────────────────────── */
+
+.success-banner {
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  animation: fadeUp 0.4s ease both;
+  font-size: 0.95rem;
+}
+
+/* ── Create group form card ───────────────────────────────── */
+
+.create-form {
+  padding: 30px 32px;
+  border-radius: 20px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.create-form h2 {
+  margin: 0 0 22px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+/* Label + input stacked vertically */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-field label {
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.form-field input {
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+/* Submit button inside the form */
+.submit-form-btn {
+  padding: 12px 26px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  margin-top: 8px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.submit-form-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ── Section headings ─────────────────────────────────────── */
+
+.groups-section {
+  margin-bottom: 40px;
+}
+
+/* Icon + h2 in a row - same .feature pattern as Dashboard */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.section-heading-icon {
+  font-size: 1.4rem !important;
+}
+
+/* ── Group cards grid ─────────────────────────────────────── */
+
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* Individual group card */
+.group-card {
+  padding: 22px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeUp 0.5s ease both;
+  transition: transform 0.2s ease;
+}
+
+.group-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Top row: module badge + optional joined badge */
+.group-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Module code pill - teal tint */
+.group-module-badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* Joined badge shown on joined cards */
+.joined-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+}
+
+.joined-icon {
+  font-size: 0.9rem !important;
+}
+
+/* Group name */
+.group-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+/* Members + session info stacked */
+.group-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.88rem;
+}
+
+.group-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.75;
+}
+
+.meta-icon {
+  font-size: 1rem !important;
+  flex-shrink: 0;
+}
+
+/* Join button */
+.join-btn {
+  margin-top: auto;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.join-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Leave button */
+.leave-btn {
+  margin-top: auto;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.leave-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Empty state */
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  opacity: 0.6;
+  font-size: 1rem;
+}
+
+/* Validation error text */
+.error-message {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Red border on invalid inputs */
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+/* ── Dark mode (glass) ────────────────────────────────────── */
+
+.groups-page.glass {
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+  color: #f8fafc;
+}
+
+.groups-page.glass .groups-tagline { color: #2dd4bf; }
+.groups-page.glass .groups-subtitle { color: #e2e8f0; }
+.groups-page.glass .section-heading-icon { color: #5eead4; }
+
+.groups-page.glass .create-group-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+.groups-page.glass .create-group-btn:hover { background: #2dd4bf; }
+
+.groups-page.glass .success-banner {
+  background: rgba(45, 212, 191, 0.15);
+  color: #5eead4;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+}
+
+.groups-page.glass .create-form {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.groups-page.glass .form-field label { color: #d1d5db; }
+
+.groups-page.glass .form-field input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f8fafc;
+}
+
+.groups-page.glass .form-field input::placeholder { color: #94a3b8; }
+
+.groups-page.glass .submit-form-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+.groups-page.glass .submit-form-btn:hover { background: #2dd4bf; }
+
+.groups-page.glass .group-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.groups-page.glass .group-card:hover { border-color: #5eead4; }
+
+.groups-page.glass .group-card.joined {
+  border-color: rgba(45, 212, 191, 0.3);
+}
+
+.groups-page.glass .group-module-badge {
+  background: rgba(45, 212, 191, 0.2);
+  color: #5eead4;
+}
+
+.groups-page.glass .joined-badge {
+  background: rgba(45, 212, 191, 0.2);
+  color: #5eead4;
+}
+
+.groups-page.glass .group-meta span { color: #94a3b8; }
+.groups-page.glass .meta-icon { color: #5eead4; }
+
+.groups-page.glass .join-btn {
+  background: #14b8a6;
+  color: #031316;
+}
+.groups-page.glass .join-btn:hover { background: #2dd4bf; }
+
+.groups-page.glass .leave-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.groups-page.glass .leave-btn:hover { background: rgba(255, 255, 255, 0.14); }
+
+.groups-page.glass .error-message { color: #fca5a5; }
+
+/* ── Light mode (campus) ──────────────────────────────────── */
+
+.groups-page.campus {
+  background: #f4f6f8;
+  color: #111827;
+}
+
+.groups-page.campus .groups-tagline { color: #2f855a; }
+.groups-page.campus .groups-subtitle { color: #374151; }
+.groups-page.campus .section-heading-icon { color: #2f855a; }
+
+.groups-page.campus .create-group-btn {
+  background: #2f855a;
+  color: white;
+}
+.groups-page.campus .create-group-btn:hover { background: #276749; }
+
+.groups-page.campus .success-banner {
+  background: #d9fbe8;
+  color: #166534;
+  border: 1px solid #a7f3c0;
+}
+
+.groups-page.campus .create-form {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.groups-page.campus .form-field label { color: #374151; }
+
+.groups-page.campus .form-field input {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.groups-page.campus .form-field input::placeholder { color: #9ca3af; }
+
+.groups-page.campus .submit-form-btn {
+  background: #2f855a;
+  color: white;
+}
+.groups-page.campus .submit-form-btn:hover { background: #276749; }
+
+.groups-page.campus .group-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.groups-page.campus .group-card:hover { border-color: #2f855a; }
+
+.groups-page.campus .group-card.joined {
+  border-color: #a7f3c0;
+}
+
+.groups-page.campus .group-module-badge {
+  background: #d9fbe8;
+  color: #166534;
+}
+
+.groups-page.campus .joined-badge {
+  background: #d9fbe8;
+  color: #166534;
+}
+
+.groups-page.campus .group-meta span { color: #6b7280; }
+.groups-page.campus .meta-icon { color: #2f855a; }
+
+.groups-page.campus .join-btn {
+  background: #2f855a;
+  color: white;
+}
+.groups-page.campus .join-btn:hover { background: #276749; }
+
+.groups-page.campus .leave-btn {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+.groups-page.campus .leave-btn:hover { background: #e5e7eb; }
+
+.groups-page.campus .error-message { color: #dc2626; }
+
+/* ── Animations ───────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .groups-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 16px;
+  }
+
+  .groups-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .groups-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

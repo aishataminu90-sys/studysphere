@@ -42,6 +42,26 @@
 - Integrated dark/light theme system across all pages matching Aishat's glass/campus design
 - Ensured responsive design across different screen sizes
 
+### Frontend (Michelle - 3135990):
+ 
+- Built Study Groups page with:
+  - Available groups list displaying module, member count, and next session
+  - Join/leave toggle with live member count update
+  - "My Groups" section showing only joined groups with a Joined badge
+  - Create Study Group form with full client-side validation:
+    - Group name required
+    - Module required
+    - Next session required
+- Built Reminders page with:
+  - Upcoming reminders list with due dates
+  - Add Reminder form with client-side validation:
+    - Title required
+    - Due date required
+    - Due date cannot be in the past
+  - Mark complete toggle with strikethrough styling on completed tasks
+  - Random motivational message displayed on task completion
+  - Delete functionality to remove reminders
+  - Completed reminders moved to a separate Completed section
 
 ##  Frontend Setup Instructions
 
