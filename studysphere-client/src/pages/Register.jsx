@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ThemeToggle from "../components/ThemeToggle";
 
@@ -193,6 +194,7 @@ function Register({ theme, setTheme }) {
           </p>
         </form>
       </section>
+      <Footer theme={theme} />
     </main>
   );
 }

@@ -9,6 +9,9 @@ import Resources from "./pages/Resources";
 import UploadResource from "./pages/UploadResource";
 import StudyGroups from "./pages/StudyGroups";
 import Reminders from "./pages/Reminders";
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
+import Terms from "./pages/Terms";
 
 // Paths that use the dashboard layout (full width, no root centering)
 const LOGGED_IN_PATHS = ["/dashboard", "/resources", "/upload", "/studygroups", "/reminders"];
@@ -25,6 +28,9 @@ function AppContent() {
         <Route path="/" element={<Home theme={theme} setTheme={setTheme} />} />
         <Route path="/login" element={<Login theme={theme} setTheme={setTheme} />} />
         <Route path="/register" element={<Register theme={theme} setTheme={setTheme} />} />
+        <Route path="/faq" element={<FAQ theme={theme} setTheme={setTheme} />} />
+        <Route path="/contact" element={<Contact theme={theme} setTheme={setTheme} />} />
+        <Route path="/terms" element={<Terms theme={theme} setTheme={setTheme} />} />
 
         {/* LOGGED IN ROUTES */}
         <Route path="/dashboard" element={<Dashboard />} />

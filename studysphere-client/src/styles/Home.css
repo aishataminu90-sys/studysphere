@@ -428,3 +428,246 @@ main.glass.home {
     radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
     linear-gradient(135deg, #0a1a2b, #111827) !important;
 }
+
+
+/* ── ABOUT SECTION (inside Home.jsx) ───────────────── */
+
+.about-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Hero */
+
+.about-hero {
+  padding: 80px 0 40px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.about-tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.about-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 6px 0 16px;
+  line-height: 1.05;
+}
+
+.about-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.65;
+  max-width: 720px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Mission */
+
+.about-mission {
+  margin: 48px 0;
+  animation: fadeUp 0.7s ease 0.1s both;
+}
+
+.mission-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 36px;
+  border-radius: 24px;
+}
+
+.mission-icon {
+  font-size: 2.8rem !important;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.mission-card h2 {
+  margin: 0 0 12px;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.mission-card p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+/* Team */
+
+.about-team {
+  margin: 48px 0 70px;
+  animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.about-team h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.team-subtitle {
+  margin: 0 0 24px;
+  font-size: 0.95rem;
+  opacity: 0.65;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.team-card {
+  padding: 28px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Avatar */
+
+.team-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.team-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.team-student-no {
+  margin: 0;
+  font-size: 0.82rem;
+  opacity: 0.55;
+}
+
+.team-role {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.team-contribution {
+  margin: 6px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.78;
+}
+
+/* ── GLASS THEME ───────────────────────────────────── */
+
+.glass .about-tagline {
+  color: #2dd4bf;
+}
+
+.glass .mission-card,
+.glass .team-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.glass .mission-icon {
+  color: #5eead4;
+}
+
+.glass .team-card:hover {
+  border-color: #5eead4;
+}
+
+.glass .team-avatar {
+  background: rgba(45, 212, 191, 0.18);
+  color: #5eead4;
+}
+
+.glass .team-role {
+  background: rgba(45, 212, 191, 0.14);
+  color: #5eead4;
+}
+
+/* ── CAMPUS THEME ──────────────────────────────────── */
+
+.campus .about-tagline {
+  color: #2f855a;
+}
+
+.campus .about-subtitle {
+  color: #374151;
+}
+
+.campus .mission-card,
+.campus .team-card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.campus .mission-icon {
+  color: #2f855a;
+}
+
+.campus .team-card:hover {
+  border-color: #2f855a;
+}
+
+.campus .team-avatar {
+  background: #d9fbe8;
+  color: #2f855a;
+}
+
+.campus .team-role {
+  background: #d9fbe8;
+  color: #166534;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mission-card {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero {
+    padding-top: 60px;
+  }
+}

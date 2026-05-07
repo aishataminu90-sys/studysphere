@@ -188,17 +188,22 @@
 
 /* ─── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 60px !important;
+
+  .sidebar-open {
+    width: 220px;
   }
 
-  .sidebar-label,
-  .sidebar-toggle-label {
-    display: none;
+  .sidebar-collapsed {
+    width: 60px;
   }
 
-  .sidebar-link {
+  .sidebar-collapsed .sidebar-link {
     justify-content: center;
     padding: 13px 0;
+  }
+
+  .sidebar-collapsed .sidebar-label,
+  .sidebar-collapsed .sidebar-toggle-label {
+    display: none;
   }
 }
