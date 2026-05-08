@@ -62,16 +62,26 @@ function Login({ theme, setTheme }) {
           }),
         });
 
-        const data = await response.json();
+       const data = await response.json();
 
         if (!response.ok) {
           setErrors({ general: data.error || "Login failed" });
           return;
         }
 
+        // Admins redirect
+        const meRes = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
+          credentials: "include",
+        });
+        const meData = await meRes.json();
+
         setSuccess("Login successful! Redirecting...");
         setTimeout(() => {
-          navigate("/dashboard");
+          if (meData.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/dashboard");
+          }
         }, 1000);
 
       } catch (error) {

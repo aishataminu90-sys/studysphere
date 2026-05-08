@@ -217,3 +217,33 @@
     display: none;
   }
 }
+
+
+
+/* Admin Panel link - visually distinct from regular links */
+.sidebar-admin {
+  margin-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px !important;
+}
+
+/* Teal/gold tint on the admin icon to make it stand out */
+.sidebar-link.sidebar-admin .sidebar-icon {
+  color: #fbbf24 !important;
+}
+
+/* Active state for admin link */
+.sidebar-link.active.sidebar-admin {
+  background: rgba(251, 191, 36, 0.15) !important;
+  border-color: #fbbf24 !important;
+}
+
+/* Light mode (campus) admin link */
+.campus .sidebar-link.sidebar-admin .sidebar-icon {
+  color: #d97706 !important;
+}
+
+.campus .sidebar-link.active.sidebar-admin {
+  background: #fef3c7 !important;
+  border-color: #d97706 !important;
+}

@@ -1,0 +1,478 @@
+/* AdminDashboard.css - Styles for the Admin Dashboard page
+   Follows the same layout pattern as Resources.css and StudyGroups.css */
+
+#root:has(.admin-page) {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  text-align: left;
+}
+
+* { box-sizing: border-box; }
+
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+.admin-layout {
+  display: flex;
+  flex: 1;
+}
+
+.admin-main {
+  margin-left: 230px;
+  padding: 30px 40px;
+  flex: 1;
+  width: calc(100% - 230px);
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+.admin-page:has(.sidebar-collapsed) .admin-main {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+/* ── Page heading ─────────────────────────────────── */
+
+.admin-tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.admin-title-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.admin-title-icon {
+  font-size: 2.4rem !important;
+}
+
+.admin-title-row h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.admin-subtitle {
+  font-size: 1rem;
+  opacity: 0.7;
+  margin: 0 0 28px;
+}
+
+/* ── Stats row ────────────────────────────────────── */
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-radius: 18px;
+}
+
+.stat-icon {
+  font-size: 2rem !important;
+  flex-shrink: 0;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  margin: 4px 0 0;
+  opacity: 0.6;
+}
+
+/* ── Tabs ─────────────────────────────────────────── */
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.admin-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.admin-tab:hover { transform: translateY(-1px); }
+.tab-icon { font-size: 1.1rem !important; }
+
+/* ── Section ──────────────────────────────────────── */
+
+.admin-section { animation: fadeUp 0.4s ease both; }
+
+.admin-section-count {
+  font-size: 0.88rem;
+  opacity: 0.55;
+  margin: 0 0 16px;
+}
+
+.admin-empty {
+  text-align: center;
+  padding: 60px 20px;
+  opacity: 0.5;
+  font-size: 1rem;
+}
+
+.admin-loading {
+  text-align: center;
+  padding: 60px 20px;
+  opacity: 0.6;
+}
+
+.admin-error {
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ── Messages ─────────────────────────────────────── */
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.message-card {
+  padding: 22px 26px;
+  border-radius: 18px;
+  transition: transform 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.message-card:hover { transform: translateY(-2px); }
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.message-sender { display: flex; flex-direction: column; gap: 2px; }
+
+.message-name {
+  font-weight: 800;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.message-email {
+  font-size: 0.82rem;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Status dropdown */
+.status-select {
+  padding: 7px 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.message-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0 0 10px;
+  opacity: 0.85;
+}
+
+.message-date {
+  font-size: 0.78rem;
+  opacity: 0.45;
+  margin: 0;
+}
+
+/* Status border colours */
+.status-new { border-left-color: #3b82f6; }
+.status-progress { border-left-color: #f59e0b; }
+.status-closed { border-left-color: #22c55e; opacity: 0.75; }
+
+/* ── Table (resources + users) ────────────────────── */
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  border-radius: 18px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.5;
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+.admin-table tbody tr {
+  border-radius: 12px;
+  transition: background 0.15s ease;
+}
+
+/* Module pill in resources table */
+.module-pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Role pill in users table */
+.role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.role-icon { font-size: 0.85rem !important; }
+
+/* User actions cell */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Make admin / remove admin button */
+.toggle-admin-btn {
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.toggle-admin-btn:hover { transform: translateY(-1px); }
+
+/* Delete button used in all tabs */
+.admin-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 7px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.admin-delete-btn:hover { transform: scale(1.1); }
+.admin-delete-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.delete-icon { font-size: 1.1rem !important; }
+
+button:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
+
+/* ── Animation ────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Dark mode (glass) ────────────────────────────── */
+
+.admin-page.glass {
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+  color: #f8fafc;
+}
+
+.admin-page.glass .admin-tagline { color: #2dd4bf; }
+.admin-page.glass .admin-title-icon { color: #5eead4; }
+
+.admin-page.glass .stat-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-page.glass .stat-icon { color: #5eead4; }
+
+.admin-page.glass .admin-tab {
+  background: rgba(255,255,255,0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-page.glass .admin-tab--active {
+  background: #14b8a6;
+  color: #031316;
+  border-color: #14b8a6;
+}
+
+.admin-page.glass .admin-error {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.3);
+}
+
+.admin-page.glass .message-card {
+  background: rgba(255,255,255,0.08);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-page.glass .status-select {
+  background: rgba(255,255,255,0.1);
+  color: #f8fafc;
+}
+
+.admin-page.glass .status-select.status-new { background: rgba(59,130,246,0.2); color: #93c5fd; }
+.admin-page.glass .status-select.status-progress { background: rgba(245,158,11,0.2); color: #fcd34d; }
+.admin-page.glass .status-select.status-closed { background: rgba(34,197,94,0.2); color: #86efac; }
+
+.admin-page.glass .admin-delete-btn { color: #6b7280; }
+.admin-page.glass .admin-delete-btn:hover { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+.admin-page.glass .admin-table th { color: #9ca3af; }
+.admin-page.glass .admin-table td { border-bottom: 1px solid rgba(255,255,255,0.06); color: #e2e8f0; }
+.admin-page.glass .admin-table tbody tr:hover td { background: rgba(255,255,255,0.04); }
+
+.admin-page.glass .module-pill { background: rgba(45,212,191,0.15); color: #5eead4; }
+.admin-page.glass .role-pill.role-admin { background: rgba(250,204,21,0.2); color: #fde047; }
+.admin-page.glass .role-pill.role-user { background: rgba(255,255,255,0.08); color: #9ca3af; }
+
+.admin-page.glass .toggle-admin-btn.promote { background: rgba(45,212,191,0.15); color: #5eead4; }
+.admin-page.glass .toggle-admin-btn.promote:hover { background: rgba(45,212,191,0.25); }
+.admin-page.glass .toggle-admin-btn.demote { background: rgba(239,68,68,0.15); color: #fca5a5; }
+.admin-page.glass .toggle-admin-btn.demote:hover { background: rgba(239,68,68,0.25); }
+
+/* ── Light mode (campus) ──────────────────────────── */
+
+.admin-page.campus {
+  background: #f4f6f8;
+  color: #111827;
+}
+
+.admin-page.campus .admin-tagline { color: #2f855a; }
+.admin-page.campus .admin-title-icon { color: #2f855a; }
+
+.admin-page.campus .stat-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.admin-page.campus .stat-icon { color: #2f855a; }
+
+.admin-page.campus .admin-tab {
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.admin-page.campus .admin-tab--active {
+  background: #2f855a;
+  color: white;
+  border-color: #2f855a;
+}
+
+.admin-page.campus .admin-error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+.admin-page.campus .message-card {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.admin-page.campus .status-select { background: #f3f4f6; color: #111827; }
+.admin-page.campus .status-select.status-new { background: #dbeafe; color: #1d4ed8; }
+.admin-page.campus .status-select.status-progress { background: #fef3c7; color: #d97706; }
+.admin-page.campus .status-select.status-closed { background: #dcfce7; color: #16a34a; }
+
+.admin-page.campus .admin-delete-btn { color: #9ca3af; }
+.admin-page.campus .admin-delete-btn:hover { background: #fef2f2; color: #ef4444; }
+
+.admin-page.campus .admin-table { background: #ffffff; border-radius: 18px; }
+.admin-page.campus .admin-table th { color: #6b7280; }
+.admin-page.campus .admin-table td { border-bottom: 1px solid #f3f4f6; color: #374151; }
+.admin-page.campus .admin-table tbody tr:hover td { background: #f9fafb; }
+
+.admin-page.campus .module-pill { background: #d9fbe8; color: #166534; }
+.admin-page.campus .role-pill.role-admin { background: #fefce8; color: #a16207; }
+.admin-page.campus .role-pill.role-user { background: #f3f4f6; color: #6b7280; }
+
+.admin-page.campus .toggle-admin-btn.promote { background: #d9fbe8; color: #166534; }
+.admin-page.campus .toggle-admin-btn.promote:hover { background: #a7f3c0; }
+.admin-page.campus .toggle-admin-btn.demote { background: #fef2f2; color: #dc2626; }
+.admin-page.campus .toggle-admin-btn.demote:hover { background: #fecaca; }
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .admin-main { margin-left: 0; width: 100%; padding: 16px; }
+  .admin-stats { grid-template-columns: 1fr; }
+  .admin-tabs { gap: 6px; }
+  .admin-tab { padding: 8px 14px; font-size: 0.82rem; }
+  .user-actions { flex-wrap: wrap; }
+}

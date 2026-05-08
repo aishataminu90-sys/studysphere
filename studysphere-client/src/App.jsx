@@ -12,10 +12,17 @@ import Reminders from "./pages/Reminders";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
+import AdminDashboard from "./pages/AdminDashboard"; 
 import ScrollToHash from "./components/ScrollToHash";
 
-// Paths that use the dashboard layout (full width, no root centering)
-const LOGGED_IN_PATHS = ["/dashboard", "/resources", "/upload", "/studygroups", "/reminders"];
+const LOGGED_IN_PATHS = [
+  "/dashboard",
+  "/resources",
+  "/upload",
+  "/studygroups",
+  "/reminders",
+  "/admin" 
+];
 
 function AppContent() {
   const [theme, setTheme] = useState("glass");
@@ -40,6 +47,9 @@ function AppContent() {
         <Route path="/upload" element={<UploadResource />} />
         <Route path="/studygroups" element={<StudyGroups />} />
         <Route path="/reminders" element={<Reminders />} />
+
+        {/* ADMIN ROUTE - redirects away if user is not an admin */}
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </main>
   );
