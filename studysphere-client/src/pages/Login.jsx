@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ThemeToggle from "../components/ThemeToggle";
 
 import "../styles/Login.css";
 
 function Login({ theme, setTheme }) {
+  const navigate = useNavigate();
+  const [success, setSuccess] = useState("");
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -28,7 +31,7 @@ function Login({ theme, setTheme }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -46,7 +49,34 @@ function Login({ theme, setTheme }) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Login form submitted", form);
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            email: form.email,
+            password: form.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setErrors({ general: data.error || "Login failed" });
+          return;
+        }
+
+        setSuccess("Login successful! Redirecting...");
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 1000);
+
+      } catch (error) {
+        setErrors({ general: "Could not connect to server" });
+      }
     }
   };
 
@@ -67,7 +97,9 @@ function Login({ theme, setTheme }) {
         <form className="login-card" onSubmit={handleSubmit} noValidate>
           <h2>Login</h2>
           <p className="subtitle">Enter your details to continue</p>
-
+          {errors.general && <p className="error-message">{errors.general}</p>}
+          {success && <p className="success-message">{success}</p>}
+          
           <input
             type="email"
             name="email"
@@ -97,6 +129,7 @@ function Login({ theme, setTheme }) {
           </p>
         </form>
       </section>
+      <Footer theme={theme} />
     </main>
   );
 }

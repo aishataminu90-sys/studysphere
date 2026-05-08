@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
   border-radius: 18px;
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -17,16 +18,24 @@
 }
 
 .logo {
-  font-size: 1.7rem;
+  font-size: clamp(1.15rem, 3vw, 1.7rem);
   font-weight: 900;
   color: #5eead4;
   text-decoration: none;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .nav-links {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .nav-links a {
@@ -90,19 +99,24 @@
 
 .campus .navbar {
   width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 14px 28px;
+  max-width: 1500px;
+  margin: 0 auto 28px;
+  padding: 18px 40px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
 
+  border-radius: 18px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(18px);
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 14px;
+  z-index: 1000;
 }
 
 /* logo */
@@ -130,29 +144,64 @@
   padding-top: 20px;
 }
 
-@media (max-width: 700px) {
-  .hamburger-btn {
+@media (max-width: 900px) {
+
+  .navbar {
+    padding: 14px 18px;
+    position: relative;
+
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
+  .logo {
+    font-size: 1.15rem;
+    flex: 1;
+  }
+
+  /* show hamburger */
+  .hamburger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    flex-shrink: 0;
+  }
+
+  /* hide desktop nav */
   .nav-links {
+    display: none;
+
     position: absolute;
     top: calc(100% + 12px);
     left: 0;
     right: 0;
-    display: none;
+
     flex-direction: column;
     align-items: stretch;
+
     padding: 16px;
+    gap: 12px;
+
     border-radius: 22px;
+
     background: rgba(17, 24, 39, 0.96);
+
+    backdrop-filter: blur(18px);
   }
 
+  /* show dropdown when open */
   .nav-links.open {
     display: flex;
   }
 
   .nav-links a {
+    width: 100%;
     text-align: center;
   }
 

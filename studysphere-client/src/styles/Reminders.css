@@ -502,3 +502,41 @@
     gap: 12px;
   }
 }
+
+/* Loading state text */
+.loading-state {
+  text-align: center;
+  padding: 60px 20px;
+  opacity: 0.6;
+  font-size: 1rem;
+}
+ 
+/* Error message when fetch fails */
+.fetch-error {
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+ 
+/* Disabled button state */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+ 
+/* Dark mode fetch error */
+.glass .fetch-error {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+ 
+/* Light mode fetch error */
+.campus .fetch-error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}

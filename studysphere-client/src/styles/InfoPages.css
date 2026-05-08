@@ -1,0 +1,313 @@
+/* =============================================
+   InfoPages.css
+   Shared styles for FAQ, Terms, Contact pages
+   Supports glass (dark) and campus (light) themes
+   ============================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Base page layout ─────────────────────────────── */
+
+.info-page {
+  min-height: 100vh;
+  padding: 22px 6% 0;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+.info-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── Hero section ─────────────────────────────────── */
+
+.info-hero {
+  padding: 70px 0 40px;
+  animation: fadeUp 0.7s ease both;
+}
+
+.info-tagline {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.info-hero h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  margin: 0 0 16px;
+  letter-spacing: -1px;
+}
+
+.info-subtitle {
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 720px;
+  opacity: 0.8;
+}
+
+/* ── Shared card styles ───────────────────────────── */
+
+.faq-card,
+.contact-card,
+.contact-form-card,
+.terms-card {
+  border-radius: 24px;
+  padding: 28px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.faq-card:hover,
+.contact-card:hover,
+.contact-form-card:hover,
+.terms-card:hover {
+  transform: translateY(-5px);
+}
+
+.faq-card h3,
+.contact-card h3,
+.terms-section h2 {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.faq-card p,
+.contact-card p,
+.terms-section p {
+  margin: 0;
+  line-height: 1.7;
+  opacity: 0.8;
+}
+
+/* ── Contact grid ─────────────────────────────────── */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+/* ── Contact form ─────────────────────────────────── */
+
+.contact-form-card {
+  margin-bottom: 70px;
+}
+
+.contact-form-card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+/* ── Terms page ───────────────────────────────────── */
+
+.terms-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 70px;
+}
+
+/* ── FAQ Accordion ────────────────────────────────── */
+
+.faq-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 60px;
+}
+
+/* Individual accordion item */
+.faq-item {
+  border-radius: 18px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+/* Clickable question row */
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: "Inter", "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  gap: 16px;
+  transition: background 0.2s ease;
+}
+
+/* Arrow icon - rotates 180deg when open */
+.faq-arrow {
+  font-size: 1.5rem !important;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.faq-arrow--open {
+  transform: rotate(180deg);
+}
+
+/* Answer panel */
+.faq-answer {
+  padding: 0 26px 22px;
+  animation: fadeUp 0.3s ease both;
+}
+
+.faq-answer p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  opacity: 0.8;
+}
+
+/* ── Animation ────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Dark mode (glass) ────────────────────────────── */
+
+.glass.info-page {
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
+    linear-gradient(135deg, #0a1a2b, #111827);
+  color: #f8fafc;
+}
+
+.glass .info-tagline { color: #2dd4bf; }
+
+.glass .faq-card,
+.glass .contact-card,
+.glass .contact-form-card,
+.glass .terms-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+}
+
+.glass .faq-card:hover,
+.glass .contact-card:hover,
+.glass .contact-form-card:hover,
+.glass .terms-card:hover {
+  border-color: #5eead4;
+}
+
+.glass .contact-form input,
+.glass .contact-form textarea {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass .faq-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+}
+
+.glass .faq-item--open,
+.glass .faq-item:hover { border-color: #5eead4; }
+
+.glass .faq-question { color: #f8fafc; }
+.glass .faq-arrow { color: #5eead4; }
+
+/* ── Light mode (campus) ──────────────────────────── */
+
+.campus.info-page {
+  background: #f8faf5;
+  color: #111827;
+}
+
+.campus .info-tagline { color: #2f855a; }
+
+.campus .faq-card,
+.campus .contact-card,
+.campus .contact-form-card,
+.campus .terms-card {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.campus .faq-card:hover,
+.campus .contact-card:hover,
+.campus .contact-form-card:hover,
+.campus .terms-card:hover {
+  border-color: #2f855a;
+}
+
+.campus .contact-form input,
+.campus .contact-form textarea {
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.campus .faq-item {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.campus .faq-item--open,
+.campus .faq-item:hover { border-color: #2f855a; }
+
+.campus .faq-question { color: #111827; }
+.campus .faq-arrow { color: #2f855a; }
+
+/* ── Responsive ───────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-hero {
+    padding-top: 60px;
+  }
+}

@@ -1,6 +1,6 @@
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
@@ -13,7 +13,21 @@ import "../styles/Sidebar.css";
 
 function Sidebar() {
   // true = full width sidebar, false = collapsed icon-only strip
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(window.innerWidth > 768);
+
+  useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   const toggle = () => setIsOpen((prev) => !prev);
 

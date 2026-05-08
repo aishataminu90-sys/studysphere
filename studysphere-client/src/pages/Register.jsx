@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ThemeToggle from "../components/ThemeToggle";
 
 import "../styles/Register.css";
 
 function Register({ theme, setTheme }) {
+  const navigate = useNavigate();
+  const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -17,10 +21,20 @@ function Register({ theme, setTheme }) {
     year: "",
   });
 
-
   const [errors, setErrors] = useState({});
 
-  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  // Email validation
+  const isValidEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
+
+  // Full name validation
+  const isValidFullName = (name) => /^[A-Za-z\s'-]+$/.test(name);
+
+  // Password validation
+  const isStrongPassword = (password) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
+
+  // Text field validation
+  const isValidText = (text) => /^[A-Za-z\s'-]+$/.test(text);
 
   const handleChange = (e) => {
     setForm({
@@ -31,50 +45,70 @@ function Register({ theme, setTheme }) {
     setErrors({
       ...errors,
       [e.target.name]: "",
+      general: "",
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
 
-     // Full name validation
-    if (!form.fullName.trim()) {
+    const fullName = form.fullName.trim();
+    const email = form.email.trim().toLowerCase();
+    const password = form.password.trim();
+    const confirmPassword = form.confirmPassword.trim();
+    const university = form.university.trim();
+    const course = form.course.trim();
+    const year = form.year.trim();
+
+    // Full name validation
+    if (!fullName) {
       newErrors.fullName = "Full name is required";
+    } else if (fullName.split(" ").length < 2) {
+      newErrors.fullName = "Please enter your first and last name";
+    } else if (!isValidFullName(fullName)) {
+      newErrors.fullName = "Full name can only contain letters";
     }
 
     // Email validation
-    if (!form.email.trim()) {
+    if (!email) {
       newErrors.email = "Email is required";
-    } else if (!isValidEmail(form.email)) {
+    } else if (email.includes(" ")) {
+      newErrors.email = "Email cannot contain spaces";
+    } else if (!isValidEmail(email)) {
       newErrors.email = "Please enter a valid email address";
     }
 
     // Password validation
-    if (!form.password.trim()) {
+    if (!password) {
       newErrors.password = "Password is required";
-    } else if (form.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    } else if (!isStrongPassword(password)) {
+      newErrors.password =
+        "Password must be at least 8 characters and include uppercase, lowercase, number, and symbol";
     }
 
     // Confirm password validation
-    if (!form.confirmPassword.trim()) {
+    if (!confirmPassword) {
       newErrors.confirmPassword = "Please confirm your password";
-    } else if (form.password !== form.confirmPassword) {
+    } else if (password !== confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
     }
 
-    // Other fields validation
-    if (!form.university.trim()) {
+    // University validation
+    if (!university) {
       newErrors.university = "University is required";
+    } else if (university.length < 2) {
+      newErrors.university = "University name is too short";
     }
 
-    if (!form.course.trim()) {
+    // Course validation
+    if (!course) {
       newErrors.course = "Course is required";
     }
 
-    if (!form.year.trim()) {
+    // Year validation
+    if (!year) {
       newErrors.year = "Year is required";
     }
 
@@ -83,9 +117,45 @@ function Register({ theme, setTheme }) {
 
     // If no errors exist, the form is valid
     if (Object.keys(newErrors).length === 0) {
-      console.log("Register form submitted", form);
+      try {
+        setIsSubmitting(true);
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            name: fullName,
+            email,
+            password,
+            university,
+            year,
+            course,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setErrors({ general: data.error || "Registration failed" });
+          return;
+        }
+
+        setSuccess("Registration successful! Redirecting to login...");
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      } catch (error) {
+        setErrors({ general: "Could not connect to server" });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
+
   return (
     <main className={`page register-page ${theme}`}>
       <Navbar theme={theme} />
@@ -95,13 +165,15 @@ function Register({ theme, setTheme }) {
         <div className="register-info">
           <h1>Create your account</h1>
           <p>Join StudySphere today.</p>
-          
         </div>
 
         {/* Registration form */}
         <form className="register-card" onSubmit={handleSubmit} noValidate>
           <h2>Create Account</h2>
           <p className="subtitle">Join StudySphere today</p>
+
+          {errors.general && <p className="error-message">{errors.general}</p>}
+          {success && <p className="success-message">{success}</p>}
 
           {/* Full Name */}
           <input
@@ -112,9 +184,7 @@ function Register({ theme, setTheme }) {
             onChange={handleChange}
             className={errors.fullName ? "input-error" : ""}
           />
-          {errors.fullName && (
-            <p className="error-message">{errors.fullName}</p>
-          )}
+          {errors.fullName && <p className="error-message">{errors.fullName}</p>}
 
           {/* Email */}
           <input
@@ -165,34 +235,49 @@ function Register({ theme, setTheme }) {
           )}
 
           {/* Course */}
-          <input
-            type="text"
+          <select
             name="course"
-            placeholder="Course"
             value={form.course}
             onChange={handleChange}
             className={errors.course ? "input-error" : ""}
-          />
-          {errors.course && <p className="error-message">{errors.course}</p>}
+          >
+            <option value=""disabled>Select Course</option>
+            <option value="Law">Law</option>
+            <option value="Computing Science">Computing Science</option>
+            <option value="Business">Business</option>
+          </select>
+
+          {errors.course && (
+            <p className="error-message">{errors.course}</p>
+          )}
 
           {/* Year */}
-          <input
-            type="text"
+          <select
             name="year"
-            placeholder="Year"
             value={form.year}
             onChange={handleChange}
             className={errors.year ? "input-error" : ""}
-          />
+          >
+            <option value="" disabled>Select Year</option>
+            <option value="Year 1">Year 1</option>
+            <option value="Year 2">Year 2</option>
+            <option value="Year 3">Year 3</option>
+            <option value="Year 4">Year 4</option>
+            <option value="Postgraduate">Postgraduate</option>
+          </select>
           {errors.year && <p className="error-message">{errors.year}</p>}
 
-          <button type="submit">Register</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Registering..." : "Register"}
+          </button>
 
           <p className="link">
             Already have an account? <Link to="/login">Login</Link>
           </p>
         </form>
       </section>
+
+      <Footer theme={theme} />
     </main>
   );
 }

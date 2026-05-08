@@ -1,11 +1,12 @@
-// Reminders.jsx - Page where users manage study tasks and deadlines
-// Layout mirrors Resources.jsx: DashboardNavbar + Sidebar + main content
+// Reminders.jsx - Connected to the backend API
+// Fetches reminders from GET /reminders
+// Adds via POST /reminders, completes via PATCH /reminders/:id/complete
+// Deletes via DELETE /reminders/:id
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import DashboardNavbar from "../components/DashboardNavbar";
 
-// Material UI icons
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
@@ -15,63 +16,79 @@ import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
 
 import "../styles/Reminders.css";
 
-// Motivational messages shown when a task is marked complete - adds fun to the experience
+// Base API URL - set VITE_API_URL in your .env file
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+// Random motivational messages shown when a task is marked complete
 const motivationalMessages = [
   "Great work! Keep it up! 🎉",
   "One step closer to your goals! 💪",
-  "You're on a roll! 🔥",
-  "That's the spirit! ⭐",
+  "You are on a roll! 🔥",
+  "That is the spirit! ⭐",
   "Smashing it! Keep going! 🚀",
   "Amazing effort! 👏",
 ];
 
-// Mock reminder data - will be fetched from the backend later
-const initialReminders = [
-  { id: 1, title: "Study for Algorithms Exam", dueDate: "2026-05-10", completed: false },
-  { id: 2, title: "Submit Law Essay", dueDate: "2026-05-12", completed: false },
-  { id: 3, title: "Prepare Marketing Presentation", dueDate: "2026-05-14", completed: false },
-  { id: 4, title: "Review Database Notes", dueDate: "2026-05-08", completed: false },
-];
-
 function Reminders() {
-  // Theme state - glass is dark mode, campus is light mode
   const [theme, setTheme] = useState("glass");
 
-  // Full list of reminders
-  const [reminders, setReminders] = useState(initialReminders);
+  // All reminders fetched from the backend
+  const [reminders, setReminders] = useState([]);
 
-  // Controls whether the add reminder form is visible
+  // Page-level loading and error states
+  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState("");
+
+  // Add reminder form visibility and values
   const [showForm, setShowForm] = useState(false);
-
-  // Stores the values the user types into the add reminder form
   const [form, setForm] = useState({ title: "", dueDate: "" });
-
-  // Stores validation error messages for each form field
   const [errors, setErrors] = useState({});
 
-  // Stores a motivational message to show after completing a task
+  // Motivational message shown briefly after completing a task
   const [motivMessage, setMotivMessage] = useState("");
 
-  // Updates a form field as the user types and clears its error
+  // Tracks which reminder's button is currently loading
+  const [loadingId, setLoadingId] = useState(null);
+
+  // Fetch all reminders when page loads
+  useEffect(() => {
+    fetchReminders();
+  }, []);
+
+  // GET /reminders - fetches all reminders for the logged-in user
+  const fetchReminders = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_URL}/reminders`, {
+        credentials: "include", // sends session cookie with request
+      });
+      if (!res.ok) throw new Error("Failed to load reminders");
+      const data = await res.json();
+      setReminders(data);
+    } catch (err) {
+      setFetchError("Could not load reminders. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Updates a form field and clears its error as the user types
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setErrors({ ...errors, [e.target.name]: "" });
   };
 
-  // Validates the form and adds the new reminder to the list
-  const handleAddReminder = (e) => {
-    e.preventDefault(); // prevent page reload
+  // POST /reminders - validates and submits the add reminder form
+  const handleAddReminder = async (e) => {
+    e.preventDefault();
 
+    // Client-side validation before hitting the API
     const newErrors = {};
-
-    // Title must not be empty
     if (!form.title.trim()) newErrors.title = "Reminder title is required";
 
-    // Due date must not be empty
     if (!form.dueDate) {
       newErrors.dueDate = "Due date is required";
     } else {
-      // Due date must not be in the past
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (new Date(form.dueDate) < today) {
@@ -80,54 +97,82 @@ function Reminders() {
     }
 
     setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
-    // Only add if no validation errors exist
-    if (Object.keys(newErrors).length === 0) {
-      const newReminder = {
-        id: reminders.length + 1,
-        title: form.title,
-        dueDate: form.dueDate,
-        completed: false,
-      };
+    try {
+      const res = await fetch(`${API_URL}/reminders`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: form.title,
+          dueDate: form.dueDate,
+        }),
+      });
 
-      setReminders([...reminders, newReminder]);
+      const data = await res.json();
 
-      // Reset and close the form
+      if (!res.ok) {
+        setErrors({ general: data.error || "Failed to add reminder" });
+        return;
+      }
+
+      // Reset form, close it, and refresh reminders list
       setForm({ title: "", dueDate: "" });
       setShowForm(false);
+      await fetchReminders();
+    } catch (err) {
+      setErrors({ general: "Something went wrong. Please try again." });
     }
   };
 
-  // Toggles a reminder between complete and incomplete
-  // Shows a motivational message when marking as complete
-  const handleToggleComplete = (id) => {
-    setReminders(reminders.map((r) => {
-      if (r.id === id) {
-        // Only show the message when marking as complete (not when un-completing)
-        if (!r.completed) {
-          const randomMsg = motivationalMessages[
-            Math.floor(Math.random() * motivationalMessages.length)
-          ];
-          setMotivMessage(randomMsg);
-          // Clear the message after 3 seconds
-          setTimeout(() => setMotivMessage(""), 3000);
-        }
-        return { ...r, completed: !r.completed };
+  // PATCH /reminders/:id/complete - toggles a reminder complete or incomplete
+  const handleToggleComplete = async (id, currentlyCompleted) => {
+    setLoadingId(id);
+    try {
+      const res = await fetch(`${API_URL}/reminders/${id}/complete`, {
+        method: "PATCH",
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to update reminder");
+
+      // Only show motivational message when marking as complete (not un-completing)
+      if (!currentlyCompleted) {
+        const msg = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+        setMotivMessage(msg);
+        setTimeout(() => setMotivMessage(""), 3000);
       }
-      return r;
-    }));
+
+      await fetchReminders(); // refresh to get updated completed status
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoadingId(null);
+    }
   };
 
-  // Removes a reminder from the list permanently
-  const handleDelete = (id) => {
-    setReminders(reminders.filter((r) => r.id !== id));
+  // DELETE /reminders/:id - permanently removes a reminder
+  const handleDelete = async (id) => {
+    setLoadingId(id);
+    try {
+      const res = await fetch(`${API_URL}/reminders/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("Failed to delete reminder");
+
+      // Remove the deleted reminder from state without refetching
+      setReminders(reminders.filter((r) => r._id !== id));
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoadingId(null);
+    }
   };
 
-  // Split reminders into pending and completed for separate display
-  const pendingReminders = reminders.filter((r) => !r.completed);
-  const completedReminders = reminders.filter((r) => r.completed);
-
-  // Format the date string into a readable format e.g. "10 May 2026"
+  // Formats a date into a readable string e.g. "10 May 2026"
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("en-IE", {
       day: "numeric",
@@ -136,10 +181,12 @@ function Reminders() {
     });
   };
 
+  // Separate reminders into pending and completed for two-section display
+  const pendingReminders = reminders.filter((r) => !r.completed);
+  const completedReminders = reminders.filter((r) => r.completed);
+
   return (
     <div className={`reminders-page ${theme}`}>
-
-      {/* Top navbar - logo, theme toggle, home, logout */}
       <DashboardNavbar theme={theme} setTheme={setTheme} />
 
       <div className="reminders-layout">
@@ -147,7 +194,7 @@ function Reminders() {
 
         <main className="reminders-main">
 
-          {/* Page heading - matches Resources and StudyGroups heading style */}
+          {/* Page heading */}
           <div className="reminders-header">
             <p className="reminders-tagline">STUDY TASKS</p>
             <h1>Reminders</h1>
@@ -156,91 +203,90 @@ function Reminders() {
             </p>
           </div>
 
-          {/* Controls row: stats + add button */}
+          {/* Controls row */}
           <div className="reminders-controls">
             <p className="reminders-count">
-              {pendingReminders.length} pending
+              {loading ? "Loading..." : `${pendingReminders.length} pending`}
               {completedReminders.length > 0 && ` · ${completedReminders.length} completed`}
             </p>
 
-            {/* Toggles the add reminder form */}
-            <button
-              className="add-reminder-btn"
-              onClick={() => setShowForm(!showForm)}
-            >
+            <button className="add-reminder-btn" onClick={() => setShowForm(!showForm)}>
               <AddRoundedIcon className="btn-icon" />
               {showForm ? "Cancel" : "Add Reminder"}
             </button>
           </div>
 
-          {/* Motivational message shown briefly after completing a task */}
-          {motivMessage && (
-            <div className="motiv-banner">{motivMessage}</div>
-          )}
+          {/* Motivational message shown after completing a task */}
+          {motivMessage && <div className="motiv-banner">{motivMessage}</div>}
 
-          {/* Add Reminder Form - only shown when showForm is true */}
+          {/* Fetch error */}
+          {fetchError && <div className="fetch-error">{fetchError}</div>}
+
+          {/* Add Reminder Form */}
           {showForm && (
             <form className="add-form" onSubmit={handleAddReminder} noValidate>
               <h2>Add a New Reminder</h2>
 
-              {/* Title input */}
+              {errors.general && <p className="error-message">{errors.general}</p>}
+
               <div className="form-field">
                 <label htmlFor="title">Title</label>
                 <input
-                  id="title"
-                  type="text"
-                  name="title"
+                  id="title" type="text" name="title"
                   placeholder="e.g. Study for Algorithms Exam"
-                  value={form.title}
-                  onChange={handleChange}
+                  value={form.title} onChange={handleChange}
                   className={errors.title ? "input-error" : ""}
                 />
                 {errors.title && <p className="error-message">{errors.title}</p>}
               </div>
 
-              {/* Due Date input */}
               <div className="form-field">
                 <label htmlFor="dueDate">Due Date</label>
                 <input
-                  id="dueDate"
-                  type="date"
-                  name="dueDate"
-                  value={form.dueDate}
-                  onChange={handleChange}
+                  id="dueDate" type="date" name="dueDate"
+                  value={form.dueDate} onChange={handleChange}
                   className={errors.dueDate ? "input-error" : ""}
                 />
                 {errors.dueDate && <p className="error-message">{errors.dueDate}</p>}
               </div>
 
-              <button type="submit" className="submit-form-btn">
-                Add Reminder
-              </button>
+              <button type="submit" className="submit-form-btn">Add Reminder</button>
             </form>
           )}
 
-          {/* Pending reminders section */}
-          {pendingReminders.length > 0 && (
+          {/* Loading state */}
+          {loading && <div className="loading-state"><p>Loading reminders...</p></div>}
+
+          {/* Empty state */}
+          {!loading && reminders.length === 0 && (
+            <div className="no-results"><p>No reminders yet. Add one to get started!</p></div>
+          )}
+
+          {/* All done banner */}
+          {!loading && pendingReminders.length === 0 && completedReminders.length > 0 && (
+            <div className="all-done-banner">🎉 All tasks completed! You are amazing!</div>
+          )}
+
+          {/* Pending reminders */}
+          {!loading && pendingReminders.length > 0 && (
             <section className="reminders-section">
               <div className="section-heading">
                 <AccessAlarmRoundedIcon className="section-heading-icon" />
                 <h2>Upcoming</h2>
               </div>
-
               <div className="reminders-list">
                 {pendingReminders.map((reminder) => (
-                  <div key={reminder.id} className="reminder-card">
+                  <div key={reminder._id} className="reminder-card">
                     <div className="reminder-info">
-
-                      {/* Circle button to mark complete */}
+                      {/* Circle button - marks reminder as complete */}
                       <button
                         className="complete-btn"
-                        onClick={() => handleToggleComplete(reminder.id)}
+                        onClick={() => handleToggleComplete(reminder._id, reminder.completed)}
+                        disabled={loadingId === reminder._id}
                         aria-label="Mark as complete"
-                        title="Mark as complete"
                       >
                         <RadioButtonUncheckedRoundedIcon className="complete-icon" />
                       </button>
-
                       <div className="reminder-text">
                         <p className="reminder-title">{reminder.title}</p>
                         <p className="reminder-date">
@@ -249,13 +295,12 @@ function Reminders() {
                         </p>
                       </div>
                     </div>
-
                     {/* Delete button */}
                     <button
                       className="delete-btn"
-                      onClick={() => handleDelete(reminder.id)}
+                      onClick={() => handleDelete(reminder._id)}
+                      disabled={loadingId === reminder._id}
                       aria-label="Delete reminder"
-                      title="Delete reminder"
                     >
                       <DeleteRoundedIcon className="delete-icon" />
                     </button>
@@ -265,44 +310,28 @@ function Reminders() {
             </section>
           )}
 
-          {/* Empty state when there are no pending reminders */}
-          {pendingReminders.length === 0 && completedReminders.length === 0 && (
-            <div className="no-results">
-              <p>No reminders yet. Add one to get started!</p>
-            </div>
-          )}
-
-          {pendingReminders.length === 0 && completedReminders.length > 0 && (
-            <div className="all-done-banner">
-              🎉 All tasks completed! You are amazing!
-            </div>
-          )}
-
-          {/* Completed reminders section - shown when at least one is done */}
-          {completedReminders.length > 0 && (
+          {/* Completed reminders */}
+          {!loading && completedReminders.length > 0 && (
             <section className="reminders-section">
               <div className="section-heading">
                 <CheckCircleRoundedIcon className="section-heading-icon done-icon" />
                 <h2>Completed</h2>
               </div>
-
               <div className="reminders-list">
                 {completedReminders.map((reminder) => (
-                  <div key={reminder.id} className="reminder-card completed">
+                  <div key={reminder._id} className="reminder-card completed">
                     <div className="reminder-info">
-
-                      {/* Filled circle button to un-complete */}
+                      {/* Filled circle - click to un-complete */}
                       <button
                         className="complete-btn done"
-                        onClick={() => handleToggleComplete(reminder.id)}
+                        onClick={() => handleToggleComplete(reminder._id, reminder.completed)}
+                        disabled={loadingId === reminder._id}
                         aria-label="Mark as incomplete"
-                        title="Mark as incomplete"
                       >
                         <CheckCircleRoundedIcon className="complete-icon" />
                       </button>
-
                       <div className="reminder-text">
-                        {/* Title gets strikethrough when completed */}
+                        {/* Strikethrough on completed titles */}
                         <p className="reminder-title strikethrough">{reminder.title}</p>
                         <p className="reminder-date">
                           <CalendarTodayRoundedIcon className="date-icon" />
@@ -310,13 +339,11 @@ function Reminders() {
                         </p>
                       </div>
                     </div>
-
-                    {/* Delete button */}
                     <button
                       className="delete-btn"
-                      onClick={() => handleDelete(reminder.id)}
+                      onClick={() => handleDelete(reminder._id)}
+                      disabled={loadingId === reminder._id}
                       aria-label="Delete reminder"
-                      title="Delete reminder"
                     >
                       <DeleteRoundedIcon className="delete-icon" />
                     </button>

@@ -1,0 +1,157 @@
+/* Footer.css - Styles for the shared Footer component
+   Supports glass (dark) and campus (light) themes
+   to match the rest of StudySphere's public pages */
+
+.footer {
+  width: 100%;
+  padding: 48px 6% 0;
+  margin-top: 30px;
+  font-family: "Inter", "Roboto", sans-serif;
+}
+
+/* Main content row: brand + two link columns */
+.footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 36px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* Brand block on the left */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Logo row - icon + text */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.footer-logo-icon {
+  font-size: 1.6rem !important;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.65;
+  max-width: 260px;
+  line-height: 1.5;
+}
+
+/* Link column */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Column heading */
+.footer-links h4 {
+  margin: 0 0 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.5;
+}
+
+/* Individual links */
+.footer-links a {
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+  width: fit-content;
+}
+
+.footer-links a:hover {
+  opacity: 0.7;
+}
+
+/* Bottom copyright bar */
+.footer-bottom {
+  padding: 18px 0;
+  text-align: center;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 0.82rem;
+  opacity: 0.45;
+}
+
+/* ── Dark mode (glass) ──────────────────────────────── */
+
+.footer.glass {
+  color: #f8fafc;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer.glass .footer-inner {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer.glass .footer-logo {
+  color: #2dd4bf;
+}
+
+.footer.glass .footer-logo-icon {
+  color: #2dd4bf;
+}
+
+.footer.glass .footer-links a {
+  color: #d1d5db;
+}
+
+/* ── Light mode (campus) ────────────────────────────── */
+
+.footer.campus {
+  color: #111827;
+  border-top: 1px solid #e5e7eb;
+}
+
+.footer.campus .footer-inner {
+  border-bottom-color: #e5e7eb;
+}
+
+.footer.campus .footer-logo {
+  color: #2f855a;
+}
+
+.footer.campus .footer-logo-icon {
+  color: #2f855a;
+}
+
+.footer.campus .footer-links a {
+  color: #374151;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+}
