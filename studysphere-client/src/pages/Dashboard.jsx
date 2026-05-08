@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import DashboardNavbar from "../components/DashboardNavbar";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import FolderRoundedIcon from "@mui/icons-material/FolderRounded";
 import AccessAlarmRoundedIcon from "@mui/icons-material/AccessAlarmRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
@@ -79,7 +80,7 @@ function Dashboard() {
           <header className="dash-topbar">
             <div className="dash-topbar-left">
               <div className="feature">
-                <FolderRoundedIcon className="feature-icons" />
+                <DashboardRoundedIcon className="feature-icons" />
                 <h2>My Dashboard</h2>
               </div>
             </div>

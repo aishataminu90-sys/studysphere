@@ -23,7 +23,6 @@ function Footer({ theme }) {
           <h4>Platform</h4>
           <Link to="/FAQ">FAQ</Link>
           <Link to="/Contact">Contact</Link>
-          <Link to="/dashboard">Dashboard</Link>
           {/* <Link to="/resources">Resources</Link> */}
         </div>
 

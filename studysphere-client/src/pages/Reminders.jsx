@@ -137,7 +137,7 @@ function Reminders() {
 
       if (!res.ok) throw new Error("Failed to update reminder");
 
-      // Only show motivational message when marking as complete (not un-completing)
+      // Only show motivational message when marking as complete 
       if (!currentlyCompleted) {
         const msg = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
         setMotivMessage(msg);
@@ -172,7 +172,7 @@ function Reminders() {
     }
   };
 
-  // Formats a date into a readable string e.g. "10 May 2026"
+  // Formats a date into a readable string 
   const formatDate = (dateStr) => {
     return new Date(dateStr).toLocaleDateString("en-IE", {
       day: "numeric",

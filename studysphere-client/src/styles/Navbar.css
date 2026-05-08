@@ -242,6 +242,12 @@ main.campus .logo {
   color: #2f855a !important;
 }
 
+/* light mode hamburger button */
+.campus .hamburger-btn {
+  background: #e8f5ee;
+  color: #2f855a;
+}
+
 /* campus nav link override */
 main.campus .nav-links a {
   color: #111827 !important;

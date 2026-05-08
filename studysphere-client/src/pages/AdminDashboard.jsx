@@ -1,4 +1,4 @@
-// AdminDashboard.jsx - Admin-only dashboard
+//  Admin-only dashboard
 // Shows: contact messages with per-admin status, all resources, all users
 // Access is blocked on the frontend if the user is not an admin
 // The backend also enforces this with adminMiddleware
@@ -19,7 +19,7 @@ import "../styles/AdminDashboard.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
-// Status badge colours — matches the theme
+// Status badge colours  matches the theme
 const STATUS_COLOURS = {
   "New": "status-new",
   "In Progress": "status-progress",
@@ -293,7 +293,7 @@ function AdminDashboard() {
           {error && <div className="admin-error">{error}</div>}
           {loading && <div className="admin-loading">Loading...</div>}
 
-          {/* ── MESSAGES TAB ── */}
+          {/*  MESSAGES TAB  */}
           {!loading && activeTab === "messages" && (
             <section className="admin-section">
               <p className="admin-section-count">{messages.length} message{messages.length !== 1 ? "s" : ""}</p>
@@ -343,7 +343,7 @@ function AdminDashboard() {
             </section>
           )}
 
-          {/* ── RESOURCES TAB ── */}
+          {/*  RESOURCES TAB  */}
           {!loading && activeTab === "resources" && (
             <section className="admin-section">
               <p className="admin-section-count">{resources.length} resource{resources.length !== 1 ? "s" : ""}</p>
@@ -388,7 +388,7 @@ function AdminDashboard() {
             </section>
           )}
 
-          {/* ── USERS TAB ── */}
+          {/*  USERS TAB  */}
           {!loading && activeTab === "users" && (
             <section className="admin-section">
               <p className="admin-section-count">{users.length} user{users.length !== 1 ? "s" : ""}</p>

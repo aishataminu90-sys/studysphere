@@ -10,6 +10,7 @@ function Login({ theme, setTheme }) {
   const navigate = useNavigate();
   const [success, setSuccess] = useState("");
 
+  // Controlled form state for email and password fields
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -17,8 +18,10 @@ function Login({ theme, setTheme }) {
 
   const [errors, setErrors] = useState({});
 
+  // Basic email format check using regex
   const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
+  // Updates the matching form field and clears its error on every keystroke
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -34,6 +37,7 @@ function Login({ theme, setTheme }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Client-side validation before hitting the API
     const newErrors = {};
 
     if (!form.email.trim()) {
@@ -48,6 +52,7 @@ function Login({ theme, setTheme }) {
 
     setErrors(newErrors);
 
+    // Only proceed if there are no validation errors
     if (Object.keys(newErrors).length === 0) {
       try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
@@ -55,27 +60,29 @@ function Login({ theme, setTheme }) {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+          credentials: "include", // sends the session cookie with the request
           body: JSON.stringify({
             email: form.email,
             password: form.password,
           }),
         });
 
-       const data = await response.json();
+        const data = await response.json();
 
         if (!response.ok) {
           setErrors({ general: data.error || "Login failed" });
           return;
         }
 
-        // Admins redirect
+        // Fetch the logged-in user's role to determine where to redirect
         const meRes = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
           credentials: "include",
         });
         const meData = await meRes.json();
 
         setSuccess("Login successful! Redirecting...");
+
+        // Redirect admins to /admin, all other users to /dashboard
         setTimeout(() => {
           if (meData.role === "admin") {
             navigate("/admin");
@@ -96,6 +103,7 @@ function Login({ theme, setTheme }) {
       <ThemeToggle theme={theme} setTheme={setTheme} />
 
       <section className="login-wrapper">
+        {/* Left side  marketing copy */}
         <div className="login-info">
           <p className="login-tagline">Welcome back</p>
           <h1>Continue your study journey.</h1>
@@ -104,9 +112,12 @@ function Login({ theme, setTheme }) {
           </p>
         </div>
 
+        {/* Right side  login form */}
         <form className="login-card" onSubmit={handleSubmit} noValidate>
           <h2>Login</h2>
           <p className="subtitle">Enter your details to continue</p>
+
+          {/* General API error (e.g. wrong credentials) */}
           {errors.general && <p className="error-message">{errors.general}</p>}
           {success && <p className="success-message">{success}</p>}
           
@@ -135,7 +146,7 @@ function Login({ theme, setTheme }) {
           </p>
 
           <p className="link">
-            Don’t have an account? <Link to="/register">Register</Link>
+            Don't have an account? <Link to="/register">Register</Link>
           </p>
         </form>
       </section>

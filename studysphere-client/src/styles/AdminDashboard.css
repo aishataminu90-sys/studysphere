@@ -1,5 +1,4 @@
-/* AdminDashboard.css - Styles for the Admin Dashboard page
-   Follows the same layout pattern as Resources.css and StudyGroups.css */
+/* AdminDashboard.css - Styles for the Admin Dashboard page */
 
 #root:has(.admin-page) {
   width: 100%;
@@ -36,7 +35,7 @@
   width: calc(100% - 60px);
 }
 
-/* ── Page heading ─────────────────────────────────── */
+/*  Page heading */
 
 .admin-tagline {
   font-size: 0.78rem;
@@ -70,7 +69,7 @@
   margin: 0 0 28px;
 }
 
-/* ── Stats row ────────────────────────────────────── */
+/*  Stats row  */
 
 .admin-stats {
   display: grid;
@@ -105,7 +104,7 @@
   opacity: 0.6;
 }
 
-/* ── Tabs ─────────────────────────────────────────── */
+/*  Tabs */
 
 .admin-tabs {
   display: flex;
@@ -130,7 +129,7 @@
 .admin-tab:hover { transform: translateY(-1px); }
 .tab-icon { font-size: 1.1rem !important; }
 
-/* ── Section ──────────────────────────────────────── */
+/* Section*/
 
 .admin-section { animation: fadeUp 0.4s ease both; }
 
@@ -160,7 +159,7 @@
   margin-bottom: 20px;
 }
 
-/* ── Messages ─────────────────────────────────────── */
+/*  Messages  */
 
 .messages-list {
   display: flex;
@@ -236,7 +235,7 @@
 .status-progress { border-left-color: #f59e0b; }
 .status-closed { border-left-color: #22c55e; opacity: 0.75; }
 
-/* ── Table (resources + users) ────────────────────── */
+/*  Table (resources + users)  */
 
 .admin-table-wrapper {
   overflow-x: auto;
@@ -329,14 +328,14 @@
 
 button:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; }
 
-/* ── Animation ────────────────────────────────────── */
+/*  Animation  */
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Dark mode (glass) ────────────────────────────── */
+/*  Dark mode (glass)  */
 
 .admin-page.glass {
   background:
@@ -405,7 +404,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important;
 .admin-page.glass .toggle-admin-btn.demote { background: rgba(239,68,68,0.15); color: #fca5a5; }
 .admin-page.glass .toggle-admin-btn.demote:hover { background: rgba(239,68,68,0.25); }
 
-/* ── Light mode (campus) ──────────────────────────── */
+/*  Light mode (campus)  */
 
 .admin-page.campus {
   background: #f4f6f8;
@@ -467,7 +466,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important;
 .admin-page.campus .toggle-admin-btn.demote { background: #fef2f2; color: #dc2626; }
 .admin-page.campus .toggle-admin-btn.demote:hover { background: #fecaca; }
 
-/* ── Responsive ───────────────────────────────────── */
+/*  Responsive  */
 
 @media (max-width: 768px) {
   .admin-main { margin-left: 0; width: 100%; padding: 16px; }

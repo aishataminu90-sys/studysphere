@@ -13,11 +13,13 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ThemeToggle from "../components/ThemeToggle";
 
+// Theme label mappings for the ThemeToggle component
 const themes = {
   glass: "Dark Mode",
   campus: "Light Mode",
 };
 
+// Team member data used to dynamically render the Meet the Team section
 const teamMembers = [
   {
     name: "Aishat Aminu",
@@ -42,8 +44,7 @@ const teamMembers = [
   },
 ];
 
-
-// Added setTheme to props so ThemeToggle works
+// setTheme is passed down so ThemeToggle can switch between dark and light mode
 function Home({ theme, setTheme }) {
 
   return (
@@ -52,6 +53,8 @@ function Home({ theme, setTheme }) {
        <ThemeToggle theme={theme} setTheme={setTheme} />
 
       <div className="page-content">
+
+        {/* Hero  main landing section with CTA buttons and study plan preview card */}
         <section className="hero">
           <div className="hero-text">
             <p className="tagline">Your academic life, organised</p>
@@ -73,6 +76,7 @@ function Home({ theme, setTheme }) {
             </div>
           </div>
 
+          {/* Preview card showing a sample study plan */}
           <div className="hero-card">
             <div className="card-header">
               <span>Today&apos;s Study Plan</span>
@@ -102,6 +106,7 @@ function Home({ theme, setTheme }) {
           </div>
         </section>
 
+        {/* Features  highlights the four core app features */}
         <section className="features">
           <div className="feature-card">
             <FolderRoundedIcon className="feature-icon" />
@@ -127,6 +132,8 @@ function Home({ theme, setTheme }) {
             <p>Track study tasks with motivational messages when completed.</p>
           </div>
         </section>
+
+        {/* About wrapper  contains the About, Mission, and Team sections */}
         <div className="about-wrapper" >
           {/* Hero section */}
           <section id="about" className="about-hero">
@@ -154,6 +161,7 @@ function Home({ theme, setTheme }) {
               </div>
             </div>
           </section>
+
            {/* Meet the team */}
         <section className="about-team">
           <h2>Meet the Team</h2>
@@ -161,6 +169,7 @@ function Home({ theme, setTheme }) {
             Built as part of the Web Technologies module at Griffith College Dublin, Stage 3.
           </p>
 
+          {/* Dynamically render a card for each team member */}
           <div className="team-grid">
             {teamMembers.map((member) => (
               <div key={member.studentNo} className="team-card">

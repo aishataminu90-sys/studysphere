@@ -1,14 +1,11 @@
-/* =============================================
-   InfoPages.css
-   Shared styles for FAQ, Terms, Contact pages
-   Supports glass (dark) and campus (light) themes
-   ============================================= */
+/* InfoPages.css
+   Shared styles for FAQ, Terms, Contact pages */
 
 * {
   box-sizing: border-box;
 }
 
-/* ── Base page layout ─────────────────────────────── */
+/*  Base page layout  */
 
 .info-page {
   min-height: 100vh;
@@ -21,7 +18,7 @@
   margin: 0 auto;
 }
 
-/* ── Hero section ─────────────────────────────────── */
+/*  Hero section  */
 
 .info-hero {
   padding: 70px 0 40px;
@@ -50,7 +47,7 @@
   opacity: 0.8;
 }
 
-/* ── Shared card styles ───────────────────────────── */
+/*  Shared card styles  */
 
 .faq-card,
 .contact-card,
@@ -84,7 +81,7 @@
   opacity: 0.8;
 }
 
-/* ── Contact grid ─────────────────────────────────── */
+/*  Contact grid  */
 
 .contact-grid {
   display: grid;
@@ -93,7 +90,7 @@
   margin-bottom: 50px;
 }
 
-/* ── Contact form ─────────────────────────────────── */
+/*  Contact form  */
 
 .contact-form-card {
   margin-bottom: 70px;
@@ -124,7 +121,7 @@
   resize: vertical;
 }
 
-/* ── Terms page ───────────────────────────────────── */
+/*  Terms page  */
 
 .terms-card {
   display: flex;
@@ -133,7 +130,7 @@
   margin-bottom: 70px;
 }
 
-/* ── FAQ Accordion ────────────────────────────────── */
+/*  FAQ Accordion  */
 
 .faq-accordion {
   display: flex;
@@ -191,7 +188,7 @@
   opacity: 0.8;
 }
 
-/* ── Animation ────────────────────────────────────── */
+/*  Animation  */
 
 @keyframes fadeUp {
   from {
@@ -204,7 +201,7 @@
   }
 }
 
-/* ── Dark mode (glass) ────────────────────────────── */
+/*  Dark mode (glass)  */
 
 .glass.info-page {
   background:
@@ -250,7 +247,7 @@
 .glass .faq-question { color: #f8fafc; }
 .glass .faq-arrow { color: #5eead4; }
 
-/* ── Light mode (campus) ──────────────────────────── */
+/*  Light mode (campus)  */
 
 .campus.info-page {
   background: #f8faf5;
@@ -294,7 +291,7 @@
 .campus .faq-question { color: #111827; }
 .campus .faq-arrow { color: #2f855a; }
 
-/* ── Responsive ───────────────────────────────────── */
+/*  Responsive  */
 
 @media (max-width: 900px) {
   .contact-grid {

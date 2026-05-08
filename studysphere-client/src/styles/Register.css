@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 
+/* Base register page layout */
 .register-page {
   min-height: 100vh;
   width: 100%;
@@ -10,6 +11,7 @@
   font-family: "Inter", "Roboto", sans-serif;
 }
 
+/* Two-column layout: info on left, form on right */
 .register-wrapper {
   width: 100%;
   max-width: 1500px;
@@ -27,6 +29,7 @@
   text-transform: uppercase;
 }
 
+/* Fluid heading size */
 .register-info h1 {
   font-size: clamp(2.7rem, 6vw, 5.3rem);
   line-height: 1;
@@ -42,6 +45,7 @@
   max-width: 560px;
 }
 
+/* Glassmorphism register card */
 .register-card {
   padding: 44px;
   border-radius: 30px;
@@ -61,6 +65,7 @@
   margin-bottom: 24px;
 }
 
+/* Shared styles for all form inputs and selects */
 .register-card input,
 .register-card select {
   width: 100%;
@@ -77,6 +82,7 @@
   cursor: text;
 }
 
+/* Custom dropdown arrow using CSS gradients (replaces native arrow) */
 .register-card select {
   appearance: none;
   -webkit-appearance: none;
@@ -96,6 +102,7 @@
   font-weight: 900;
 }
 
+/* Visual feedback while form is submitting */
 .register-card button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
@@ -110,7 +117,7 @@
   text-decoration: none;
 }
 
-/* DARK MODE */
+/* DARK (GLASS) THEME  */
 
 .register-page.glass {
   color: #f9fafb;
@@ -141,6 +148,7 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+/* Light-coloured arrow for dark background */
 .register-page.glass .register-card select {
   background-image:
     linear-gradient(45deg, transparent 50%, #f9fafb 50%),
@@ -175,7 +183,7 @@
   color: #5eead4;
 }
 
-/* LIGHT MODE */
+/*  LIGHT (CAMPUS) THEME */
 
 .register-page.campus {
   color: #111827;
@@ -205,6 +213,7 @@
   border: 1px solid #d1d5db;
 }
 
+/* Dark-coloured arrow for light background */
 .register-page.campus .register-card select {
   background-image:
     linear-gradient(45deg, transparent 50%, #111827 50%),
@@ -239,7 +248,7 @@
   color: #2f855a;
 }
 
-/* Validation messages */
+/* VALIDATION MESSAGES  */
 
 .error-message {
   margin: -4px 0 8px;
@@ -255,6 +264,7 @@
   font-weight: 700;
 }
 
+/* Red border on invalid inputs */
 .input-error {
   border-color: #ef4444 !important;
 }
@@ -275,9 +285,11 @@
   color: #2f855a;
 }
 
+/*  RESPONSIVE  */
+
 @media (max-width: 850px) {
   .register-wrapper {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* stack layout on tablets/mobile */
     gap: 40px;
   }
 

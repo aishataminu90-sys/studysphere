@@ -7,6 +7,7 @@ body {
   font-family: "Inter", "Roboto", sans-serif;
 }
 
+/* Base home page layout */
 .home {
   min-height: 100vh;
   width: 100%;
@@ -49,6 +50,7 @@ body {
   border: none;
 }
 
+/* Two-column hero layout */
 .hero {
   display: grid;
   grid-template-columns: 1fr 0.95fr;
@@ -61,14 +63,11 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #5eead4; /* ADD THIS */
+  color: #5eead4;
 }
-/* .hero h1 {
-  font-weight: 800;
-  letter-spacing: -1px;
-} 
-*/
-  .hero h1 {
+
+/* Fluid font size scales with viewport */
+.hero h1 {
   font-weight: 800;
   letter-spacing: -1px;
   font-size: clamp(3.2rem, 5.8vw, 6.7rem);
@@ -77,22 +76,11 @@ body {
   color: inherit;
 }
 
-
-
- /* .hero h1 {
-  font-size: clamp(2.7rem, 6vw, 5.7rem);
-  line-height: 1;
-  margin: 14px 0 22px;
-  color: #f9fafb; /* ADD THIS LINE 
-}  
-*/
-
-
 .description {
   max-width: 620px;
   font-size: clamp(1rem, 1.2vw, 1.25rem);
   line-height: 1.6;
-  color: #d1d5db; /* ADD THIS */
+  color: #d1d5db;
 }
 
 .hero-buttons {
@@ -109,6 +97,7 @@ body {
   font-weight: 800;
 }
 
+/* Glassmorphism study plan card */
 .hero-card {
   padding: 26px;
   border-radius: 30px;
@@ -145,6 +134,7 @@ body {
   margin: 0;
 }
 
+/* 4-column features grid */
 .features {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -156,7 +146,6 @@ body {
   min-height: 135px;
   padding: 24px;
   border-radius: 24px;
-
 }
 
 .feature-card p {
@@ -172,7 +161,7 @@ body {
   margin-bottom: 8px;
 }
 
-/*  dark mode */
+/*  DARK (GLASS) THEME  */
 
 .glass.home {
   background:
@@ -226,14 +215,15 @@ body {
   color: #031316;
 }
 
-/*  light mode  */
+/*  LIGHT (CAMPUS) THEME  */
+
 .campus.home {
   background: #f8faf5;
   color: #111827;
 }
 
 .campus .hero h1 {
-  color: #111827; /* dark text for light background */
+  color: #111827;
 }
 
 .campus .description {
@@ -284,7 +274,10 @@ body {
   background: #2f855a;
   color: white;
 }
-/* animation*/
+
+/*  ANIMATIONS  */
+
+/* Fade-up on page load for key elements */
 .navbar,
 .theme-switcher,
 .hero-text,
@@ -303,6 +296,7 @@ body {
   max-width: 760px;
 }
 
+/* Hover lift effect on feature cards */
 .feature-card {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
@@ -316,6 +310,7 @@ body {
   border-color: #2f855a;
 }
 
+/* Smooth transitions for all interactive buttons */
 .primary-btn,
 .secondary-btn,
 .login-card button,
@@ -376,6 +371,7 @@ body {
   }
 }
 
+/* Form validation error styles */
 .error-message {
   margin: -4px 0 8px;
   text-align: left;
@@ -392,15 +388,15 @@ body {
   color: #dc2626;
 }
 
-/* Responsive */
+/* RESPONSIVE  */
 
 @media (max-width: 900px) {
   .hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* stack hero on tablets */
   }
 
   .features {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2-col features on tablets */
   }
 
   .navbar {
@@ -411,7 +407,7 @@ body {
 
 @media (max-width: 600px) {
   .features {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* single column on mobile */
   }
 
   .hero-buttons {
@@ -419,6 +415,7 @@ body {
   }
 }
 
+/* Override specificity issues for themed backgrounds */
 main.campus.home {
   background: #f8faf5 !important;
 }
@@ -430,14 +427,12 @@ main.glass.home {
 }
 
 
-/* ── ABOUT SECTION (inside Home.jsx) ───────────────── */
+/* ABOUT SECTION  */
 
 .about-wrapper {
   max-width: 1100px;
   margin: 0 auto;
 }
-
-/* Hero */
 
 .about-hero {
   padding: 80px 0 40px;
@@ -452,6 +447,7 @@ main.glass.home {
   margin-bottom: 10px;
 }
 
+/* Fluid heading size */
 .about-hero h1 {
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 800;
@@ -467,8 +463,6 @@ main.glass.home {
   opacity: 0.8;
   margin: 0;
 }
-
-/* Mission */
 
 .about-mission {
   margin: 48px 0;
@@ -502,8 +496,6 @@ main.glass.home {
   opacity: 0.85;
 }
 
-/* Team */
-
 .about-team {
   margin: 48px 0 70px;
   animation: fadeUp 0.7s ease 0.2s both;
@@ -521,6 +513,7 @@ main.glass.home {
   opacity: 0.65;
 }
 
+/* 3-column team grid */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -542,8 +535,6 @@ main.glass.home {
 .team-card:hover {
   transform: translateY(-6px);
 }
-
-/* Avatar */
 
 .team-avatar {
   width: 54px;
@@ -584,7 +575,7 @@ main.glass.home {
   opacity: 0.78;
 }
 
-/* ── GLASS THEME ───────────────────────────────────── */
+/* ABOUT — GLASS THEME  */
 
 .glass .about-tagline {
   color: #2dd4bf;
@@ -615,7 +606,7 @@ main.glass.home {
   color: #5eead4;
 }
 
-/* ── CAMPUS THEME ──────────────────────────────────── */
+/*  ABOUT CAMPUS THEME  */
 
 .campus .about-tagline {
   color: #2f855a;
@@ -650,21 +641,21 @@ main.glass.home {
   color: #166534;
 }
 
-/* ── RESPONSIVE ────────────────────────────────────── */
+/* ABOUT — RESPONSIVE  */
 
 @media (max-width: 900px) {
   .team-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr; /* 2-col on tablets */
   }
 
   .mission-card {
-    flex-direction: column;
+    flex-direction: column; /* stack icon above text */
   }
 }
 
 @media (max-width: 600px) {
   .team-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* single column on mobile */
   }
 
   .about-hero {

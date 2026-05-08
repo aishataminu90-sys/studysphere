@@ -1,6 +1,5 @@
 // FAQ.jsx - Frequently Asked Questions page with accordion functionality
-// Each question expands and collapses when clicked
-// Matches the glass/campus theme system used across StudySphere
+
 
 import { useState } from "react";
 import Navbar from "../components/Navbar";
