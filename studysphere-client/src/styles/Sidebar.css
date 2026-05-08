@@ -1,13 +1,13 @@
+/* global box sizing reset */
 * {
   box-sizing: border-box;
 }
 
-/* ─── Main sidebar container ─────────────────────────────── */
+/* sidebar main container */
 .sidebar {
   position: fixed;
   width: 240px;
-
-  top: 60px; /* sits below DashboardNavbar which is 60px tall */
+  top: 60px;
   left: 0;
   height: calc(100vh - 60px);
   display: flex;
@@ -17,20 +17,19 @@
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
   transition: width 0.25s ease;
-  /* NO overflow:hidden - that was clipping the toggle button */
 }
 
-/* Open state */
+/* expanded sidebar state */
 .sidebar-open {
   width: 230px;
 }
 
-/* Collapsed state - icons only */
+/* collapsed sidebar state */
 .sidebar-collapsed {
   width: 60px;
 }
 
-/* ─── Nav links list ─────────────────────────────────────── */
+/* sidebar navigation list */
 .sidebar-links {
   list-style: none;
   padding: 12px 0;
@@ -40,11 +39,12 @@
   overflow-x: hidden;
 }
 
+/* list items */
 .sidebar-links li {
   width: 100%;
 }
 
-/* ─── Individual link ────────────────────────────────────── */
+/* individual nav link */
 .sidebar-link {
   display: flex;
   align-items: center;
@@ -59,12 +59,13 @@
   transition: background 0.2s ease, color 0.2s ease;
 }
 
+/* link hover state */
 .sidebar-link:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
 
-/* Active page highlight */
+/* active nav link */
 .sidebar-link.active {
   background: rgba(20, 184, 166, 0.2);
   color: #2dd4bf;
@@ -72,30 +73,30 @@
   border-left: 3px solid #2dd4bf;
 }
 
-/* MUI icon */
+/* sidebar icons */
 .sidebar-icon {
   font-size: 1.2rem !important;
   flex-shrink: 0;
 }
 
-/* Text label */
+/* sidebar label text */
 .sidebar-label {
   overflow: hidden;
   white-space: nowrap;
 }
 
-/* Collapsed: centre icons */
+/* collapsed sidebar link layout */
 .sidebar-collapsed .sidebar-link {
   justify-content: center;
   padding: 13px 0;
 }
 
-/* Active border still shows when collapsed */
+/* keep active border visible when collapsed */
 .sidebar-collapsed .sidebar-link.active {
   border-left: 3px solid #2dd4bf;
 }
 
-/* ─── Toggle button at the bottom ────────────────────────── */
+/* sidebar toggle button */
 .sidebar-toggle-btn {
   display: flex;
   align-items: center;
@@ -114,94 +115,103 @@
   flex-shrink: 0;
 }
 
+/* toggle button hover */
 .sidebar-toggle-btn:hover {
   background: rgba(45, 212, 191, 0.1);
   color: #2dd4bf;
 }
 
+/* toggle icon */
 .sidebar-toggle-icon {
   font-size: 1.1rem !important;
   flex-shrink: 0;
 }
 
-.sidebar-toggle-label {
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-/* Hide text label in toggle when collapsed */
+/* hide toggle text in collapsed mode */
 .sidebar-collapsed .sidebar-toggle-label {
   display: none;
 }
 
-/* ─── Icons used by page topbars (compatibility) ─────────── */
+/* shared topbar icon style */
 .topbar-icon {
   font-size: 1.3rem !important;
   margin-right: 8px;
 }
 
+/* section title wrapper */
 .section-title {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+/* section heading text */
 .section-title h3 {
   margin: 0;
 }
 
+/* section icon */
 .section-icon {
   font-size: 1.2rem !important;
 }
 
-/* ─── Light mode (campus) ────────────────────────────────── */
+/* light mode sidebar */
 .campus .sidebar {
   background: #ffffff;
   border-right: 1px solid #d1d5db;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
 }
 
+/* light mode toggle button */
 .campus .sidebar-toggle-btn {
   border-top-color: #e5e7eb;
   color: #9ca3af;
 }
 
+/* light mode toggle hover */
 .campus .sidebar-toggle-btn:hover {
   background: #f0faf4;
   color: #2f855a;
 }
 
+/* light mode links */
 .campus .sidebar-link {
   color: #374151;
 }
 
+/* light mode link hover */
 .campus .sidebar-link:hover {
   background: #f1f8f4;
   color: #111827;
 }
 
+/* light mode active link */
 .campus .sidebar-link.active {
   background: #e8f5ee;
   color: #2f855a;
   border-left-color: #2f855a;
 }
 
-/* ─── Responsive ─────────────────────────────────────────── */
+/* mobile adjustments */
 @media (max-width: 768px) {
 
+  /* slightly smaller expanded sidebar */
   .sidebar-open {
     width: 220px;
   }
 
+  /* collapsed width stays fixed */
   .sidebar-collapsed {
     width: 60px;
   }
 
+  /* center icons in collapsed mode */
   .sidebar-collapsed .sidebar-link {
     justify-content: center;
     padding: 13px 0;
   }
 
+  /* hide labels on mobile collapsed sidebar */
   .sidebar-collapsed .sidebar-label,
   .sidebar-collapsed .sidebar-toggle-label {
     display: none;

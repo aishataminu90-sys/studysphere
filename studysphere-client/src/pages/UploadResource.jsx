@@ -7,101 +7,159 @@ import TipsAndUpdatesRoundedIcon from "@mui/icons-material/TipsAndUpdatesRounded
 import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
 import "../styles/UploadResource.css";
 
-// Upload Resource page - lets students share their study materials
+const API = import.meta.env.VITE_API_URL;
+
+const PRESET_MODULES = ["CS201", "LAW101", "BUS301"];
+const TAGS = ["Notes", "Summary", "Slides", "Past Paper", "Case Study"];
+
 function UploadResource() {
   const navigate = useNavigate();
-
-  // Theme state
   const [theme, setTheme] = useState("glass");
 
-  // All form field values stored together
   const [form, setForm] = useState({
     title: "",
     module: "",
+    customModule: "",
     tag: "",
     description: "",
-    file: null,
+    link: "",
   });
 
-  // Validation error messages shown under each field
+  const [isCustomModule, setIsCustomModule] = useState(false);
   const [errors, setErrors] = useState({});
-
-  // Shows the success banner when form is submitted correctly
   const [submitted, setSubmitted] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  // Module and tag options for the dropdowns
-  const modules = ["CS201", "LAW101", "BUS301"];
-  const tags = ["Notes", "Summary", "Slides", "Past Paper", "Case Study"];
-
-  // Updates form state when user types or selects an option
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Clear the error for the field being edited
     setErrors({ ...errors, [e.target.name]: "" });
+    setServerError("");
   };
 
-  // Handles the file input separately since it uses e.target.files
-  const handleFileChange = (e) => {
-    setForm({ ...form, file: e.target.files[0] });
-    setErrors({ ...errors, file: "" });
+  const handleModuleChange = (e) => {
+    const val = e.target.value;
+
+    if (val === "__other__") {
+      setIsCustomModule(true);
+      setForm({ ...form, module: "", customModule: "" });
+    } else {
+      setIsCustomModule(false);
+      setForm({ ...form, module: val, customModule: "" });
+    }
+
+    setErrors({ ...errors, module: "" });
   };
 
-  // Checks all fields are valid before submitting
+  const containsUnsafeContent = (text) => {
+    const unsafePatterns = [
+     /<script.*?>.*?<\/script>/gi,
+     /<[^>]+>/g,
+     /javascript:/gi,
+     /onerror=/gi,
+     /onload=/gi
+   ];
+
+   return unsafePatterns.some((pattern) => pattern.test(text));
+ };
+
   const validate = () => {
     const newErrors = {};
+    const finalModule = isCustomModule ? form.customModule.trim() : form.module;
 
-    if (!form.title.trim())
+    if (!form.title.trim()) {
       newErrors.title = "Title is required";
+      } else if (containsUnsafeContent(form.title)) {
+    newErrors.title = "Invalid characters detected";
+  }
 
-    if (!form.module)
-      newErrors.module = "Please select a module";
+    
 
-    if (!form.tag)
+    if (!finalModule) {
+      newErrors.module = isCustomModule
+        ? "Please enter your module name"
+        : "Please select a module";
+    } else if (containsUnsafeContent(finalModule)) {
+    newErrors.module = "Invalid characters detected";
+  }
+
+    if (!form.tag) {
       newErrors.tag = "Please select a resource type";
+    } 
 
-    if (!form.description.trim())
+    if (!form.description.trim()) {
       newErrors.description = "Description is required";
-    else if (form.description.trim().length < 10)
+    } else if (form.description.trim().length < 10) {
       newErrors.description = "Description must be at least 10 characters";
+    } else if (containsUnsafeContent(form.description)) {
+    newErrors.description = "Invalid characters detected";
+  }
 
-    if (!form.file)
-      newErrors.file = "Please select a file to upload";
+    if (!form.link.trim()) {
+      newErrors.link = "Please add a file link";
+    }
 
     return newErrors;
   };
 
-  // Runs when the form is submitted
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = validate();
     setErrors(newErrors);
 
-    // Only proceed if there are no validation errors
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Resource uploaded:", form);
+    if (Object.keys(newErrors).length > 0) return;
+
+    setSubmitting(true);
+    setServerError("");
+
+    const finalModule = isCustomModule ? form.customModule.trim() : form.module;
+
+    try {
+      const res = await fetch(`${API}/resources`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          title: form.title,
+          module: finalModule,
+          tags: form.tag,
+          description: form.description,
+          link: form.link,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setServerError(data.error || "Upload failed. Please try again.");
+        return;
+      }
+
       setSubmitted(true);
 
-      // After 3 seconds redirect to the resources page
       setTimeout(() => {
         setSubmitted(false);
         navigate("/resources");
       }, 3000);
+    } catch (err) {
+      setServerError("Could not connect to server. Please try again.");
+      console.error(err);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
     <div className={`upload-page ${theme}`}>
-
-      {/* Top navbar - logo, theme toggle, home, logout */}
       <DashboardNavbar theme={theme} setTheme={setTheme} />
 
       <div className="upload-layout">
         <Sidebar />
 
         <div className="upload-wrapper">
-
-          {/* Page title bar */}
           <header className="upload-topbar">
             <div className="upload-topbar-left">
               <UploadFileRoundedIcon className="topbar-icon" />
@@ -110,8 +168,6 @@ function UploadResource() {
           </header>
 
           <main className="upload-main">
-
-            {/* Page heading */}
             <div className="upload-header">
               <p className="upload-tagline">SHARE YOUR KNOWLEDGE</p>
               <h1>Upload a Study Resource</h1>
@@ -120,7 +176,6 @@ function UploadResource() {
               </p>
             </div>
 
-            {/* Success message shown after a valid submission */}
             {submitted && (
               <div className="success-banner">
                 <CheckCircleRoundedIcon className="success-icon" />
@@ -128,13 +183,15 @@ function UploadResource() {
               </div>
             )}
 
-            {/* Two column layout - form on left, tips on right */}
-            <div className="upload-form-layout">
+            {serverError && (
+              <div className="server-error-banner">
+                {serverError}
+              </div>
+            )}
 
-              {/* Main upload form */}
+            <div className="upload-form-layout">
               <form className="upload-form" onSubmit={handleSubmit} noValidate>
 
-                {/* Title */}
                 <div className="form-group">
                   <label htmlFor="title">Resource Title *</label>
                   <input
@@ -149,25 +206,39 @@ function UploadResource() {
                   {errors.title && <p className="error-msg">{errors.title}</p>}
                 </div>
 
-                {/* Module dropdown */}
                 <div className="form-group">
                   <label htmlFor="module">Module *</label>
                   <select
                     id="module"
                     name="module"
-                    value={form.module}
-                    onChange={handleChange}
-                    className={errors.module ? "input-error" : ""}
+                    value={isCustomModule ? "__other__" : form.module}
+                    onChange={handleModuleChange}
+                    className={`upload-select ${errors.module ? "input-error" : ""}`}
                   >
                     <option value="">Select a module</option>
-                    {modules.map((mod) => (
-                      <option key={mod} value={mod}>{mod}</option>
+                    {PRESET_MODULES.map((mod) => (
+                      <option key={mod} value={mod}>
+                        {mod}
+                      </option>
                     ))}
+                    <option value="__other__">+ Add my own module</option>
                   </select>
+
+                  {isCustomModule && (
+                    <input
+                      type="text"
+                      name="customModule"
+                      placeholder="e.g. MATH301 or Introduction to Psychology"
+                      value={form.customModule}
+                      onChange={handleChange}
+                      className={`custom-module-input ${errors.module ? "input-error" : ""}`}
+                      style={{ marginTop: "0.5rem" }}
+                    />
+                  )}
+
                   {errors.module && <p className="error-msg">{errors.module}</p>}
                 </div>
 
-                {/* Resource type dropdown */}
                 <div className="form-group">
                   <label htmlFor="tag">Resource Type *</label>
                   <select
@@ -175,17 +246,19 @@ function UploadResource() {
                     name="tag"
                     value={form.tag}
                     onChange={handleChange}
-                    className={errors.tag ? "input-error" : ""}
+                    className={`upload-select ${errors.tag ? "input-error" : ""}`}
                   >
                     <option value="">Select a type</option>
-                    {tags.map((tag) => (
-                      <option key={tag} value={tag}>{tag}</option>
+                    {TAGS.map((tag) => (
+                      <option key={tag} value={tag}>
+                        {tag}
+                      </option>
                     ))}
                   </select>
+
                   {errors.tag && <p className="error-msg">{errors.tag}</p>}
                 </div>
 
-                {/* Description textarea */}
                 <div className="form-group">
                   <label htmlFor="description">Description *</label>
                   <textarea
@@ -197,38 +270,40 @@ function UploadResource() {
                     rows={4}
                     className={errors.description ? "input-error" : ""}
                   />
-                  {errors.description && <p className="error-msg">{errors.description}</p>}
+                  {errors.description && (
+                    <p className="error-msg">{errors.description}</p>
+                  )}
                 </div>
 
-                {/* File upload area */}
                 <div className="form-group">
-                  <label htmlFor="file">Upload File *</label>
-                  <div className={`file-drop-zone ${errors.file ? "input-error" : ""}`}>
-                    {/* Hidden file input sits over the visible area */}
-                    <input
-                      type="file"
-                      id="file"
-                      name="file"
-                      onChange={handleFileChange}
-                      accept=".pdf,.doc,.docx,.ppt,.pptx,.mp4"
-                    />
-                    <UploadFileRoundedIcon className="file-upload-icon" />
-                    <p className="file-hint">
-                      {form.file
-                        ? `${form.file.name}`
-                        : "Click to browse or drag and drop your file here"}
-                    </p>
-                    <p className="file-types">PDF, DOC, DOCX, PPT, PPTX, MP4</p>
-                  </div>
-                  {errors.file && <p className="error-msg">{errors.file}</p>}
+                  <label htmlFor="link">Resource Link *</label>
+                  <input
+                    type="url"
+                    id="link"
+                    name="link"
+                    placeholder="e.g. https://drive.google.com/your-file"
+                    value={form.link}
+                    onChange={handleChange}
+                    className={errors.link ? "input-error" : ""}
+                  />
+
+                  {errors.link && <p className="error-msg">{errors.link}</p>}
+
+                  <p className="field-hint">
+                    Paste a Google Drive, Dropbox or any public link to your file
+                  </p>
                 </div>
 
-                {/* Submit and cancel buttons */}
                 <div className="form-actions">
-                  <button type="submit" className="submit-btn">
+                  <button
+                    type="submit"
+                    className="submit-btn"
+                    disabled={submitting}
+                  >
                     <UploadFileRoundedIcon className="btn-icon" />
-                    Upload Resource
+                    {submitting ? "Uploading..." : "Upload Resource"}
                   </button>
+
                   <button
                     type="button"
                     className="cancel-btn"
@@ -237,28 +312,29 @@ function UploadResource() {
                     Cancel
                   </button>
                 </div>
-
               </form>
 
-              {/* Tips card on the right */}
               <aside className="upload-tips">
                 <div className="tips-header">
                   <TipsAndUpdatesRoundedIcon className="tips-icon" />
                   <h3>Upload Tips</h3>
                 </div>
+
                 <ul>
                   <li>Make sure your title clearly describes the content</li>
                   <li>Select the correct module so others can find it easily</li>
+                  <li>Can't find your module? Use "Add my own module"</li>
                   <li>Add a helpful description so peers know what's inside</li>
                   <li>Only upload files you have the right to share</li>
-                  <li>Max file size: 50MB</li>
+                  <li>Use Google Drive or Dropbox to host your file and paste the link</li>
                 </ul>
+
                 <div className="tips-note">
-                  <strong>Accepted formats:</strong><br />
+                  <strong>Accepted formats:</strong>
+                  <br />
                   PDF, Word, PowerPoint, MP4
                 </div>
               </aside>
-
             </div>
           </main>
         </div>

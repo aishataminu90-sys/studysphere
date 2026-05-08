@@ -1,4 +1,4 @@
-/* Fix root centering for full width layout */
+/* full width root layout fix */
 #root:has(.resources-page) {
   width: 100%;
   max-width: 100%;
@@ -7,22 +7,26 @@
   text-align: left;
 }
 
-* { box-sizing: border-box; }
+/* global box sizing reset */
+* {
+  box-sizing: border-box;
+}
 
+/* main page wrapper */
 .resources-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: "Inter", "Roboto", sans-serif;
+  font-family: "inter", "roboto", sans-serif;
 }
 
-/* Row below DashboardNavbar */
+/* layout row under navbar/sidebar */
 .resources-layout {
   display: flex;
   flex: 1;
 }
 
-/* Main content sits to the right of the sidebar */
+/* main content area beside sidebar */
 .resources-main {
   margin-left: 230px;
   padding: 30px 40px;
@@ -31,13 +35,13 @@
   transition: margin-left 0.25s ease, width 0.25s ease;
 }
 
-/* Collapsed sidebar */
+/* sidebar collapsed state adjustment */
 .resources-page:has(.sidebar-collapsed) .resources-main {
   margin-left: 60px;
   width: calc(100% - 60px);
 }
 
-/* Page heading */
+/* page subtitle styling */
 .res-tagline {
   font-weight: 700;
   letter-spacing: 1px;
@@ -46,6 +50,7 @@
   font-size: 0.78rem;
 }
 
+/* main page title */
 .resources-header h1 {
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 800;
@@ -53,13 +58,14 @@
   margin: 6px 0 8px;
 }
 
+/* subtitle under heading */
 .res-subtitle {
   font-size: 1rem;
   margin-bottom: 28px;
   opacity: 0.8;
 }
 
-/* Search bar and filter dropdowns in a row */
+/* controls row (search + filters) */
 .resources-controls {
   display: flex;
   gap: 12px;
@@ -67,7 +73,7 @@
   margin-bottom: 16px;
 }
 
-/* Search bar with icon inside */
+/* search input wrapper */
 .search-wrapper {
   flex: 1;
   min-width: 200px;
@@ -76,6 +82,7 @@
   align-items: center;
 }
 
+/* search icon inside input */
 .search-icon {
   position: absolute;
   left: 14px;
@@ -83,6 +90,7 @@
   opacity: 0.5;
 }
 
+/* search input field */
 .search-input {
   width: 100%;
   padding: 12px 16px 12px 42px;
@@ -92,6 +100,7 @@
   font-family: inherit;
 }
 
+/* dropdown filter */
 .filter-select {
   padding: 12px 16px;
   border-radius: 14px;
@@ -101,20 +110,21 @@
   font-family: inherit;
 }
 
-/* Results count text */
+/* results text under filters */
 .results-count {
   font-size: 0.9rem;
   opacity: 0.65;
   margin-bottom: 16px;
 }
 
-/* Resource cards stacked vertically */
+/* list container for resources */
 .resources-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
+/* single resource card */
 .resource-card {
   display: flex;
   justify-content: space-between;
@@ -125,16 +135,19 @@
   transition: transform 0.2s ease;
 }
 
+/* card hover effect */
 .resource-card:hover {
   transform: translateY(-3px);
 }
 
+/* resource title */
 .resource-title {
   font-size: 1.05rem;
   font-weight: 700;
   margin: 0 0 8px;
 }
 
+/* metadata row (tags, uploader, etc) */
 .resource-meta {
   display: flex;
   align-items: center;
@@ -142,7 +155,7 @@
   flex-wrap: wrap;
 }
 
-/* Module and tag pill badges */
+/* badge styling */
 .res-badge {
   padding: 4px 12px;
   border-radius: 999px;
@@ -150,18 +163,20 @@
   font-weight: 700;
 }
 
+/* uploader text */
 .uploaded-by {
   font-size: 0.82rem;
   opacity: 0.65;
 }
 
-/* View and Save buttons */
+/* action buttons container */
 .resource-actions {
   display: flex;
   gap: 10px;
   flex-shrink: 0;
 }
 
+/* shared button style */
 .res-btn {
   display: flex;
   align-items: center;
@@ -175,15 +190,17 @@
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
+/* button hover effect */
 .res-btn:hover {
   transform: translateY(-2px);
 }
 
+/* button icon size */
 .btn-icon {
   font-size: 1rem !important;
 }
 
-/* Empty state */
+/* empty state message */
 .no-results {
   text-align: center;
   padding: 60px 20px;
@@ -191,7 +208,7 @@
   font-size: 1rem;
 }
 
-/* Dark mode */
+/* dark mode background */
 .resources-page.glass {
   background:
     radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
@@ -199,9 +216,11 @@
   color: #f8fafc;
 }
 
+/* dark mode text */
 .resources-page.glass .res-tagline { color: #2dd4bf; }
 .resources-page.glass .res-subtitle { color: #e2e8f0; }
 
+/* dark mode inputs */
 .resources-page.glass .search-input,
 .resources-page.glass .filter-select {
   background: rgba(255, 255, 255, 0.1);
@@ -209,47 +228,58 @@
   color: #f8fafc;
 }
 
-.resources-page.glass .search-input::placeholder { color: #94a3b8; }
+/* placeholder text in dark mode */
+.resources-page.glass .search-input::placeholder {
+  color: #94a3b8;
+}
 
+/* dark mode card */
 .resources-page.glass .resource-card {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+/* dark mode badge */
 .resources-page.glass .res-badge {
   background: rgba(45, 212, 191, 0.2);
   color: #5eead4;
 }
 
+/* tag badge override */
 .resources-page.glass .res-badge.tag {
   background: rgba(255, 255, 255, 0.08);
   color: #e2e8f0;
 }
 
+/* view button dark mode */
 .resources-page.glass .view-btn {
   background: rgba(255, 255, 255, 0.08);
   color: #e2e8f0;
 }
 
+/* save button dark mode */
 .resources-page.glass .save-btn {
   background: #14b8a6;
   color: #031316;
 }
 
+/* saved state */
 .resources-page.glass .save-btn.saved {
   background: rgba(255, 255, 255, 0.08);
   color: #5eead4;
 }
 
-/* Light mode */
+/* light mode background */
 .resources-page.campus {
   background: #f4f6f8;
   color: #111827;
 }
 
+/* light mode text */
 .resources-page.campus .res-tagline { color: #2f855a; }
 .resources-page.campus .res-subtitle { color: #374151; }
 
+/* light mode inputs */
 .resources-page.campus .search-input,
 .resources-page.campus .filter-select {
   background: #ffffff;
@@ -257,43 +287,50 @@
   color: #111827;
 }
 
+/* light mode card */
 .resources-page.campus .resource-card {
   background: #ffffff;
   border: 1px solid #d1d5db;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+/* light mode badge */
 .resources-page.campus .res-badge {
   background: #d9fbe8;
   color: #166534;
 }
 
+/* tag badge light mode */
 .resources-page.campus .res-badge.tag {
   background: #f1f5f9;
   color: #374151;
 }
 
+/* view button light mode */
 .resources-page.campus .view-btn {
   background: #e8f5ee;
   color: #2f855a;
 }
 
+/* save button light mode */
 .resources-page.campus .save-btn {
   background: #2f855a;
   color: white;
 }
 
+/* saved state light mode */
 .resources-page.campus .save-btn.saved {
   background: #d9fbe8;
   color: #166534;
 }
 
+/* fade in animation */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Tablet */
+/* mobile layout adjustments */
 @media (max-width: 768px) {
   .resources-main {
     margin-left: 0;
@@ -310,4 +347,124 @@
   .resources-controls {
     flex-direction: column;
   }
+}
+
+/* glass theme dropdown styling */
+.glass .filter-select,
+.glass .upload-select {
+  background-color: #1e2a3a;
+  color: #ffffff;
+  border: 1px solid #3a4a5a;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+/* dropdown options dark mode */
+.glass .filter-select option,
+.glass .upload-select option {
+  background-color: #1e2a3a;
+  color: #ffffff;
+}
+
+/* light mode dropdown */
+.campus .filter-select,
+.campus .upload-select {
+  background-color: #ffffff;
+  color: #1a1a2e;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+/* light mode dropdown options */
+.campus .filter-select option,
+.campus .upload-select option {
+  background-color: #ffffff;
+  color: #1a1a2e;
+}
+
+/* server error message */
+.server-error-banner {
+  background-color: #ffe0e0;
+  color: #cc0000;
+  border: 1px solid #ffaaaa;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* small helper text under inputs */
+.field-hint {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+
+/* custom module input field */
+.custom-module-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #3a4a5a;
+  background-color: #1e2a3a;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+/* light mode custom input */
+.campus .custom-module-input {
+  background-color: #ffffff;
+  color: #1a1a2e;
+  border: 1px solid #cccccc;
+}
+
+/* saved filter toggle button */
+.saved-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* saved button hover */
+.saved-toggle-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* dark theme saved button */
+.resources-page.glass .saved-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* dark active saved button */
+.resources-page.glass .saved-toggle-btn.active {
+  background: #14b8a6;
+  color: #031316;
+  border-color: transparent;
+}
+
+/* light theme saved button */
+.resources-page.campus .saved-toggle-btn {
+  background: #ffffff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+/* light active saved button */
+.resources-page.campus .saved-toggle-btn.active {
+  background: #2f855a;
+  color: #ffffff;
+  border-color: transparent;
 }

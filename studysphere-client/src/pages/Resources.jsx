@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import DashboardNavbar from "../components/DashboardNavbar";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -7,99 +7,174 @@ import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import "../styles/Resources.css";
 
-// Resources page - students can browse, search and filter study materials
+const API = import.meta.env.VITE_API_URL;
+
 function Resources() {
-  // Theme state - glass is dark, campus is light
   const [theme, setTheme] = useState("glass");
 
-  // What the user has typed in the search box
+  // search and filter states
   const [searchQuery, setSearchQuery] = useState("");
-
-  // Currently selected dropdown filters
   const [selectedModule, setSelectedModule] = useState("All");
   const [selectedTag, setSelectedTag] = useState("All");
+  const [showSavedOnly, setShowSavedOnly] = useState(false);
 
-  // Tracks which resource IDs the user has saved
+  // data states
+  const [resources, setResources] = useState([]);
   const [savedResources, setSavedResources] = useState([]);
 
-  // Mock resource data - will be fetched from the backend later
-  const [resources] = useState([
-    { id: 1, title: "Data Structures Notes", module: "CS201", tag: "Notes", uploadedBy: "John D." },
-    { id: 2, title: "Contract Law Summary", module: "LAW101", tag: "Summary", uploadedBy: "Sarah K." },
-    { id: 3, title: "Marketing Strategy Slides", module: "BUS301", tag: "Slides", uploadedBy: "Emma R." },
-    { id: 4, title: "Algorithms Past Paper 2024", module: "CS201", tag: "Past Paper", uploadedBy: "Liam T." },
-    { id: 5, title: "Business Ethics Notes", module: "BUS301", tag: "Notes", uploadedBy: "Aisha M." },
-    { id: 6, title: "Criminal Law Case Studies", module: "LAW101", tag: "Case Study", uploadedBy: "Daniel O." },
-  ]);
+  // loading and error states
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Dropdown filter options
-  const modules = ["All", "CS201", "LAW101", "BUS301"];
+  // dropdown options
+  const [moduleOptions, setModuleOptions] = useState(["All"]);
   const tags = ["All", "Notes", "Summary", "Slides", "Past Paper", "Case Study"];
 
-  // Toggle save/unsave - adds or removes the resource id from the saved list
-  const handleSave = (id) => {
-    setSavedResources((prev) =>
-      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
-    );
+  // fetch all resources on page load
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const res = await fetch(`${API}/resources`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) throw new Error("failed to fetch resources");
+
+        const data = await res.json();
+        setResources(data);
+
+        // extract unique modules for filter dropdown
+        const uniqueModules = [
+          "All",
+          ...new Set(data.map((r) => r.module).filter(Boolean)),
+        ];
+        setModuleOptions(uniqueModules);
+      } catch (err) {
+        console.error(err);
+        setError("could not load resources. please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchResources();
+  }, []);
+
+  // fetch saved resources for user
+  useEffect(() => {
+    const fetchSaved = async () => {
+      try {
+        const res = await fetch(`${API}/resources/saved`, {
+          credentials: "include",
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        // store only saved resource ids
+        const savedIds = data.map((r) => r._id || r.id);
+        setSavedResources(savedIds);
+      } catch (err) {
+        console.error("failed to fetch saved resources:", err);
+      }
+    };
+
+    fetchSaved();
+  }, []);
+
+  // save or unsave a resource
+  const handleSave = async (id) => {
+    try {
+      const res = await fetch(`${API}/resources/${id}/save`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error("save failed");
+
+      const data = await res.json();
+
+      // update saved list based on response
+      setSavedResources((prev) =>
+        data.saved
+          ? [...prev, id]
+          : prev.filter((r) => r !== id)
+      );
+    } catch (err) {
+      console.error("save error:", err);
+    }
   };
 
-  // Filter the resource list based on search text, module and tag
+  // filter resources based on search and filters
   const filteredResources = resources.filter((r) => {
-    const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesModule = selectedModule === "All" || r.module === selectedModule;
-    const matchesTag = selectedTag === "All" || r.tag === selectedTag;
-    return matchesSearch && matchesModule && matchesTag;
+    const matchesSearch = r.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    const matchesModule =
+      selectedModule === "All" || r.module === selectedModule;
+
+    const resourceTags = Array.isArray(r.tags) ? r.tags : [r.tags];
+
+    const matchesTag =
+      selectedTag === "All" || resourceTags.includes(selectedTag);
+
+    const matchesSaved =
+      !showSavedOnly || savedResources.includes(r._id);
+
+    return matchesSearch && matchesModule && matchesTag && matchesSaved;
   });
 
   return (
     <div className={`resources-page ${theme}`}>
-
-      {/* Top navbar - logo, theme toggle, home, logout */}
+      {/* top navbar */}
       <DashboardNavbar theme={theme} setTheme={setTheme} />
 
       <div className="resources-layout">
+        {/* sidebar navigation */}
         <Sidebar />
 
         <main className="resources-main">
 
-          {/* Page heading */}
+          {/* page header */}
           <div className="resources-header">
-            <p className="res-tagline">STUDY MATERIALS</p>
-            <h1>Resource Library</h1>
+            <p className="res-tagline">study materials</p>
+            <h1>resource library</h1>
             <p className="res-subtitle">
-              Search and filter study materials shared by your peers.
+              search and filter study materials shared by your peers.
             </p>
           </div>
 
-          {/* Search bar and filter dropdowns */}
+          {/* search and filter controls */}
           <div className="resources-controls">
 
-            {/* Search icon + input together */}
+            {/* search input */}
             <div className="search-wrapper">
               <SearchRoundedIcon className="search-icon" />
               <input
                 type="text"
-                placeholder="Search by title..."
+                placeholder="search by title..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="search-input"
               />
             </div>
 
-            {/* Filter by module */}
+            {/* module filter */}
             <select
               value={selectedModule}
               onChange={(e) => setSelectedModule(e.target.value)}
               className="filter-select"
             >
-              {modules.map((mod) => (
+              {moduleOptions.map((mod) => (
                 <option key={mod} value={mod}>
-                  {mod === "All" ? "All Modules" : mod}
+                  {mod === "All" ? "all modules" : mod}
                 </option>
               ))}
             </select>
 
-            {/* Filter by tag/type */}
+            {/* tag filter */}
             <select
               value={selectedTag}
               onChange={(e) => setSelectedTag(e.target.value)}
@@ -107,58 +182,122 @@ function Resources() {
             >
               {tags.map((tag) => (
                 <option key={tag} value={tag}>
-                  {tag === "All" ? "All Tags" : tag}
+                  {tag === "All" ? "all tags" : tag}
                 </option>
               ))}
             </select>
+
+            {/* toggle saved only view */}
+            <button
+              className={`saved-toggle-btn ${showSavedOnly ? "active" : ""}`}
+              onClick={() => setShowSavedOnly((prev) => !prev)}
+            >
+              {showSavedOnly ? (
+                <BookmarkRoundedIcon className="btn-icon" />
+              ) : (
+                <BookmarkBorderRoundedIcon className="btn-icon" />
+              )}
+              {showSavedOnly ? "showing saved" : "show saved"}
+            </button>
           </div>
 
-          {/* Show how many results match the current filters */}
-          <p className="results-count">
-            {filteredResources.length} resource{filteredResources.length !== 1 ? "s" : ""} found
-          </p>
+          {/* loading state */}
+          {loading && (
+            <p style={{ opacity: 0.6, padding: "1rem 0" }}>
+              loading resources...
+            </p>
+          )}
 
-          {/* Resource list */}
-          <div className="resources-list">
-            {filteredResources.length === 0 ? (
-              // Show this when no resources match the search/filter
-              <div className="no-results">
-                <p>No resources found. Try a different search or filter.</p>
-              </div>
-            ) : (
-              filteredResources.map((resource) => (
-                <div key={resource.id} className="resource-card">
-                  <div className="resource-info">
-                    <h3 className="resource-title">{resource.title}</h3>
-                    <div className="resource-meta">
-                      <span className="res-badge">{resource.module}</span>
-                      <span className="res-badge tag">{resource.tag}</span>
-                      <span className="uploaded-by">Uploaded by {resource.uploadedBy}</span>
+          {/* error state */}
+          {error && (
+            <p style={{ color: "red", padding: "1rem 0" }}>{error}</p>
+          )}
+
+          {/* resource list */}
+          {!loading && !error && (
+            <>
+              <p className="results-count">
+                {showSavedOnly
+                  ? `${filteredResources.length} saved resource${filteredResources.length !== 1 ? "s" : ""}`
+                  : `${filteredResources.length} resource${filteredResources.length !== 1 ? "s" : ""} found`}
+              </p>
+
+              <div className="resources-list">
+
+                {/* empty state */}
+                {filteredResources.length === 0 ? (
+                  <div className="no-results">
+                    <p>
+                      {showSavedOnly
+                        ? "you haven't saved any resources yet."
+                        : "no resources found. try a different search."}
+                    </p>
+                  </div>
+                ) : (
+
+                  // render each resource card
+                  filteredResources.map((resource) => (
+                    <div key={resource._id} className="resource-card">
+
+                      <div className="resource-info">
+                        <h3 className="resource-title">{resource.title}</h3>
+
+                        <div className="resource-meta">
+                          <span className="res-badge">{resource.module}</span>
+
+                          <span className="res-badge tag">
+                            {Array.isArray(resource.tags)
+                              ? resource.tags[0]
+                              : resource.tags}
+                          </span>
+
+                          <span className="uploaded-by">
+                            uploaded by {resource.uploadedBy?.name ?? "unknown"}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="resource-actions">
+
+                        {/* view resource link */}
+                        <a
+                          href={resource.link || "#"}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="res-btn view-btn"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <VisibilityRoundedIcon className="btn-icon" />
+                          view
+                        </a>
+
+                        {/* save button */}
+                        <button
+                          className={`res-btn save-btn ${
+                            savedResources.includes(resource._id) ? "saved" : ""
+                          }`}
+                          onClick={() => handleSave(resource._id)}
+                        >
+                          {savedResources.includes(resource._id) ? (
+                            <>
+                              <BookmarkRoundedIcon className="btn-icon" />
+                              saved
+                            </>
+                          ) : (
+                            <>
+                              <BookmarkBorderRoundedIcon className="btn-icon" />
+                              save
+                            </>
+                          )}
+                        </button>
+
+                      </div>
                     </div>
-                  </div>
-
-                  {/* View and Save action buttons */}
-                  <div className="resource-actions">
-                    <button className="res-btn view-btn">
-                      <VisibilityRoundedIcon className="btn-icon" />
-                      View
-                    </button>
-
-                    {/* Save button changes appearance when saved */}
-                    <button
-                      className={`res-btn save-btn ${savedResources.includes(resource.id) ? "saved" : ""}`}
-                      onClick={() => handleSave(resource.id)}
-                    >
-                      {savedResources.includes(resource.id)
-                        ? <><BookmarkRoundedIcon className="btn-icon" /> Saved</>
-                        : <><BookmarkBorderRoundedIcon className="btn-icon" /> Save</>
-                      }
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+                  ))
+                )}
+              </div>
+            </>
+          )}
         </main>
       </div>
     </div>

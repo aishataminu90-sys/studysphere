@@ -1,4 +1,4 @@
-/* Fix root centering for full width layout */
+/* fix root centering for full width layout */
 #root:has(.upload-page) {
   width: 100%;
   max-width: 100%;
@@ -7,22 +7,24 @@
   text-align: left;
 }
 
+/* global box sizing */
 * { box-sizing: border-box; }
 
+/* main page wrapper */
 .upload-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: "Inter", "Roboto", sans-serif;
+  font-family: "inter", "roboto", sans-serif;
 }
 
-/* Row below DashboardNavbar */
+/* layout row under navbar */
 .upload-form-layout {
   display: flex;
   flex: 1;
 }
 
-/* Everything to the right of the sidebar */
+/* wrapper to the right of sidebar */
 .upload-wrapper {
   margin-left: 230px;
   flex: 1;
@@ -32,20 +34,21 @@
   transition: margin-left 0.25s ease, width 0.25s ease;
 }
 
-/* Collapsed sidebar */
+/* collapsed sidebar state */
 .upload-page:has(.sidebar-collapsed) .upload-wrapper {
   margin-left: 60px;
   width: calc(100% - 60px);
 }
 
-/* Renamed from upload-layout to upload-form-layout to avoid conflict */
+/* layout for form and side panel */
 .upload-form-layout {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: start;
 }
 
-/* Top bar */
+/* top navigation bar */
 .upload-topbar {
   display: flex;
   justify-content: space-between;
@@ -54,24 +57,27 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* left side of topbar */
 .upload-topbar-left {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
+/* topbar title */
 .upload-topbar-left h2 {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 700;
 }
 
+/* main content area */
 .upload-main {
   padding: 28px 32px;
   flex: 1;
 }
 
-/* Page heading */
+/* small heading text */
 .upload-tagline {
   font-size: 0.78rem;
   font-weight: 700;
@@ -79,6 +85,7 @@
   margin: 0 0 6px;
 }
 
+/* page title */
 .upload-header h1 {
   font-size: clamp(1.5rem, 3vw, 2.2rem);
   font-weight: 800;
@@ -86,13 +93,14 @@
   margin: 6px 0 8px;
 }
 
+/* subtitle text */
 .upload-subtitle {
   font-size: 1rem;
   opacity: 0.8;
   margin: 0 0 24px;
 }
 
-/* Success banner shown after valid submission */
+/* success message banner */
 .success-banner {
   display: flex;
   align-items: center;
@@ -104,19 +112,12 @@
   font-size: 0.95rem;
 }
 
+/* icon inside success banner */
 .success-icon {
   font-size: 1.3rem !important;
 }
 
-/* Two column layout */
-.upload-form-layout {
-  display: grid;
-  grid-template-columns: 1fr 280px;
-  gap: 24px;
-  align-items: start;
-}
-
-/* Form card */
+/* form container */
 .upload-form {
   border-radius: 16px;
   padding: 28px;
@@ -125,18 +126,20 @@
   gap: 20px;
 }
 
-/* Individual form field group */
+/* input group */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 7px;
 }
 
+/* form labels */
 .form-group label {
   font-size: 0.92rem;
   font-weight: 700;
 }
 
+/* inputs and textarea */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -149,11 +152,12 @@
   width: 100%;
 }
 
+/* textarea resize */
 .form-group textarea {
   resize: vertical;
 }
 
-/* File upload drop zone */
+/* file upload box */
 .file-drop-zone {
   border-radius: 12px;
   border: 2px dashed;
@@ -164,7 +168,7 @@
   transition: border-color 0.2s;
 }
 
-/* Hidden file input covers the whole drop zone area */
+/* hidden file input overlay */
 .file-drop-zone input[type="file"] {
   position: absolute;
   inset: 0;
@@ -175,25 +179,28 @@
   padding: 0;
 }
 
+/* upload icon */
 .file-upload-icon {
   font-size: 2rem !important;
   opacity: 0.5;
   margin-bottom: 8px;
 }
 
+/* helper text in upload box */
 .file-hint {
   margin: 0 0 6px;
   font-weight: 600;
   font-size: 0.92rem;
 }
 
+/* file type text */
 .file-types {
   margin: 0;
   font-size: 0.8rem;
   opacity: 0.55;
 }
 
-/* Error messages shown under invalid fields */
+/* error text */
 .error-msg {
   font-size: 0.84rem;
   font-weight: 700;
@@ -201,18 +208,19 @@
   color: #f87171;
 }
 
-/* Red border on fields with errors */
+/* error input border */
 .input-error {
   border-color: #ef4444 !important;
 }
 
-/* Submit and cancel buttons */
+/* form button row */
 .form-actions {
   display: flex;
   gap: 12px;
   margin-top: 4px;
 }
 
+/* primary button */
 .submit-btn {
   flex: 1;
   display: flex;
@@ -228,8 +236,10 @@
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
+/* button hover */
 .submit-btn:hover { transform: translateY(-2px); }
 
+/* secondary button */
 .cancel-btn {
   padding: 14px 24px;
   border-radius: 14px;
@@ -240,9 +250,10 @@
   background: transparent;
 }
 
+/* cancel hover */
 .cancel-btn:hover { transform: translateY(-2px); }
 
-/* Tips card - same height feel as the form */
+/* tips panel */
 .upload-tips {
   border-radius: 16px;
   padding: 24px;
@@ -250,6 +261,7 @@
   top: 20px;
 }
 
+/* tips header row */
 .tips-header {
   display: flex;
   align-items: center;
@@ -257,16 +269,19 @@
   margin-bottom: 16px;
 }
 
+/* tips title */
 .tips-header h3 {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
 }
 
+/* tips icon */
 .tips-icon {
   font-size: 1.2rem !important;
 }
 
+/* tips list */
 .upload-tips ul {
   padding-left: 18px;
   margin: 0 0 16px;
@@ -275,12 +290,14 @@
   gap: 10px;
 }
 
+/* tip items */
 .upload-tips li {
   font-size: 0.88rem;
   line-height: 1.6;
   opacity: 0.85;
 }
 
+/* note box */
 .tips-note {
   font-size: 0.85rem;
   padding: 12px;
@@ -288,11 +305,12 @@
   line-height: 1.7;
 }
 
+/* button icon */
 .btn-icon {
   font-size: 1rem !important;
 }
 
-/* Dark mode */
+/* dark theme */
 .upload-page.glass {
   background:
     radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
@@ -300,21 +318,26 @@
   color: #f8fafc;
 }
 
+/* topbar dark */
 .upload-page.glass .upload-topbar {
   background: rgba(255, 255, 255, 0.04);
 }
 
+/* dark accents */
 .upload-page.glass .upload-tagline { color: #2dd4bf; }
 .upload-page.glass .upload-subtitle { color: #e2e8f0; }
 .upload-page.glass .topbar-icon { color: #5eead4; }
 
+/* form dark */
 .upload-page.glass .upload-form {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* labels dark */
 .upload-page.glass .form-group label { color: #e2e8f0; }
 
+/* inputs dark */
 .upload-page.glass input,
 .upload-page.glass select,
 .upload-page.glass textarea {
@@ -323,71 +346,85 @@
   color: #f8fafc;
 }
 
+/* placeholder */
 .upload-page.glass input::placeholder,
 .upload-page.glass textarea::placeholder {
   color: #94a3b8;
 }
 
+/* select dropdown */
 .upload-page.glass select option {
   background: #1e2a3a;
 }
 
+/* upload box dark */
 .upload-page.glass .file-drop-zone {
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.05);
 }
 
+/* submit button dark */
 .upload-page.glass .submit-btn {
   background: #14b8a6;
   color: #031316;
 }
 
+/* hover submit */
 .upload-page.glass .submit-btn:hover { background: #2dd4bf; }
 
+/* cancel dark */
 .upload-page.glass .cancel-btn {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #e2e8f0;
 }
 
+/* tips dark */
 .upload-page.glass .upload-tips {
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* tips icon dark */
 .upload-page.glass .tips-icon { color: #5eead4; }
 
+/* note dark */
 .upload-page.glass .tips-note {
   background: rgba(20, 184, 166, 0.1);
   color: #5eead4;
 }
 
+/* success dark */
 .upload-page.glass .success-banner {
   background: rgba(20, 184, 166, 0.15);
   color: #2dd4bf;
   border: 1px solid rgba(20, 184, 166, 0.3);
 }
 
-/* Light mode */
+/* light theme */
 .upload-page.campus {
   background: #f4f6f8;
   color: #111827;
 }
 
+/* topbar light */
 .upload-page.campus .upload-topbar {
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
 }
 
+/* light accents */
 .upload-page.campus .upload-tagline { color: #2f855a; }
 .upload-page.campus .upload-subtitle { color: #374151; }
 .upload-page.campus .topbar-icon { color: #2f855a; }
 
+/* form light */
 .upload-page.campus .upload-form {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* inputs light */
 .upload-page.campus input,
 .upload-page.campus select,
 .upload-page.campus textarea {
@@ -396,55 +433,65 @@
   color: #111827;
 }
 
+/* upload box light */
 .upload-page.campus .file-drop-zone {
   border-color: #d1d5db;
   background: #f9fafb;
 }
 
+/* submit light */
 .upload-page.campus .submit-btn {
   background: #2f855a;
   color: white;
 }
 
+/* hover submit light */
 .upload-page.campus .submit-btn:hover { background: #276749; }
 
+/* cancel light */
 .upload-page.campus .cancel-btn {
   border: 1px solid #d1d5db;
   color: #374151;
 }
 
+/* tips light */
 .upload-page.campus .upload-tips {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+/* tips icon light */
 .upload-page.campus .tips-icon { color: #2f855a; }
 
+/* note light */
 .upload-page.campus .tips-note {
   background: #f0fdf4;
   color: #166534;
 }
 
+/* error light */
 .upload-page.campus .error-msg { color: #dc2626; }
 
+/* success light */
 .upload-page.campus .success-banner {
   background: #f0fdf4;
   color: #166534;
   border: 1px solid #bbf7d0;
 }
 
-/* Stack to one column on smaller screens */
+/* responsive tablet */
 @media (max-width: 900px) {
   .upload-form-layout {
     grid-template-columns: 1fr;
   }
+
   .upload-tips {
     position: static;
   }
 }
 
-/* Mobile */
+/* mobile layout */
 @media (max-width: 768px) {
   .upload-wrapper {
     margin-left: 0;

@@ -1,3 +1,4 @@
+/* main navbar container */
 .navbar {
   width: 100%;
   max-width: 1500px;
@@ -17,6 +18,7 @@
   z-index: 1000;
 }
 
+/* logo text */
 .logo {
   font-size: clamp(1.15rem, 3vw, 1.7rem);
   font-weight: 900;
@@ -31,6 +33,7 @@
   min-width: 0;
 }
 
+/* nav links container */
 .nav-links {
   display: flex;
   gap: 10px;
@@ -38,6 +41,7 @@
   flex-shrink: 0;
 }
 
+/* individual nav link */
 .nav-links a {
   position: relative;
   color: #f9fafb;
@@ -49,6 +53,7 @@
   z-index: 1;
 }
 
+/* animated background effect for links */
 .nav-links a::before {
   content: "";
   position: absolute;
@@ -61,17 +66,20 @@
   z-index: -1;
 }
 
+/* hover and active state background animation */
 .nav-links a:hover::before,
 .nav-links a.active::before {
   opacity: 1;
   transform: scale(1);
 }
 
+/* hover and active text color change */
 .nav-links a:hover,
 .nav-links a.active {
   color: #031316;
 }
 
+/* mobile hamburger button */
 .hamburger-btn {
   display: none;
   border: none;
@@ -82,21 +90,19 @@
   cursor: pointer;
 }
 
-
-/* Dark mode navbar */
+/* dark mode navbar */
 .glass .navbar {
   background: rgba(17, 24, 39, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* Light mode navbar */
-
+/* light mode page background */
 .campus.home {
   background: #f7f9f7;
 }
 
-
+/* light mode navbar */
 .campus .navbar {
   width: 100%;
   max-width: 1500px;
@@ -119,33 +125,37 @@
   z-index: 1000;
 }
 
-/* logo */
+/* light mode logo color */
 .campus .logo {
   color: #2f855a;
 }
 
-/* links */
+/* light mode nav link color */
 .campus .nav-links a {
   color: #1f2937;
 }
 
-/* active / hover */
+/* light mode hover and active state */
 .campus .nav-links a.active,
 .campus .nav-links a:hover {
   background: #2f855a;
   color: white;
 }
 
+/* light mode link animation color */
 .campus .nav-links a::before {
   background: #2f855a;
 }
 
+/* page content spacing */
 .page-content {
   padding-top: 20px;
 }
 
+/* tablet and mobile layout */
 @media (max-width: 900px) {
 
+  /* navbar spacing adjustment */
   .navbar {
     padding: 14px 18px;
     position: relative;
@@ -156,12 +166,13 @@
     align-items: center;
   }
 
+  /* smaller logo on mobile */
   .logo {
     font-size: 1.15rem;
     flex: 1;
   }
 
-  /* show hamburger */
+  /* show hamburger button */
   .hamburger-btn {
     display: flex;
     align-items: center;
@@ -173,7 +184,7 @@
     flex-shrink: 0;
   }
 
-  /* hide desktop nav */
+  /* hide desktop nav links */
   .nav-links {
     display: none;
 
@@ -195,43 +206,48 @@
     backdrop-filter: blur(18px);
   }
 
-  /* show dropdown when open */
+  /* show mobile menu when open */
   .nav-links.open {
     display: flex;
   }
 
+  /* full width links on mobile */
   .nav-links a {
     width: 100%;
     text-align: center;
   }
 
+  /* light mode mobile menu */
   .campus .nav-links.open {
     background: white;
   }
 }
 
-/* FINAL THEME OVERRIDES */
-
+/* override styles for glass theme */
 main.glass .navbar {
   background: rgba(17, 24, 39, 0.86) !important;
   border: 1px solid rgba(255, 255, 255, 0.14) !important;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.28) !important;
 }
 
+/* override styles for campus theme */
 main.campus .navbar {
   background: #ffffff !important;
   border: 1px solid #e5e7eb !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06) !important;
 }
 
+/* campus logo override */
 main.campus .logo {
   color: #2f855a !important;
 }
 
+/* campus nav link override */
 main.campus .nav-links a {
   color: #111827 !important;
 }
 
+/* campus hover and active override */
 main.campus .nav-links a:hover,
 main.campus .nav-links a.active {
   background: #2f855a !important;
