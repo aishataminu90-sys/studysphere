@@ -12,36 +12,33 @@ var logger = require('morgan');
 
 var app = express();
 
-// Router
+// Routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
-const authMiddleware = require('./middleware/authMiddleware');
 var resourceRouter = require('./routes/resources');
 var groupsRouter = require('./routes/groups');
 var remindersRouter = require('./routes/reminders');
+var contactRouter = require('./routes/contact');
+var adminRouter = require('./routes/admin');
 
-// 🔍 DEBUG (VERY IMPORTANT — DO NOT REMOVE YET)
-console.log('indexRouter:', typeof indexRouter);
-console.log('usersRouter:', typeof usersRouter);
-console.log('authRouter:', typeof authRouter);
-console.log('authMiddleware:', typeof authMiddleware);
-console.log('resourceRouter:', typeof resourceRouter);
-console.log('groupsRouter:', typeof groupsRouter);
-console.log('remindersRouter:', typeof remindersRouter);
+const authMiddleware = require('./middleware/authMiddleware');
 
 // Connecting to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 10000,
+  family: 4
+})
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
 
-// view engine setup
+// View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// Middleware 
+// Middleware
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
   credentials: true
 }));
 app.use(logger('dev'));
@@ -50,7 +47,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session 
+// Session
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -68,20 +65,19 @@ app.use('/auth', authRouter);
 app.use('/resources', resourceRouter);
 app.use('/groups', groupsRouter);
 app.use('/reminders', remindersRouter);
+app.use('/contact', contactRouter);
+app.use('/admin', adminRouter);
 
-// catch 404
-app.use(function(req, res, next) {
+// Catch 404
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
+// Error handler
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500).json({
-    error: err.message
-  });
+  res.status(err.status || 500).json({ error: err.message });
 });
 
 module.exports = app;

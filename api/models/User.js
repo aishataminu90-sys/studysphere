@@ -19,10 +19,22 @@ password: {
     
 },
 //their university
-university: {
+  university: {
     type: String,
-    year: String,
-    course: String
+  },
+ 
+  year: {
+    type: String,
+  },
+ 
+  course: {
+    type: String,
+  },
+//role - user default, admin assigned
+role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
 }
 }, { timestamps: true });
 
