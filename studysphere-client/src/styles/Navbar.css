@@ -99,19 +99,24 @@
 
 .campus .navbar {
   width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 14px 28px;
+  max-width: 1500px;
+  margin: 0 auto 28px;
+  padding: 18px 40px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: nowrap;
 
+  border-radius: 18px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(18px);
 
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 14px;
+  z-index: 1000;
 }
 
 /* logo */

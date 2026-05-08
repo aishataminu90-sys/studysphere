@@ -127,14 +127,14 @@ function Home({ theme, setTheme }) {
             <p>Track study tasks with motivational messages when completed.</p>
           </div>
         </section>
-        <div className="about-wrapper">
+        <div className="about-wrapper" >
           {/* Hero section */}
-          <section className="about-hero">
+          <section id="about" className="about-hero">
             <p className="about-tagline">WHO WE ARE</p>
             <h1>About StudySphere</h1>
             <p className="about-subtitle">
               StudySphere was built by three computing students at Griffith College Dublin
-              who wanted to solve a real problem — study resources scattered across
+              who wanted to solve a real problem, study resources scattered across
               group chats, multiple platforms, and messy folders.
             </p>
           </section>
@@ -148,7 +148,7 @@ function Home({ theme, setTheme }) {
                 <p>
                   To give every university student one centralised platform where they
                   can upload and discover study materials, join or create study groups,
-                  and keep track of their deadlines — all in one place, without the
+                  and keep track of their deadlines all in one place, without the
                   chaos of switching between apps.
                 </p>
               </div>

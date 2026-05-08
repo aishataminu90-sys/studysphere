@@ -1,23 +1,44 @@
 ###  Frontend (Aishat - 3135224):
-
 - Built React frontend using Vite
 - Implemented client-side routing using react-router-dom
+
 - Created core pages:
   - Home (landing page with features and navigation)
-  - Login (with validation and error handling)
-  - Register (multi-field form with full validation)
+  - Login (with validation, API integration, and error handling)
+  - Register (multi-field form with advanced validation and API integration)
+
 - Designed responsive UI using CSS and Material UI components
+
 - Implemented Navbar with:
   - Navigation links (Home, Login, Register)
   - Responsive hamburger menu for mobile view
+  - Theme-aware styling for light and dark modes
+
 - Added client-side validation:
   - Required field checks
   - Email format validation
-  - Password length validation
-  - Password match validation
-- Styled pages with separate CSS files (as required)
+  - Password strength validation
+  - Password confirmation matching
+  - Full name format validation
+  - Dropdown-based validation for course and academic year
+
+- Implemented dynamic form handling using React state hooks
+
+- Added dropdown selection fields for:
+  - Course options (Law, Computing Science, Business)
+  - Academic year selection
+
+- Integrated frontend with backend authentication API using fetch requests
+- Configured environment variables for local and Render deployment support
+- Implemented success and error feedback messages for authentication flows
+- Added loading state handling during form submission
+- Styled pages with separate CSS files
+- Implemented custom themed dropdown styling for light and dark modes
 - Ensured responsive design across different screen sizes
-- Prepared frontend for API integration using environment variables
+- Added smooth scroll navigation from Footer links to Home page sections
+- Created reusable ScrollToHash component for section-based navigation
+- Prepared frontend architecture for future protected routes and dashboard integration
+
 
 ### Frontend (Aisha - 3127257):
 

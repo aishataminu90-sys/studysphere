@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ThemeToggle from "../components/ThemeToggle";
 import "../styles/InfoPages.css";
 
 function Terms({ theme, setTheme }) {
   return (
     <main className={`info-page ${theme}`}>
       <Navbar theme={theme} />
+      <ThemeToggle theme={theme} setTheme={setTheme} />
 
       <div className="info-wrapper">
         <section className="info-hero">

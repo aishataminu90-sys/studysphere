@@ -30,7 +30,7 @@ function Footer({ theme }) {
         {/* Right side - company links */}
         <div className="footer-links">
           <h4>Company</h4>
-          <Link to="/About">About Us</Link>
+          <Link to="/#about">About Us</Link>
           <Link to="/terms">Terms &amp; Conditions</Link>
         </div>
 

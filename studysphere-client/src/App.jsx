@@ -12,6 +12,7 @@ import Reminders from "./pages/Reminders";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Terms from "./pages/Terms";
+import ScrollToHash from "./components/ScrollToHash";
 
 // Paths that use the dashboard layout (full width, no root centering)
 const LOGGED_IN_PATHS = ["/dashboard", "/resources", "/upload", "/studygroups", "/reminders"];
@@ -23,6 +24,7 @@ function AppContent() {
 
   return (
     <main className={`app ${isLoggedIn ? "" : theme}`}>
+      <ScrollToHash />
       <Routes>
         {/* PUBLIC ROUTES */}
         <Route path="/" element={<Home theme={theme} setTheme={setTheme} />} />
