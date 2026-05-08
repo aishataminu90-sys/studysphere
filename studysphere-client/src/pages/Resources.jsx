@@ -5,49 +5,91 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
+import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
+import StarHalfRoundedIcon from "@mui/icons-material/StarHalfRounded";
 import "../styles/Resources.css";
 
 const API = import.meta.env.VITE_API_URL;
 
+// helper — calculate average rating from ratings array
+const getAverage = (ratings = []) => {
+  if (ratings.length === 0) return 0;
+  const sum = ratings.reduce((acc, r) => acc + r.value, 0);
+  return Math.round((sum / ratings.length) * 10) / 10;
+};
+
+// renders 5 stars filled/half/empty based on a numeric value
+function StarDisplay({ value }) {
+  return (
+    <span className="star-display">
+      {[1, 2, 3, 4, 5].map((star) => {
+        if (value >= star) {
+          return <StarRoundedIcon key={star} className="star filled" />;
+        } else if (value >= star - 0.5) {
+          return <StarHalfRoundedIcon key={star} className="star filled" />;
+        } else {
+          return <StarBorderRoundedIcon key={star} className="star empty" />;
+        }
+      })}
+      <span className="star-count">
+        {value > 0 ? `${value}` : "no ratings yet"}
+      </span>
+    </span>
+  );
+}
+
+// interactive 5-star picker
+function StarPicker({ resourceId, currentRating, onRate }) {
+  const [hovered, setHovered] = useState(0);
+
+  return (
+    <span className="star-picker">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          className="star-pick-btn"
+          onMouseEnter={() => setHovered(star)}
+          onMouseLeave={() => setHovered(0)}
+          onClick={() => onRate(resourceId, star)}
+        >
+          {hovered >= star || currentRating >= star ? (
+            <StarRoundedIcon className="star filled" />
+          ) : (
+            <StarBorderRoundedIcon className="star empty" />
+          )}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Resources() {
   const [theme, setTheme] = useState("glass");
-
-  // search and filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedModule, setSelectedModule] = useState("All");
   const [selectedTag, setSelectedTag] = useState("All");
   const [showSavedOnly, setShowSavedOnly] = useState(false);
 
-  // data states
   const [resources, setResources] = useState([]);
   const [savedResources, setSavedResources] = useState([]);
+  // stores user's own rating per resource id
+  const [myRatings, setMyRatings] = useState({});
 
-  // loading and error states
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-  // dropdown options
   const [moduleOptions, setModuleOptions] = useState(["All"]);
   const tags = ["All", "Notes", "Summary", "Slides", "Past Paper", "Case Study"];
 
-  // fetch all resources on page load
+  // fetch all resources
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const res = await fetch(`${API}/resources`, {
-          credentials: "include",
-        });
-
-        if (!res.ok) throw new Error("failed to fetch resources");
-
+        const res = await fetch(`${API}/resources`, { credentials: "include" });
+        if (!res.ok) throw new Error("failed to fetch");
         const data = await res.json();
         setResources(data);
-
-        // extract unique modules for filter dropdown
-        const uniqueModules = [
-          "All",
-          ...new Set(data.map((r) => r.module).filter(Boolean)),
-        ];
+        const uniqueModules = ["All", ...new Set(data.map((r) => r.module).filter(Boolean))];
         setModuleOptions(uniqueModules);
       } catch (err) {
         console.error(err);
@@ -56,88 +98,94 @@ function Resources() {
         setLoading(false);
       }
     };
-
     fetchResources();
   }, []);
 
-  // fetch saved resources for user
+  // fetch saved resources
   useEffect(() => {
     const fetchSaved = async () => {
       try {
-        const res = await fetch(`${API}/resources/saved`, {
-          credentials: "include",
-        });
-
+        const res = await fetch(`${API}/resources/saved`, { credentials: "include" });
         if (!res.ok) return;
-
         const data = await res.json();
-
-        // store only saved resource ids
-        const savedIds = data.map((r) => r._id || r.id);
-        setSavedResources(savedIds);
+        setSavedResources(data.map((r) => r._id));
       } catch (err) {
-        console.error("failed to fetch saved resources:", err);
+        console.error("failed to fetch saved:", err);
       }
     };
-
     fetchSaved();
   }, []);
 
-  // save or unsave a resource
+  // save or unsave
   const handleSave = async (id) => {
     try {
       const res = await fetch(`${API}/resources/${id}/save`, {
         method: "POST",
         credentials: "include",
       });
-
       if (!res.ok) throw new Error("save failed");
-
       const data = await res.json();
-
-      // update saved list based on response
       setSavedResources((prev) =>
-        data.saved
-          ? [...prev, id]
-          : prev.filter((r) => r !== id)
+        data.saved ? [...prev, id] : prev.filter((r) => r !== id)
       );
     } catch (err) {
       console.error("save error:", err);
     }
   };
 
-  // filter resources based on search and filters
+  // submit a star rating
+  const handleRate = async (id, value) => {
+    try {
+      const res = await fetch(`${API}/resources/${id}/rate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ value }),
+      });
+
+      if (!res.ok) throw new Error("rating failed");
+      const data = await res.json();
+
+      // save user's rating locally
+      setMyRatings((prev) => ({ ...prev, [id]: value }));
+
+      // update the resource's ratings in state so average refreshes instantly
+      setResources((prev) =>
+        prev.map((r) => {
+          if (r._id !== id) return r;
+          // rebuild ratings array with updated value for this user
+          const existingIndex = r.ratings?.findIndex((rt) => rt.userRated) ?? -1;
+          const updatedRatings = r.ratings ? [...r.ratings] : [];
+          if (existingIndex !== -1) {
+            updatedRatings[existingIndex] = { ...updatedRatings[existingIndex], value };
+          } else {
+            updatedRatings.push({ value, userRated: true });
+          }
+          return { ...r, ratings: updatedRatings };
+        })
+      );
+    } catch (err) {
+      console.error("rating error:", err);
+    }
+  };
+
   const filteredResources = resources.filter((r) => {
-    const matchesSearch = r.title
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-
-    const matchesModule =
-      selectedModule === "All" || r.module === selectedModule;
-
+    const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesModule = selectedModule === "All" || r.module === selectedModule;
     const resourceTags = Array.isArray(r.tags) ? r.tags : [r.tags];
-
-    const matchesTag =
-      selectedTag === "All" || resourceTags.includes(selectedTag);
-
-    const matchesSaved =
-      !showSavedOnly || savedResources.includes(r._id);
-
+    const matchesTag = selectedTag === "All" || resourceTags.includes(selectedTag);
+    const matchesSaved = !showSavedOnly || savedResources.includes(r._id);
     return matchesSearch && matchesModule && matchesTag && matchesSaved;
   });
 
   return (
     <div className={`resources-page ${theme}`}>
-      {/* top navbar */}
       <DashboardNavbar theme={theme} setTheme={setTheme} />
 
       <div className="resources-layout">
-        {/* sidebar navigation */}
         <Sidebar />
 
         <main className="resources-main">
-
-          {/* page header */}
           <div className="resources-header">
             <p className="res-tagline">study materials</p>
             <h1>resource library</h1>
@@ -146,10 +194,7 @@ function Resources() {
             </p>
           </div>
 
-          {/* search and filter controls */}
           <div className="resources-controls">
-
-            {/* search input */}
             <div className="search-wrapper">
               <SearchRoundedIcon className="search-icon" />
               <input
@@ -161,7 +206,6 @@ function Resources() {
               />
             </div>
 
-            {/* module filter */}
             <select
               value={selectedModule}
               onChange={(e) => setSelectedModule(e.target.value)}
@@ -174,7 +218,6 @@ function Resources() {
               ))}
             </select>
 
-            {/* tag filter */}
             <select
               value={selectedTag}
               onChange={(e) => setSelectedTag(e.target.value)}
@@ -187,7 +230,6 @@ function Resources() {
               ))}
             </select>
 
-            {/* toggle saved only view */}
             <button
               className={`saved-toggle-btn ${showSavedOnly ? "active" : ""}`}
               onClick={() => setShowSavedOnly((prev) => !prev)}
@@ -201,19 +243,9 @@ function Resources() {
             </button>
           </div>
 
-          {/* loading state */}
-          {loading && (
-            <p style={{ opacity: 0.6, padding: "1rem 0" }}>
-              loading resources...
-            </p>
-          )}
+          {loading && <p style={{ opacity: 0.6, padding: "1rem 0" }}>loading resources...</p>}
+          {error && <p style={{ color: "red", padding: "1rem 0" }}>{error}</p>}
 
-          {/* error state */}
-          {error && (
-            <p style={{ color: "red", padding: "1rem 0" }}>{error}</p>
-          )}
-
-          {/* resource list */}
           {!loading && !error && (
             <>
               <p className="results-count">
@@ -223,8 +255,6 @@ function Resources() {
               </p>
 
               <div className="resources-list">
-
-                {/* empty state */}
                 {filteredResources.length === 0 ? (
                   <div className="no-results">
                     <p>
@@ -234,66 +264,73 @@ function Resources() {
                     </p>
                   </div>
                 ) : (
+                  filteredResources.map((resource) => {
+                    const avgRating = getAverage(resource.ratings);
+                    const myRating = myRatings[resource._id] || 0;
 
-                  // render each resource card
-                  filteredResources.map((resource) => (
-                    <div key={resource._id} className="resource-card">
+                    return (
+                      <div key={resource._id} className="resource-card">
+                        <div className="resource-info">
+                          <h3 className="resource-title">{resource.title}</h3>
 
-                      <div className="resource-info">
-                        <h3 className="resource-title">{resource.title}</h3>
+                          <div className="resource-meta">
+                            <span className="res-badge">{resource.module}</span>
+                            <span className="res-badge tag">
+                              {Array.isArray(resource.tags) ? resource.tags[0] : resource.tags}
+                            </span>
+                            <span className="uploaded-by">
+                              uploaded by {resource.uploadedBy?.name ?? "unknown"}
+                            </span>
+                          </div>
 
-                        <div className="resource-meta">
-                          <span className="res-badge">{resource.module}</span>
+                          {/* average star display */}
+                          <div className="rating-row">
+                            <StarDisplay value={avgRating} />
+                            <span className="rating-count">
+                              ({resource.ratings?.length ?? 0} {resource.ratings?.length === 1 ? "rating" : "ratings"})
+                            </span>
+                          </div>
 
-                          <span className="res-badge tag">
-                            {Array.isArray(resource.tags)
-                              ? resource.tags[0]
-                              : resource.tags}
-                          </span>
+                          {/* interactive rating picker */}
+                          <div className="rate-row">
+                            <span className="rate-label">your rating:</span>
+                            <StarPicker
+                              resourceId={resource._id}
+                              currentRating={myRating}
+                              onRate={handleRate}
+                            />
+                            {myRating > 0 && (
+                              <span className="your-rating-badge">{myRating}/5</span>
+                            )}
+                          </div>
+                        </div>
 
-                          <span className="uploaded-by">
-                            uploaded by {resource.uploadedBy?.name ?? "unknown"}
-                          </span>
+                        <div className="resource-actions">
+                          <a
+                            href={resource.link || "#"}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="res-btn view-btn"
+                            style={{ textDecoration: "none" }}
+                          >
+                            <VisibilityRoundedIcon className="btn-icon" />
+                            view
+                          </a>
+
+                          <button
+                            className={`res-btn save-btn ${savedResources.includes(resource._id) ? "saved" : ""}`}
+                            onClick={() => handleSave(resource._id)}
+                          >
+                            {savedResources.includes(resource._id) ? (
+                              <><BookmarkRoundedIcon className="btn-icon" /> saved</>
+                            ) : (
+                              <><BookmarkBorderRoundedIcon className="btn-icon" /> save</>
+                            )}
+                          </button>
                         </div>
                       </div>
-
-                      <div className="resource-actions">
-
-                        {/* view resource link */}
-                        <a
-                          href={resource.link || "#"}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="res-btn view-btn"
-                          style={{ textDecoration: "none" }}
-                        >
-                          <VisibilityRoundedIcon className="btn-icon" />
-                          view
-                        </a>
-
-                        {/* save button */}
-                        <button
-                          className={`res-btn save-btn ${
-                            savedResources.includes(resource._id) ? "saved" : ""
-                          }`}
-                          onClick={() => handleSave(resource._id)}
-                        >
-                          {savedResources.includes(resource._id) ? (
-                            <>
-                              <BookmarkRoundedIcon className="btn-icon" />
-                              saved
-                            </>
-                          ) : (
-                            <>
-                              <BookmarkBorderRoundedIcon className="btn-icon" />
-                              save
-                            </>
-                          )}
-                        </button>
-
-                      </div>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
             </>

@@ -1,4 +1,4 @@
-/* Fix Aishat's root centering so dashboard takes full width */
+
 #root:has(.dashboard-page) {
   width: 100%;
   max-width: 100%;
@@ -18,7 +18,6 @@
 }
 
 
-/* Outer page wrapper - stacks navbar on top, then sidebar+content below */
 .dashboard-page {
   display: flex;
   flex-direction: column;
@@ -26,13 +25,11 @@
   font-family: "Inter", "Roboto", sans-serif;
 }
 
-/* Row below the DashboardNavbar: sidebar + main content side by side */
 .dashboard-layout {
   display: flex;
   flex: 1;
 }
 
-/* Everything to the right of the sidebar */
 .dashboard-wrapper {
   margin-left: 230px;
   flex: 1;
@@ -42,13 +39,13 @@
   transition: margin-left 0.25s ease, width 0.25s ease;
 }
 
-/* When sidebar is collapsed (60px wide) */
+/* when sidebar is collapsed */
 .dashboard-page:has(.sidebar-collapsed) .dashboard-wrapper {
   margin-left: 60px;
   width: calc(100% - 60px);
 }
 
-/* Top bar with page title and theme toggle */
+/* top bar with page title and theme toggle */
 .dash-topbar {
   display: flex;
   justify-content: space-between;
@@ -68,7 +65,7 @@
   font-weight: 700;
 }
 
-/* Welcome banner below the topbar */
+/* welcome banner below the topbar */
 .dash-welcome-banner {
   display: flex;
   justify-content: space-between;
@@ -99,7 +96,7 @@
   opacity: 0.8;
 }
 
-/* Main two-column layout */
+/* main two-column layout */
 .dash-content {
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -120,7 +117,7 @@
   gap: 24px;
 }
 
-/* Section cards */
+/* section cards */
 .dash-section {
   border-radius: 16px;
   padding: 22px 24px;
@@ -148,7 +145,7 @@
   opacity: 0.7;
 }
 
-/* Course cards grid - like Moodle */
+/* course cards grid  */
 .dash-course-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -165,13 +162,13 @@
   transform: translateY(-4px);
 }
 
-/* Coloured top strip on each card */
+
 .course-card-bar {
   height: 7px;
   background: linear-gradient(90deg, #14b8a6, #2dd4bf);
 }
 
-/* Green bar for study group cards */
+
 .course-card-bar.group-bar {
   background: linear-gradient(90deg, #2f855a, #48bb78);
 }
@@ -215,7 +212,7 @@
   opacity: 0.7;
 }
 
-/* Reminders timeline */
+/* reminders timeline */
 .dash-timeline {
   display: flex;
   flex-direction: column;
@@ -249,7 +246,7 @@
   opacity: 0.65;
 }
 
-/* Quick stats grid */
+/* quick stats grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -278,7 +275,7 @@
   opacity: 0.75;
 }
 
-/* Dark mode */
+/* dark mode */
 .dashboard-page.glass {
   background:
     radial-gradient(circle at top left, rgba(20, 184, 166, 0.35), transparent 40%),
@@ -319,7 +316,7 @@
 .dashboard-page.glass .section-icon { color: #5eead4; }
 .dashboard-page.glass .topbar-icon { color: #5eead4; }
 
-/* Light mode */
+/* light mode */
 .dashboard-page.campus {
   background: #f4f6f8;
   color: #111827;
@@ -366,7 +363,7 @@
 .dashboard-page.campus .section-icon { color: #2f855a; }
 .dashboard-page.campus .topbar-icon { color: #2f855a; }
 
-/* Fade in animation */
+/* fade in animation */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to { opacity: 1; transform: translateY(0); }
@@ -376,14 +373,14 @@
   animation: fadeUp 0.6s ease both;
 }
 
-/* Tablet - stack to one column */
+/* tablet*/
 @media (max-width: 1024px) {
   .dash-content {
     grid-template-columns: 1fr;
   }
 }
 
-/* Mobile */
+/* mobile */
 @media (max-width: 768px) {
   .dashboard-wrapper {
     margin-left: 0;
