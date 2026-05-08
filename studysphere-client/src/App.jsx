@@ -7,8 +7,11 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Resources from "./pages/Resources";
 import UploadResource from "./pages/UploadResource";
+import StudyGroups from "./pages/StudyGroups";
+import Reminders from "./pages/Reminders";
 
-const LOGGED_IN_PATHS = ["/dashboard", "/resources", "/upload"];
+// Paths that use the dashboard layout (full width, no root centering)
+const LOGGED_IN_PATHS = ["/dashboard", "/resources", "/upload", "/studygroups", "/reminders"];
 
 function AppContent() {
   const [theme, setTheme] = useState("glass");
@@ -18,15 +21,17 @@ function AppContent() {
   return (
     <main className={`app ${isLoggedIn ? "" : theme}`}>
       <Routes>
-        {/* PUBLIC */}
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Home theme={theme} setTheme={setTheme} />} />
         <Route path="/login" element={<Login theme={theme} setTheme={setTheme} />} />
         <Route path="/register" element={<Register theme={theme} setTheme={setTheme} />} />
 
-        {/* DASHBOARD */}
+        {/* LOGGED IN ROUTES */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/upload" element={<UploadResource />} />
+        <Route path="/studygroups" element={<StudyGroups />} />
+        <Route path="/reminders" element={<Reminders />} />
       </Routes>
     </main>
   );

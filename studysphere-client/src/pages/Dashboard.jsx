@@ -68,6 +68,7 @@ function Dashboard() {
         {/* Main content - two columns like Moodle */}
         <main className="dash-content">
 
+<<<<<<< HEAD
           {/* Left column - resources and groups */}
           <div className="dash-left-col">
 
@@ -140,17 +141,50 @@ function Dashboard() {
               </div>
             </section>
 
+=======
+          {/* Page title bar */}
+          <header className="dash-topbar">
+            <div className="dash-topbar-left">
+             <div className="feature">
+              <FolderRoundedIcon className="feature-icons"/>
+              <h2> My Dashboard</h2>
+              </div> 
+            </div>
+          </header>
+
+          {/* Welcome banner */}
+          <div className="dash-welcome-banner">
+            <div>
+              <p className="dash-tagline">YOUR STUDY HUB</p>
+              <h1>Welcome back, {username}! 👋</h1>
+              <p className="dash-subtitle">You have {reminders.length} upcoming reminders and {studyGroups.length} active study groups.</p>
+            </div>
+>>>>>>> 4401871dd59f7689a1ac52b6f07f25d9a48c58b6
           </div>
 
           {/* Right column - reminders and stats */}
           <div className="dash-right-col">
 
+<<<<<<< HEAD
             {/* Upcoming reminders timeline */}
             <section className="dash-section">
               <div className="dash-section-header">
                 <div className="section-title">
                   <AccessAlarmRoundedIcon className="section-icon" />
                   <h3>Upcoming</h3>
+=======
+            {/* Left column - resources + groups */}
+            <div className="dash-left-col">
+
+              {/* Recent Resources - styled like Moodle course cards */}
+              <section className="dash-section">
+                <div className="dash-section-header">
+                  <div className="feature">
+                  <FolderRoundedIcon className="feature-icons"/>
+                  <h3> Recent Resources</h3>
+                  </div>
+                  <button className="dash-link-btn" onClick={() => navigate("/resources")}>View all</button>
+>>>>>>> 4401871dd59f7689a1ac52b6f07f25d9a48c58b6
                 </div>
                 <button className="dash-link-btn" onClick={() => navigate("/reminders")}>
                   View all
@@ -166,6 +200,76 @@ function Dashboard() {
                       <p className="timeline-title">{reminder.title}</p>
                       <p className="timeline-date">Due: {reminder.dueDate}</p>
                     </div>
+<<<<<<< HEAD
+=======
+                  ))}
+                </div>
+              </section>
+
+              {/* Study Groups */}
+              <section className="dash-section">
+                <div className="dash-section-header">
+                  <div className="feature">
+                  <GroupsRoundedIcon className="feature-icons"/>
+                  <h3>My Study Groups</h3>
+                  </div>
+                  <button className="dash-link-btn" onClick={() => navigate("/studygroups")}>View all</button>
+                </div>
+                <div className="dash-course-grid">
+                  {studyGroups.map((group) => (
+                    <div key={group.id} className="course-card">
+                      <div className="course-card-bar group-bar"></div>
+                      <div className="course-card-body">
+                        <span className="course-card-tag">{group.members} members</span>
+                        <h4>{group.name}</h4>
+                        <p>{group.module}</p>
+                        <button className="course-card-btn" onClick={() => navigate("/studygroups")}>
+                          Open →
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+            </div>
+
+            {/* Right column - reminders timeline like Moodle timeline block */}
+            <div className="dash-right-col">
+              <section className="dash-section">
+                <div className="dash-section-header">
+                  <div className="feature">
+                    <AccessAlarmRoundedIcon className="feature-icons"/>
+                    <h3>Upcoming</h3>
+                  </div>
+                  <button className="dash-link-btn" onClick={() => navigate("/reminders")}>View all</button>
+                </div>
+
+                {/* Timeline list */}
+                <div className="dash-timeline">
+                  {reminders.map((reminder) => (
+                    <div key={reminder.id} className="timeline-item">
+                      <div className="timeline-dot"></div>
+                      <div className="timeline-content">
+                        <p className="timeline-title">{reminder.title}</p>
+                        <p className="timeline-date">📅 Due: {reminder.dueDate}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* Quick stats block like Moodle */}
+              <section className="dash-section dash-stats">
+                <div className="feature">
+                  <BarChartRoundedIcon className="feature-icons"/>
+                  <h3>Quick Stats</h3>
+                </div>
+                <div className="stats-grid">
+                  <div className="stat-item">
+                    <span className="stat-number">3</span>
+                    <span className="stat-label">Resources</span>
+>>>>>>> 4401871dd59f7689a1ac52b6f07f25d9a48c58b6
                   </div>
                 ))}
               </div>

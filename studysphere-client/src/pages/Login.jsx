@@ -66,6 +66,7 @@ function Login({ theme, setTheme }) {
 
         <form className="login-card" onSubmit={handleSubmit} noValidate>
           <h2>Login</h2>
+          <p className="subtitle">Enter your details to continue</p>
 
           <input
             type="email"
@@ -87,7 +88,11 @@ function Login({ theme, setTheme }) {
 
           <button type="submit">Login</button>
 
-          <p>
+          <p className="forgot-link">
+            <a href="#">Forgot password?</a>
+          </p>
+
+          <p className="link">
             Don’t have an account? <Link to="/register">Register</Link>
           </p>
         </form>
