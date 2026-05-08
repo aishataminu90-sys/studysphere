@@ -188,7 +188,7 @@ function Resources() {
         <main className="resources-main">
           <div className="resources-header">
             <p className="res-tagline">study materials</p>
-            <h1>resource library</h1>
+            <h1>Resource Library</h1>
             <p className="res-subtitle">
               search and filter study materials shared by your peers.
             </p>

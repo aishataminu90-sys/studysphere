@@ -1,8 +1,5 @@
-/* StudyGroups.css - Styles for the Study Groups page
-   Follows the exact same layout pattern as Resources.css:
-   full-width page, DashboardNavbar + Sidebar + main content */
+/* StudyGroups.css - Styles for the Study Groups page */
 
-/* Fix root centering for full-width layout - same fix as Resources.css */
 #root:has(.groups-page) {
   width: 100%;
   max-width: 100%;
@@ -13,7 +10,6 @@
 
 * { box-sizing: border-box; }
 
-/* Outer wrapper - stacks navbar on top, sidebar+content below */
 .groups-page {
   display: flex;
   flex-direction: column;
@@ -21,29 +17,26 @@
   font-family: "Inter", "Roboto", sans-serif;
 }
 
-/* Row below DashboardNavbar: sidebar + main content side by side */
 .groups-layout {
   display: flex;
   flex: 1;
 }
 
-/* Main content sits to the right of the sidebar - mirrors resources-main */
 .groups-main {
   margin-left: 230px;
+  margin-top: 60px;
   padding: 30px 40px;
   flex: 1;
   width: calc(100% - 230px);
   transition: margin-left 0.25s ease, width 0.25s ease;
 }
 
-/* Shift content when sidebar collapses to 60px */
-.groups-page:has(.sidebar-collapsed) .groups-main {
+.groups-page.sidebar-collapsed .groups-main {
   margin-left: 60px;
   width: calc(100% - 60px);
 }
 
-/* ── Page heading - matches Resources page style ───────────── */
-
+/* Page heading */
 .groups-tagline {
   font-weight: 700;
   letter-spacing: 1px;
@@ -65,8 +58,7 @@
   opacity: 0.8;
 }
 
-/* ── Controls row: count text + create button ─────────────── */
-
+/* Controls row */
 .groups-controls {
   display: flex;
   justify-content: space-between;
@@ -82,7 +74,6 @@
   margin: 0;
 }
 
-/* Create Group button - teal filled pill */
 .create-group-btn {
   display: flex;
   align-items: center;
@@ -100,8 +91,7 @@
   transform: translateY(-2px);
 }
 
-/* ── Success banner ────────────────────────────────────────── */
-
+/* Success banner */
 .success-banner {
   padding: 14px 20px;
   border-radius: 14px;
@@ -111,8 +101,7 @@
   font-size: 0.95rem;
 }
 
-/* ── Create group form card ───────────────────────────────── */
-
+/* Create group form card */
 .create-form {
   padding: 30px 32px;
   border-radius: 20px;
@@ -126,7 +115,6 @@
   font-weight: 800;
 }
 
-/* Label + input stacked vertically */
 .form-field {
   display: flex;
   flex-direction: column;
@@ -148,7 +136,6 @@
   transition: border-color 0.2s ease;
 }
 
-/* Submit button inside the form */
 .submit-form-btn {
   padding: 12px 26px;
   border-radius: 14px;
@@ -164,13 +151,11 @@
   transform: translateY(-2px);
 }
 
-/* ── Section headings ─────────────────────────────────────── */
-
+/* Section headings */
 .groups-section {
   margin-bottom: 40px;
 }
 
-/* Icon + h2 in a row - same .feature pattern as Dashboard */
 .section-heading {
   display: flex;
   align-items: center;
@@ -188,15 +173,13 @@
   font-size: 1.4rem !important;
 }
 
-/* ── Group cards grid ─────────────────────────────────────── */
-
+/* Group cards grid */
 .groups-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
 }
 
-/* Individual group card */
 .group-card {
   padding: 22px;
   border-radius: 20px;
@@ -211,14 +194,12 @@
   transform: translateY(-4px);
 }
 
-/* Top row: module badge + optional joined badge */
 .group-card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* Module code pill - teal tint */
 .group-module-badge {
   padding: 4px 12px;
   border-radius: 999px;
@@ -227,8 +208,8 @@
   display: inline-block;
 }
 
-/* Joined badge shown on joined cards */
-.joined-badge {
+.joined-badge,
+.pending-badge {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -242,7 +223,6 @@
   font-size: 0.9rem !important;
 }
 
-/* Group name */
 .group-name {
   margin: 0;
   font-size: 1rem;
@@ -250,7 +230,6 @@
   line-height: 1.35;
 }
 
-/* Members + session info stacked */
 .group-meta {
   display: flex;
   flex-direction: column;
@@ -270,8 +249,83 @@
   flex-shrink: 0;
 }
 
-/* Join button */
-.join-btn {
+/* Pending requests section inside group card */
+.pending-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pending-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.pending-icon {
+  font-size: 0.95rem !important;
+}
+
+.pending-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pending-user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.pending-user span {
+  flex: 1;
+}
+
+.pending-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.approve-btn,
+.deny-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.approve-btn:hover,
+.deny-btn:hover {
+  transform: scale(1.1);
+}
+
+.approve-btn:disabled,
+.deny-btn:disabled,
+.join-btn:disabled,
+.leave-btn:disabled,
+.cancel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Buttons */
+.join-btn,
+.leave-btn,
+.cancel-btn {
   margin-top: auto;
   padding: 10px 16px;
   border-radius: 12px;
@@ -279,25 +333,16 @@
   font-size: 0.88rem;
   cursor: pointer;
   border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.join-btn:hover {
-  transform: translateY(-2px);
-}
-
-/* Leave button */
-.leave-btn {
-  margin-top: auto;
-  padding: 10px 16px;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.88rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.leave-btn:hover {
+.join-btn:hover,
+.leave-btn:hover,
+.cancel-btn:hover {
   transform: translateY(-2px);
 }
 
@@ -309,14 +354,12 @@
   font-size: 1rem;
 }
 
-/* Validation error text */
 .error-message {
   margin: 4px 0 0;
   font-size: 0.85rem;
   font-weight: 700;
 }
 
-/* Red border on invalid inputs */
 .input-error {
   border-color: #ef4444 !important;
 }
@@ -388,6 +431,29 @@
   color: #5eead4;
 }
 
+.groups-page.glass .pending-badge {
+  background: rgba(251, 146, 60, 0.2);
+  color: #fed7aa;
+}
+
+.groups-page.glass .pending-section {
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+.groups-page.glass .pending-user {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.groups-page.glass .approve-btn {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.groups-page.glass .deny-btn {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
 .groups-page.glass .group-meta span { color: #94a3b8; }
 .groups-page.glass .meta-icon { color: #5eead4; }
 
@@ -403,6 +469,12 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .groups-page.glass .leave-btn:hover { background: rgba(255, 255, 255, 0.14); }
+
+.groups-page.glass .cancel-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+.groups-page.glass .cancel-btn:hover { background: rgba(239, 68, 68, 0.25); }
 
 .groups-page.glass .error-message { color: #fca5a5; }
 
@@ -473,6 +545,29 @@
   color: #166534;
 }
 
+.groups-page.campus .pending-badge {
+  background: #fed7aa;
+  color: #b45309;
+}
+
+.groups-page.campus .pending-section {
+  border-top-color: #e5e7eb;
+}
+
+.groups-page.campus .pending-user {
+  background: #f9fafb;
+}
+
+.groups-page.campus .approve-btn {
+  background: #d9fbe8;
+  color: #166534;
+}
+
+.groups-page.campus .deny-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
 .groups-page.campus .group-meta span { color: #6b7280; }
 .groups-page.campus .meta-icon { color: #2f855a; }
 
@@ -489,20 +584,25 @@
 }
 .groups-page.campus .leave-btn:hover { background: #e5e7eb; }
 
+.groups-page.campus .cancel-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+.groups-page.campus .cancel-btn:hover { background: #fecaca; }
+
 .groups-page.campus .error-message { color: #dc2626; }
 
-/* ── Animations ───────────────────────────────────────────── */
-
+/* Animations */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Responsive ───────────────────────────────────────────── */
-
+/* Responsive */
 @media (max-width: 768px) {
   .groups-main {
     margin-left: 0;
+    margin-top: 0;
     width: 100%;
     padding: 16px;
   }
@@ -517,15 +617,13 @@
   }
 }
 
-/* Loading state text */
 .loading-state {
   text-align: center;
   padding: 60px 20px;
   opacity: 0.6;
   font-size: 1rem;
 }
- 
-/* Error message when fetch fails */
+
 .fetch-error {
   padding: 14px 20px;
   border-radius: 14px;
@@ -533,22 +631,13 @@
   margin-bottom: 20px;
   font-size: 0.95rem;
 }
- 
-/* Disabled button state */
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none !important;
-}
- 
-/* Dark mode fetch error */
+
 .glass .fetch-error {
   background: rgba(239, 68, 68, 0.15);
   color: #fca5a5;
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
- 
-/* Light mode fetch error */
+
 .campus .fetch-error {
   background: #fef2f2;
   color: #dc2626;
