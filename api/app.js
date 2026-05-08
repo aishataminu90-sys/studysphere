@@ -39,8 +39,11 @@ mongoose.connect(process.env.MONGO_URI)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// Middleware
-app.use(cors());
+// Middleware 
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

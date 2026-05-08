@@ -1,45 +1,22 @@
 const mongoose = require('mongoose');
 
-// Schema for a study group
+// Schema for a study group — includes pendingMembers for the waiting room feature
 const studyGroupSchema = new mongoose.Schema({
 
-    // Name of the study group e.g. "Web Dev Group"
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
+    name: { type: String, required: true, trim: true },
+    module: { type: String, required: true, trim: true },
+    description: { type: String, trim: true },
 
-    // Which module this group is for e.g. "CS204"
-    module: {
-        type: String,
-        required: true,
-        trim: true
-    },
+    // The user who created the group — acts as the group leader
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 
-    // Optional description of the group
-    description: {
-        type: String,
-        trim: true
-    },
+    // Fully approved members
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 
-    // The user who created the group
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
+    // Users who have requested to join but are waiting for leader approval
+    pendingMembers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 
-    // List of members who have joined
-    members: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-
-    // Optional next session date/time
-    nextSession: {
-        type: Date
-    }
+    nextSession: { type: Date }
 
 }, { timestamps: true });
 

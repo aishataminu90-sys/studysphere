@@ -34,7 +34,21 @@ const ResourceSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'User',
     default: []
-  }
+  },
+  // Array of individual ratings — one per user
+  ratings: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      value: {
+        type: Number,
+        min: 1,
+        max: 5
+      }
+    }
+  ]
 }, { timestamps: true });
 
-module.exports = mongoose.model('Resource', ResourceSchema);
+module.exports = mongoose.model('Resource', ResourceSchema);`1`
