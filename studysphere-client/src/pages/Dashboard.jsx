@@ -25,14 +25,19 @@ function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Get username from cookie (set on login)
-        const cookies = document.cookie.split(";");
-        const usernameCookie = cookies.find((c) => c.trim().startsWith("username="));
-        if (usernameCookie) {
-          setUsername(decodeURIComponent(usernameCookie.split("=")[1]));
+        // Get username from localStorage (stored on login)
+        // Using localStorage avoids cross-origin cookie issues on Render
+        const stored = localStorage.getItem("studysphere_user");
+        if (stored) {
+          try {
+            const userData = JSON.parse(stored);
+            setUsername(userData.name || "Student");
+          } catch {
+            setUsername("Student");
+          }
         }
 
-        // Fetch resources
+        // Fetch resources - public route, no auth required
         const resourcesRes = await fetch(`${API}/resources`, {
           credentials: "include",
         });
@@ -42,7 +47,7 @@ function Dashboard() {
           setRecentResources(resourcesData.slice(0, 3));
         }
 
-        // Fetch study groups
+        // Fetch study groups - public route, no auth required
         const groupsRes = await fetch(`${API}/groups`, {
           credentials: "include",
         });
@@ -51,7 +56,7 @@ function Dashboard() {
           setStudyGroups(groupsData.slice(0, 2));
         }
 
-        // Fetch reminders
+        // Fetch reminders - requires auth session
         const remindersRes = await fetch(`${API}/reminders`, {
           credentials: "include",
         });
