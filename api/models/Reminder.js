@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Schema for a personal reminder/task
 const reminderSchema = new mongoose.Schema({
 
-    // Title of the reminder e.g. "Study Chapter 4"
+    // Title of the reminder 
     title: {
         type: String,
         required: true,

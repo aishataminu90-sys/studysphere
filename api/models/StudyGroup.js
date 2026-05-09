@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
-// Schema for a study group — includes pendingMembers for the waiting room feature
+// Schema for a study group,  includes pendingMembers for the waiting room feature
 const studyGroupSchema = new mongoose.Schema({
 
     name: { type: String, required: true, trim: true },
     module: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
 
-    // The user who created the group — acts as the group leader
+    // The user who created the group , acts as the group leader
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 
     // Fully approved members
