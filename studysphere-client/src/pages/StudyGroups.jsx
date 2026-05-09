@@ -11,6 +11,7 @@ import HourglassEmptyRoundedIcon from "@mui/icons-material/HourglassEmptyRounded
 import CheckCircleOutlineRoundedIcon from "@mui/icons-material/CheckCircleOutlineRounded";
 import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
 import MeetingRoomRoundedIcon from "@mui/icons-material/MeetingRoomRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import "../styles/StudyGroups.css";
 
@@ -215,6 +216,41 @@ function StudyGroups() {
       }
 
       await fetchGroups();
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  // Delete group (leader only)
+  const handleDeleteGroup = async (groupId) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this group? This cannot be undone."
+      )
+    ) {
+      return;
+    }
+
+    setActionLoadingId(groupId);
+
+    try {
+      const res = await fetch(`${API_URL}/groups/${groupId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error();
+      }
+
+      await fetchGroups();
+      setSuccessMessage("Group deleted successfully");
+
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
     } catch (err) {
       alert("Something went wrong. Please try again.");
     } finally {
@@ -494,9 +530,11 @@ function StudyGroups() {
                     )}
 
                     <button
-                      className="leave-btn"
+                      className="delete-btn"
+                      onClick={() => handleDeleteGroup(group._id)}
                       disabled={actionLoadingId === group._id}
                     >
+                      <DeleteRoundedIcon />
                       Delete Group
                     </button>
                   </div>
