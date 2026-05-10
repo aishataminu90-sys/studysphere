@@ -1,4 +1,3 @@
-// Dashboard.jsx - Main page shown after login
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -15,6 +14,7 @@ const API = import.meta.env.VITE_API_URL;
 function Dashboard() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState("glass");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const [username, setUsername] = useState("Student");
   const [recentResources, setRecentResources] = useState([]);
@@ -25,11 +25,13 @@ function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Get username from cookie (set on login)
-        const cookies = document.cookie.split(";");
-        const usernameCookie = cookies.find((c) => c.trim().startsWith("username="));
-        if (usernameCookie) {
-          setUsername(decodeURIComponent(usernameCookie.split("=")[1]));
+        // Get username from /auth/me endpoint
+        const meRes = await fetch(`${API}/auth/me`, {
+          credentials: "include",
+        });
+        if (meRes.ok) {
+          const userData = await meRes.json();
+          setUsername(userData.name);
         }
 
         // Fetch resources
@@ -38,7 +40,6 @@ function Dashboard() {
         });
         if (resourcesRes.ok) {
           const resourcesData = await resourcesRes.json();
-          // Only show 3 most recent on dashboard
           setRecentResources(resourcesData.slice(0, 3));
         }
 
@@ -70,11 +71,11 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className={`dashboard-page ${theme}`}>
+    <div className={`dashboard-page ${theme} ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
       <DashboardNavbar theme={theme} setTheme={setTheme} />
 
       <div className="dashboard-layout">
-        <Sidebar />
+        <Sidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
 
         <div className="dashboard-wrapper">
           <header className="dash-topbar">
