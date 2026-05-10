@@ -12,6 +12,9 @@ var logger = require('morgan');
 
 var app = express();
 
+// CRITICAL: trust proxy must be FIRST
+app.set('trust proxy', 1);
+
 // Routers
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -36,26 +39,35 @@ mongoose.connect(process.env.MONGO_URI, {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// Middleware
+// CORS - CRITICAL for cross-domain cookies
+const isProduction = process.env.NODE_ENV === 'production';
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  origin: process.env.CLIENT_URL || 'https://studysphere-vobi.onrender.com',
   credentials: true
 }));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session
+// Session - CRITICAL settings for production
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'studysphere_secret',
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI
+    mongoUrl: process.env.MONGO_URI,
+    ttl: 86400,
+    touchAfter: 3600
   }),
-  cookie: { maxAge: 1000 * 60 * 60 * 24 }
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+    secure: isProduction ? true : false,
+    sameSite: isProduction ? 'none' : 'lax'
+  }
 }));
 
 // Routes
