@@ -1,4 +1,4 @@
-// Dashboard.jsx - Main page shown after login
+// dashboard.jsx - main page shown after login
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -10,12 +10,13 @@ import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
 import "../styles/Dashboard.css";
 
-const API = import.meta.env.VITE_API_URL;
+const api = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
   const navigate = useNavigate();
   const [theme, setTheme] = useState("glass");
 
+  /* user + dashboard data */
   const [username, setUsername] = useState("Student");
   const [recentResources, setRecentResources] = useState([]);
   const [reminders, setReminders] = useState([]);
@@ -25,42 +26,47 @@ function Dashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Get username from cookie (set on login)
+        /* get username from cookie (set during login) */
         const cookies = document.cookie.split(";");
-        const usernameCookie = cookies.find((c) => c.trim().startsWith("username="));
+        const usernameCookie = cookies.find((c) =>
+          c.trim().startsWith("username=")
+        );
+
         if (usernameCookie) {
           setUsername(decodeURIComponent(usernameCookie.split("=")[1]));
         }
 
-        // Fetch resources
-        const resourcesRes = await fetch(`${API}/resources`, {
+        /* fetch recent resources */
+        const resourcesRes = await fetch(`${api}/resources`, {
           credentials: "include",
         });
+
         if (resourcesRes.ok) {
           const resourcesData = await resourcesRes.json();
-          // Only show 3 most recent on dashboard
           setRecentResources(resourcesData.slice(0, 3));
         }
 
-        // Fetch study groups
-        const groupsRes = await fetch(`${API}/groups`, {
+        /* fetch study groups */
+        const groupsRes = await fetch(`${api}/groups`, {
           credentials: "include",
         });
+
         if (groupsRes.ok) {
           const groupsData = await groupsRes.json();
           setStudyGroups(groupsData.slice(0, 2));
         }
 
-        // Fetch reminders
-        const remindersRes = await fetch(`${API}/reminders`, {
+        /* fetch reminders */
+        const remindersRes = await fetch(`${api}/reminders`, {
           credentials: "include",
         });
+
         if (remindersRes.ok) {
           const remindersData = await remindersRes.json();
           setReminders(remindersData.slice(0, 5));
         }
       } catch (err) {
-        console.error("Failed to load dashboard data:", err);
+        console.error("failed to load dashboard data:", err);
       } finally {
         setLoading(false);
       }
@@ -77,18 +83,21 @@ function Dashboard() {
         <Sidebar />
 
         <div className="dashboard-wrapper">
+
+          {/* top bar */}
           <header className="dash-topbar">
             <div className="dash-topbar-left">
               <div className="feature">
                 <DashboardRoundedIcon className="feature-icons" />
-                <h2>My Dashboard</h2>
+                <h2>my dashboard</h2>
               </div>
             </div>
           </header>
 
+          {/* welcome banner */}
           <div className="dash-welcome-banner">
             <div>
-              <p className="dash-tagline">YOUR STUDY HUB</p>
+              <p className="dash-tagline">your study hub</p>
               <h1>Welcome back, {username}! 👋</h1>
               <p className="dash-subtitle">
                 You have {reminders.length} upcoming reminders and{" "}
@@ -98,25 +107,35 @@ function Dashboard() {
           </div>
 
           {loading ? (
-            <p style={{ padding: "2rem", opacity: 0.6 }}>Loading your dashboard...</p>
+            <p style={{ padding: "2rem", opacity: 0.6 }}>
+              loading your dashboard...
+            </p>
           ) : (
             <main className="dash-content">
+
+              {/* left column */}
               <div className="dash-left-col">
 
-                {/* Recent Resources */}
+                {/* recent resources */}
                 <section className="dash-section">
                   <div className="dash-section-header">
                     <div className="feature">
                       <FolderRoundedIcon className="feature-icons" />
-                      <h3>Recent Resources</h3>
+                      <h3>recent resources</h3>
                     </div>
-                    <button className="dash-link-btn" onClick={() => navigate("/resources")}>
-                      View all
+
+                    <button
+                      className="dash-link-btn"
+                      onClick={() => navigate("/resources")}
+                    >
+                      view all
                     </button>
                   </div>
 
                   {recentResources.length === 0 ? (
-                    <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>No resources yet.</p>
+                    <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>
+                      no resources yet.
+                    </p>
                   ) : (
                     <div className="dash-course-grid">
                       {recentResources.map((resource) => (
@@ -124,7 +143,9 @@ function Dashboard() {
                           <div className="course-card-bar"></div>
                           <div className="course-card-body">
                             <span className="course-card-tag">
-                              {Array.isArray(resource.tags) ? resource.tags[0] : resource.tags}
+                              {Array.isArray(resource.tags)
+                                ? resource.tags[0]
+                                : resource.tags}
                             </span>
                             <h4>{resource.title}</h4>
                             <p>{resource.module}</p>
@@ -132,7 +153,7 @@ function Dashboard() {
                               className="course-card-btn"
                               onClick={() => navigate("/resources")}
                             >
-                              Open →
+                              open →
                             </button>
                           </div>
                         </div>
@@ -141,20 +162,26 @@ function Dashboard() {
                   )}
                 </section>
 
-                {/* Study Groups */}
+                {/* study groups */}
                 <section className="dash-section">
                   <div className="dash-section-header">
                     <div className="feature">
                       <GroupsRoundedIcon className="feature-icons" />
-                      <h3>My Study Groups</h3>
+                      <h3>my study groups</h3>
                     </div>
-                    <button className="dash-link-btn" onClick={() => navigate("/studygroups")}>
-                      View all
+
+                    <button
+                      className="dash-link-btn"
+                      onClick={() => navigate("/studygroups")}
+                    >
+                      view all
                     </button>
                   </div>
 
                   {studyGroups.length === 0 ? (
-                    <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>No study groups yet.</p>
+                    <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>
+                      no study groups yet.
+                    </p>
                   ) : (
                     <div className="dash-course-grid">
                       {studyGroups.map((group) => (
@@ -170,7 +197,7 @@ function Dashboard() {
                               className="course-card-btn"
                               onClick={() => navigate("/studygroups")}
                             >
-                              Open →
+                              open →
                             </button>
                           </div>
                         </div>
@@ -180,33 +207,43 @@ function Dashboard() {
                 </section>
               </div>
 
-              {/* Right column */}
+              {/* right column */}
               <div className="dash-right-col">
+
+                {/* reminders */}
                 <section className="dash-section">
                   <div className="dash-section-header">
                     <div className="feature">
                       <AccessAlarmRoundedIcon className="feature-icons" />
-                      <h3>Upcoming</h3>
+                      <h3>upcoming</h3>
                     </div>
-                    <button className="dash-link-btn" onClick={() => navigate("/reminders")}>
-                      View all
+
+                    <button
+                      className="dash-link-btn"
+                      onClick={() => navigate("/reminders")}
+                    >
+                      view all
                     </button>
                   </div>
 
                   {reminders.length === 0 ? (
-                    <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>No reminders yet.</p>
+                    <p style={{ opacity: 0.6, fontSize: "0.9rem" }}>
+                      no reminders yet.
+                    </p>
                   ) : (
                     <div className="dash-timeline">
                       {reminders.map((reminder) => (
                         <div key={reminder._id} className="timeline-item">
                           <div className="timeline-dot"></div>
                           <div className="timeline-content">
-                            <p className="timeline-title">{reminder.title}</p>
+                            <p className="timeline-title">
+                              {reminder.title}
+                            </p>
                             <p className="timeline-date">
-                              📅 Due:{" "}
+                              📅 due:{" "}
                               {reminder.dueDate
                                 ? new Date(reminder.dueDate).toLocaleDateString()
-                                : "No date set"}
+                                : "no date set"}
                             </p>
                           </div>
                         </div>
@@ -215,30 +252,39 @@ function Dashboard() {
                   )}
                 </section>
 
-                {/* Quick Stats */}
+                {/* quick stats */}
                 <section className="dash-section dash-stats">
                   <div className="feature">
                     <BarChartRoundedIcon className="feature-icons" />
-                    <h3>Quick Stats</h3>
+                    <h3>quick stats</h3>
                   </div>
+
                   <div className="stats-grid">
                     <div className="stat-item">
-                      <span className="stat-number">{recentResources.length}</span>
-                      <span className="stat-label">Resources</span>
+                      <span className="stat-number">
+                        {recentResources.length}
+                      </span>
+                      <span className="stat-label">resources</span>
                     </div>
-                    <div className="stat-item">
-                      <span className="stat-number">{studyGroups.length}</span>
-                      <span className="stat-label">Groups</span>
-                    </div>
-                    <div className="stat-item">
-                      <span className="stat-number">{reminders.length}</span>
-                      <span className="stat-label">Reminders</span>
-                    </div>
+
                     <div className="stat-item">
                       <span className="stat-number">
-                        {[...new Set(recentResources.map((r) => r.module))].length}
+                        {studyGroups.length}
                       </span>
-                      <span className="stat-label">Modules</span>
+                      <span className="stat-label">groups</span>
+                    </div>
+
+                    <div className="stat-item">
+                      <span className="stat-number">{reminders.length}</span>
+                      <span className="stat-label">reminders</span>
+                    </div>
+
+                    <div className="stat-item">
+                      <span className="stat-number">
+                        {[...new Set(recentResources.map((r) => r.module))]
+                          .length}
+                      </span>
+                      <span className="stat-label">modules</span>
                     </div>
                   </div>
                 </section>

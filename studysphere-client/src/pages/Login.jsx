@@ -10,7 +10,7 @@ function Login({ theme, setTheme }) {
   const navigate = useNavigate();
   const [success, setSuccess] = useState("");
 
-  // Controlled form state for email and password fields
+  // form state
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -18,10 +18,10 @@ function Login({ theme, setTheme }) {
 
   const [errors, setErrors] = useState({});
 
-  // Basic email format check using regex
+  // simple email check
   const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  // Updates the matching form field and clears its error on every keystroke
+  // update form values + clear errors as user types
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -37,63 +37,60 @@ function Login({ theme, setTheme }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Client-side validation before hitting the API
+    // basic validation before api call
     const newErrors = {};
 
     if (!form.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = "email is required";
     } else if (!isValidEmail(form.email)) {
-      newErrors.email = "Please enter a valid email";
+      newErrors.email = "enter a valid email";
     }
 
     if (!form.password.trim()) {
-      newErrors.password = "Password is required";
+      newErrors.password = "password is required";
     }
 
     setErrors(newErrors);
 
-    // Only proceed if there are no validation errors
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+    if (Object.keys(newErrors).length > 0) return;
+
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // sends the session cookie with the request
-          body: JSON.stringify({
-            email: form.email,
-            password: form.password,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          setErrors({ general: data.error || "Login failed" });
-          return;
-        }
-
-        // Fetch the logged-in user's role to determine where to redirect
-        const meRes = await fetch(`${import.meta.env.VITE_API_URL}/auth/me`, {
+          headers: { "Content-Type": "application/json" },
           credentials: "include",
-        });
-        const meData = await meRes.json();
+          body: JSON.stringify(form),
+        }
+      );
 
-        setSuccess("Login successful! Redirecting...");
+      const data = await res.json();
 
-        // Redirect admins to /admin, all other users to /dashboard
-        setTimeout(() => {
-          if (meData.role === "admin") {
-            navigate("/admin");
-          } else {
-            navigate("/dashboard");
-          }
-        }, 1000);
-
-      } catch (error) {
-        setErrors({ general: "Could not connect to server" });
+      if (!res.ok) {
+        setErrors({ general: data.error || "login failed" });
+        return;
       }
+
+      // check user role
+      const meRes = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/me`,
+        { credentials: "include" }
+      );
+
+      const meData = await meRes.json();
+
+      setSuccess("login successful. redirecting...");
+
+      setTimeout(() => {
+        if (meData.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+      }, 1000);
+    } catch {
+      setErrors({ general: "could not connect to server" });
     }
   };
 
@@ -103,53 +100,60 @@ function Login({ theme, setTheme }) {
       <ThemeToggle theme={theme} setTheme={setTheme} />
 
       <section className="login-wrapper">
-        {/* Left side  marketing copy */}
+        {/* left side */}
         <div className="login-info">
-          <p className="login-tagline">Welcome back</p>
-          <h1>Continue your study journey.</h1>
-          <p>
-            Access resources, study groups, and reminders easily.
-          </p>
+          <p className="login-tagline">welcome back</p>
+          <h1>continue your study journey.</h1>
+          <p>access resources, study groups, and reminders easily.</p>
         </div>
 
-        {/* Right side  login form */}
+        {/* right side form */}
         <form className="login-card" onSubmit={handleSubmit} noValidate>
-          <h2>Login</h2>
-          <p className="subtitle">Enter your details to continue</p>
+          <h2>login</h2>
+          <p className="subtitle">enter your details to continue</p>
 
-          {/* General API error (e.g. wrong credentials) */}
-          {errors.general && <p className="error-message">{errors.general}</p>}
-          {success && <p className="success-message">{success}</p>}
-          
+          {errors.general && (
+            <p className="error-message">{errors.general}</p>
+          )}
+
+          {success && (
+            <p className="success-message">{success}</p>
+          )}
+
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="email"
             value={form.email}
             onChange={handleChange}
           />
-          {errors.email && <p className="error-message">{errors.email}</p>}
+          {errors.email && (
+            <p className="error-message">{errors.email}</p>
+          )}
 
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="password"
             value={form.password}
             onChange={handleChange}
           />
-          {errors.password && <p className="error-message">{errors.password}</p>}
+          {errors.password && (
+            <p className="error-message">{errors.password}</p>
+          )}
 
-          <button type="submit">Login</button>
+          <button type="submit">login</button>
 
           <p className="forgot-link">
-            <a href="#">Forgot password?</a>
+            <a href="#">forgot password?</a>
           </p>
 
           <p className="link">
-            Don't have an account? <Link to="/register">Register</Link>
+            don't have an account? <Link to="/register">register</Link>
           </p>
         </form>
       </section>
+
       <Footer theme={theme} />
     </main>
   );

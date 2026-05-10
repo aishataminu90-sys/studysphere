@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
 
-// Register user
+// register user
 router.post('/register', async(req, res) => {
   try {
     const { name, email, password, university, year, course } = req.body;
@@ -47,7 +47,7 @@ router.post('/register', async(req, res) => {
   }
 });
 
-// Login user
+// login user
 router.post('/login', async(req, res) => {
   try {
     console.log("Login attempt - Body:", req.body);
@@ -84,7 +84,7 @@ router.post('/login', async(req, res) => {
   }
 });
 
-// Logout user
+// logout user
 router.post('/logout', async(req, res) => {
   try {
     req.session.destroy((err) => {
@@ -102,7 +102,7 @@ router.post('/logout', async(req, res) => {
   }
 });
 
-// Get current logged-in user
+// get current logged-in user
 router.get('/me', async (req, res) => {
   try {
     if (!req.session.userId) {

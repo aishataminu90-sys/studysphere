@@ -1,7 +1,3 @@
-// Reminders.jsx - Connected to the backend API
-// Fetches reminders from GET /reminders
-// Adds via POST /reminders, completes via PATCH /reminders/:id/complete
-// Deletes via DELETE /reminders/:id
 
 import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
