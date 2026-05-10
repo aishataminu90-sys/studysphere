@@ -93,7 +93,7 @@ function Resources() {
         setModuleOptions(uniqueModules);
       } catch (err) {
         console.error(err);
-        setError("could not load resources. please try again.");
+        setError("Could not load resources. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -110,7 +110,7 @@ function Resources() {
         const data = await res.json();
         setSavedResources(data.map((r) => r._id));
       } catch (err) {
-        console.error("failed to fetch saved:", err);
+        console.error("Failed to fetch saved:", err);
       }
     };
     fetchSaved();
@@ -123,7 +123,7 @@ function Resources() {
         method: "POST",
         credentials: "include",
       });
-      if (!res.ok) throw new Error("save failed");
+      if (!res.ok) throw new Error("Save failed");
       const data = await res.json();
       setSavedResources((prev) =>
         data.saved ? [...prev, id] : prev.filter((r) => r !== id)
@@ -187,10 +187,10 @@ function Resources() {
 
         <main className="resources-main">
           <div className="resources-header">
-            <p className="res-tagline">study materials</p>
+            <p className="res-tagline">Study Materials</p>
             <h1>Resource Library</h1>
             <p className="res-subtitle">
-              search and filter study materials shared by your peers.
+              Search and filter study materials shared by your peers.
             </p>
           </div>
 
